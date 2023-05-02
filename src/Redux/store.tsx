@@ -18,6 +18,7 @@ const pokemonsPersistConfig = {
   whitelist: ['pokemons'],
 };
 
+const ignoredActions = [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER];
 export const store = configureStore({
   reducer: {
     pokemons: persistReducer(pokemonsPersistConfig, pokemonsReducer),
@@ -25,9 +26,10 @@ export const store = configureStore({
 
   middleware: getDefaultMiddleware({
     serializableCheck: {
-      ignoreActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      ignoredActions: ignoredActions,
     },
   }),
 });
 
 export const persistor = persistStore(store);
+export type AppDispatch = typeof store.dispatch;

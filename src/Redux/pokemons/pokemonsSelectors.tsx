@@ -1,3 +1,6 @@
-export const selectPokemons = state => state.pokemons.pokemons;
-export const selectError = state => state.contacts.error;
-export const selectIsLoading = state => state.contacts.isLoading;
+import { PokeState } from './pokemonsSlice';
+import { Pokemon } from './pokemonsSlice';
+export const selectPokemons = (state: PokeState): Pokemon[] =>
+  state.pokemons.pokemons;
+export const selectError = (state: PokeState) => state.error;
+export const selectIsLoading = (state: PokeState) => state.isLoading;
