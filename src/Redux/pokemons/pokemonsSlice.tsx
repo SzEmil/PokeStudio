@@ -6,10 +6,8 @@ export interface Pokemon {
   url: string;
 }
 
-export type PokeState = {
-  pokemons: {
-    pokemons: Pokemon[];
-  };
+export interface PokeState {
+  pokemonsData: Pokemon[];
   isLoading: boolean;
   error: SerializedError | boolean | null;
 };
@@ -24,11 +22,10 @@ const handleRejected = (state: PokeState, action: PayloadAction<any>) => {
 };
 
 const pokemonsInitialState: PokeState = {
-  pokemons: {
-    pokemons: [],
-  },
-  isLoading: false,
-  error: null,
+    pokemonsData: [],
+    isLoading: false,
+    error: null,
+
 };
 
 const pokemonSlice = createSlice({
@@ -39,13 +36,14 @@ const pokemonSlice = createSlice({
   },
   extraReducers: builder => {
     builder.addCase(fetchPokemons.pending, handlePending);
-    builder.addCase(fetchPokemons.fulfilled, (state: PokeState, action) => {
-      if ('payload' in action) {
+    builder.addCase(
+      fetchPokemons.fulfilled,
+      (state: PokeState, action: PayloadAction<Pokemon[]>) => {
         state.isLoading = false;
         state.error = null;
-        state.pokemons = action.payload.pokemons;
+        state.pokemonsData = action.payload;
       }
-    });
+    );
     builder.addCase(fetchPokemons.rejected, handleRejected);
   },
 });

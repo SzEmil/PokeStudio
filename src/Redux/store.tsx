@@ -15,7 +15,7 @@ import {
 const pokemonsPersistConfig = {
   key: 'pokemons',
   storage,
-  whitelist: ['pokemons'],
+  whitelist: ['pokemonsData'],
 };
 
 const ignoredActions = [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER];

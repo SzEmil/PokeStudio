@@ -13,10 +13,16 @@ export const App = () => {
     dispatch(fetchPokemons());
   };
   const pokeData = useSelector(selectPokemons);
+
+  console.log(pokeData);
+
   const handlePokeData = () => {
     console.log(pokeData);
   };
 
+  // const handlePokeIndex = (url:string)=>{
+  //   return url
+  // }
   return (
     <>
       <div>
@@ -28,9 +34,11 @@ export const App = () => {
         </button>
       </div>
       <ul>
-        {pokeData.map(pokemon => (
-          <li key={nanoid()}>{pokemon.name} </li>
-        ))}
+        {pokeData.length !== 0 ? (
+          pokeData?.map(pokemon => <li key={nanoid()}>{pokemon.name}</li>)
+        ) : (
+          <p> Poke Array is null </p>
+        )}
       </ul>
     </>
   );
