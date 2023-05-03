@@ -20,9 +20,14 @@ export const App = () => {
     console.log(pokeData);
   };
 
-  // const handlePokeIndex = (url:string)=>{
-  //   return url
-  // }
+  const handlePokeIndex = (url: string) => {
+    const index = url
+      .split('')
+      .slice(0, length - 1)
+      .slice(34)
+      .join('');
+    return index;
+  };
   return (
     <>
       <div>
@@ -35,7 +40,17 @@ export const App = () => {
       </div>
       <ul>
         {pokeData.length !== 0 ? (
-          pokeData?.map(pokemon => <li key={nanoid()}>{pokemon.name}</li>)
+          pokeData?.map(pokemon => (
+            <li key={nanoid()}>
+              <span>{pokemon.name}</span>
+              <img
+                alt={pokemon.name}
+                src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${handlePokeIndex(
+                  pokemon.url
+                )}.png`}
+              />
+            </li>
+          ))
         ) : (
           <p> Poke Array is null </p>
         )}
