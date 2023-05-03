@@ -8,10 +8,11 @@ export const fetchPokemons = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const response = await axios.get('/pokemon?limit=50&offset=0');
-      console.log(response.data.results);
+      // console.log(response.data.results);
       return response.data.results;
     } catch (error: any) {
       return thunkAPI.rejectWithValue(error.message);
     }
   }
 );
+

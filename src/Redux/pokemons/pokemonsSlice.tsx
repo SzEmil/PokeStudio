@@ -5,12 +5,11 @@ export interface Pokemon {
   name: string;
   url: string;
 }
-
 export interface PokeState {
   pokemonsData: Pokemon[];
   isLoading: boolean;
   error: SerializedError | boolean | null;
-};
+}
 
 const handlePending = (state: PokeState) => {
   state.isLoading = true;
@@ -22,10 +21,9 @@ const handleRejected = (state: PokeState, action: PayloadAction<any>) => {
 };
 
 const pokemonsInitialState: PokeState = {
-    pokemonsData: [],
-    isLoading: false,
-    error: null,
-
+  pokemonsData: [],
+  isLoading: false,
+  error: null,
 };
 
 const pokemonSlice = createSlice({
