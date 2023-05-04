@@ -1,0 +1,19 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100vh;
+
+  border-left: 20px solid
+    linear-gradient(90deg, rgba(24, 32, 41, 1) 0%, rgba(17, 22, 28, 1) 100%);
+}
+.image {
+  width: 100%;
+}
+.card {
+  position: relative;
+
+  border: 0.1px solid #ffd600;
+}
