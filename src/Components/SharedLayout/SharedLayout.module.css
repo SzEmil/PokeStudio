@@ -1,0 +1,48 @@
+.head {
+  display: flex;
+  display: block;
+  align-items: center;
+  width: 100%;
+  position: relative;
+  padding: 15px 100px;
+}
+
+.logo {
+  color: #ffd600;
+  /* color: white; */
+  font-style: normal;
+  font-family: 'Pokemon Solid';
+  font-weight: 300;
+  font-size: 36px;
+  line-height: 38px;
+  position: absolute;
+  left: 50%;
+  bottom: 10px;
+
+  transform: translateX(-50%);
+}
+/* .logoColor {
+  color: rgb(0, 0, 0);
+} */
+
+.nav {
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: right;
+}
+.linksBar {
+  display: flex;
+  justify-content: space-between;
+}
+.link {
+  color: white;
+  font-style: normal;
+  font-family: 'Roboto';
+  font-weight: 500;
+  font-size: 28px;
+  line-height: 30px;
+}
+.link:nth-child(n + 2) {
+  padding-left: 15px;
+}

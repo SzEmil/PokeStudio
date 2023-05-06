@@ -29,10 +29,19 @@
   filter: blur(20px); /* dodaj rozmycie */
   opacity: 1; /* ukryj połyskiwanie */
   transition: opacity 0.3s ease-in-out; /* dodaj efekt przejścia */
+
+  transition: background-color 250ms ease-in-out;
 }
 
 .card:hover {
   cursor: pointer;
+}
+.card:hover:before {
+  background: radial-gradient(
+    circle,
+    #ffd600 5%,
+    rgba(255, 255, 255, 0) 60%
+  ); /* dodaj gradient */
 }
 
 .image {
@@ -53,18 +62,16 @@
 
 .name {
   margin: 0;
-  font-size: 24px;
-  font-weight: bold;
   text-align: center;
 
   color: #ffd600;
   /* color: white; */
   font-style: normal;
-  font-family: 'Roboto';
+  font-family: 'Pokemon Solid';
   font-weight: 300;
   font-size: 28px;
   line-height: 32px;
-  text-transform: uppercase;
+
 }
 
 @media (max-width: 400px) {

@@ -12,14 +12,10 @@ body {
   margin-left: auto;
   margin-right: auto;
 
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Roboto', 'Pokemon Solid', sans-serif;
   color: white;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}
 *,
 *::before,
 *::after {

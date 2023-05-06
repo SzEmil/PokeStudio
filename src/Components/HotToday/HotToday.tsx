@@ -13,7 +13,8 @@ export const HotToday = () => {
   function randomPokeId() {
     return Math.floor(Math.random() * 898) + 1;
   }
-
+  //dodać by fethc robił sie raz dziennie dodatkowo czyli dodać do stanu aktualną date i ją tutaj pobrać i porównać zdzisiejszą, jesli taki sam dzien to nie fetchować
+  
   // useEffect(() => {
   //   dispatch(fetchRandomPokemon(randomPokeId()));
   // }, [dispatch]);
