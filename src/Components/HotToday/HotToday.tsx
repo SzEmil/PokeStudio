@@ -6,38 +6,113 @@ import { selectRandomPokemon } from '../../Redux/pokemonInfo/pokemonInfoSelector
 import { useSelector } from 'react-redux';
 import { selectRandomPokemonIsLoading } from '../../Redux/pokemonInfo/pokemonInfoSelectors';
 import css from './HotToday.module.css';
+import { selectRandomPokemonDate } from '../../Redux/pokemonInfo/pokemonInfoSelectors';
+import { PokeballLoader } from '../PokeballLoader/PokeballLoader';
+import { nanoid } from '@reduxjs/toolkit';
+import { fetchMoreDetailsPokemon } from '../../Redux/pokemonInfo/pokemonInfoOperations';
+import { selectisLoadingMoreInfo } from '../../Redux/pokemonInfo/pokemonInfoSelectors';
 
 export const HotToday = () => {
-  const dispatch: AppDispatch = useDispatch();
-
+  function getFormattedDate() {
+    const today = new Date();
+    const day = today.getDate().toString().padStart(2, '0');
+    const month = (today.getMonth() + 1).toString().padStart(2, '0');
+    const year = today.getFullYear().toString();
+    return `${day}-${month}-${year}`;
+  }
   function randomPokeId() {
     return Math.floor(Math.random() * 898) + 1;
   }
-  //dodać by fethc robił sie raz dziennie dodatkowo czyli dodać do stanu aktualną date i ją tutaj pobrać i porównać zdzisiejszą, jesli taki sam dzien to nie fetchować
-  
-  // useEffect(() => {
-  //   dispatch(fetchRandomPokemon(randomPokeId()));
-  // }, [dispatch]);
 
+  const dispatch: AppDispatch = useDispatch();
   const hotPokemon: any = useSelector(selectRandomPokemon);
   const isRandomLoaded = useSelector(selectRandomPokemonIsLoading);
+  const isRandomMoreInfoLoaded = useSelector(selectisLoadingMoreInfo);
+  const todayDate = getFormattedDate();
+  const dateOfRandomPokemon = useSelector(selectRandomPokemonDate);
+
+  const handleGrowFirstLetter = (name: string) => {
+    const bigLetter = name[0].toUpperCase();
+    return name.replace(bigLetter.toLocaleLowerCase(), bigLetter);
+  };
+
+  const renderRandomPokemon = () => {
+    if (hotPokemon.overview === null && hotPokemon.details === null) {
+      dispatch(fetchRandomPokemon(randomPokeId()));
+      return;
+    } else if (
+      hotPokemon.overview !== null &&
+      hotPokemon.details !== null &&
+      todayDate !== dateOfRandomPokemon
+    ) {
+      dispatch(fetchRandomPokemon(randomPokeId()));
+      return;
+    }
+  };
+
+  useEffect(() => {
+    renderRandomPokemon();
+  }, []);
+
+  useEffect(() => {
+    if (hotPokemon.overview === null) return;
+    if (hotPokemon.details !== null) return;
+    if (hotPokemon?.overview.species) {
+      dispatch(fetchMoreDetailsPokemon(hotPokemon.overview.species.url));
+    }
+  }, [hotPokemon.overview, dispatch]);
+
   return (
     <>
       {isRandomLoaded ? (
-        <p>Loading random mob</p>
+        <PokeballLoader />
       ) : (
         <div className={css.wrapper}>
-          <div className={css.card}>
-            <h2>Hot Pokemon For Today!!</h2>
-            <img
-              className={css.image}
-              src={hotPokemon?.sprites.other.home.front_default}
-            />
-            <h2>{hotPokemon?.name}</h2>
-            <button onClick={() => console.log(hotPokemon)}>
-              co tam w randomie slychac
-            </button>
-          </div>
+          {hotPokemon.overview === null ||
+          isRandomMoreInfoLoaded ||
+          hotPokemon.details === null ? (
+            <p>loading data...</p>
+          ) : (
+            <div
+              className={css.card}
+              style={{
+                background: `radial-gradient(circle,${hotPokemon?.details.color.name} 0%,rgba(255, 255, 255, 0) 85%)`,
+              }}
+            >
+              <div className={css.headBar}>
+                <h2 className={css.name}>
+                  {handleGrowFirstLetter(hotPokemon?.overview?.name)}
+                  <span className={css.nameTag}>
+                    #{hotPokemon?.overview?.id}
+                  </span>
+                </h2>
+                <span>{hotPokemon?.overview.base_experience}</span>
+              </div>
+              <img
+                className={css.image}
+                src={hotPokemon?.overview.sprites.other.home.front_default}
+              />
+              <div>
+                <p>{hotPokemon.details.flavor_text_entries[38].flavor_text}</p>
+              </div>
+              <div>
+                <ul className={css.stats}>
+                  {hotPokemon?.overview.stats.map(
+                    (stat: ReturnType<typeof hotPokemon>) => (
+                      <li key={nanoid()}>
+                        <p>
+                          {stat.stat.name}: <span>{stat.base_stat}</span>
+                        </p>
+                      </li>
+                    )
+                  )}
+                </ul>
+              </div>
+              <button onClick={() => console.log(hotPokemon)}>
+                co tam w randomie slychac
+              </button>
+            </div>
+          )}
         </div>
       )}
     </>

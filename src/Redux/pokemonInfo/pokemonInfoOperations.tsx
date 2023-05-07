@@ -20,3 +20,15 @@ export const fetchRandomPokemon = createAsyncThunk<MyData, number>(
     }
   }
 );
+
+export const fetchMoreDetailsPokemon = createAsyncThunk(
+  'pokemons/fetchMoreDetails',
+  async (url: string, thunkAPI) => {
+    try {
+      const response = await axios.get(`${url}`);
+      return response.data;
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);

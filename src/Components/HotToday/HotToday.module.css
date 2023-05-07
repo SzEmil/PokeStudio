@@ -9,6 +9,13 @@
   border-left: 20px solid
     linear-gradient(90deg, rgba(24, 32, 41, 1) 0%, rgba(17, 22, 28, 1) 100%);
 }
+.headBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+}
+
 .image {
   width: 100%;
 }
@@ -16,4 +23,46 @@
   position: relative;
 
   border: 0.1px solid #ffd600;
+}
+.card:before {
+  content: '';
+  position: absolute;
+  top: -20px; /* ustawianie pozycji */
+  left: -20px; /* ustawianie pozycji */
+  right: -20px; /* ustawianie pozycji */
+  bottom: -20px; /* ustawianie pozycji */
+  z-index: -1; /* ustaw z-index na -1, aby pozostał pod kartą */
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.4) 10%,
+    rgba(255, 255, 255, 0) 55%
+  ); /* dodaj gradient */
+  filter: blur(20px); /* dodaj rozmycie */
+  opacity: 1; /* ukryj połyskiwanie */
+  transition: opacity 0.3s ease-in-out; /* dodaj efekt przejścia */
+
+  transition: background-color 250ms ease-in-out;
+  overflow: hidden;
+}
+
+.name {
+  font-style: normal;
+  font-family: 'Pokemon Solid';
+  font-weight: 300;
+  font-size: 36px;
+  line-height: 38px;
+}
+.nameTag {
+  color: rgba(167, 167, 167, 0.925);
+  font-style: normal;
+  font-family: 'Pokemon Solid';
+  font-weight: 300;
+  font-size: 24px;
+  line-height: 26px;
+}
+.stats {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  height: 70px;
 }
