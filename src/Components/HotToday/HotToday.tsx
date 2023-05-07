@@ -73,45 +73,70 @@ export const HotToday = () => {
           hotPokemon.details === null ? (
             <p>loading data...</p>
           ) : (
-            <div
-              className={css.card}
-              style={{
-                background: `radial-gradient(circle,${hotPokemon?.details.color.name} 0%,rgba(255, 255, 255, 0) 85%)`,
-              }}
-            >
-              <div className={css.headBar}>
-                <h2 className={css.name}>
-                  {handleGrowFirstLetter(hotPokemon?.overview?.name)}
-                  <span className={css.nameTag}>
-                    #{hotPokemon?.overview?.id}
-                  </span>
-                </h2>
-                <span>{hotPokemon?.overview.base_experience}</span>
+            <>
+              <div className={css.cardBox}>
+                <div className={css.titleBox}>
+                  <h2 className={css.title}>Pokemon of a day</h2>
+                </div>
+                <div
+                  className={css.card}
+                  style={{
+                    background: `radial-gradient(circle,${hotPokemon?.details.color.name} 10%,rgba(255, 255, 255, 0) 87%)`,
+                  }}
+                >
+                  <div className={css.headBar}>
+                    <h2 className={css.name}>
+                      {handleGrowFirstLetter(hotPokemon?.overview?.name)}
+                      <span className={css.nameTag}>
+                        #{hotPokemon?.overview?.id}
+                      </span>
+                    </h2>
+                    <div>
+                      <ul>
+                        {hotPokemon?.overview.types.map(
+                          (type: { type: { name: string } }) => (
+                            <li key={`${type.type.name}+${nanoid()}`}>
+                              {type.type.name}
+                            </li>
+                          )
+                        )}
+                      </ul>
+                      <span>{hotPokemon?.overview.base_experience}</span>
+                    </div>
+                  </div>
+                  <img
+                    className={css.image}
+                    src={hotPokemon?.overview.sprites.other.home.front_default}
+                  />
+                  <div className={css.description}>
+                    <p className={css.descriptionText}>
+                      {
+                        hotPokemon.details.flavor_text_entries.find(
+                          (item: ReturnType<typeof hotPokemon.details>) =>
+                            item.language.name === 'en'
+                        ).flavor_text
+                      }
+                    </p>
+                  </div>
+                  <div>
+                    <ul className={css.stats}>
+                      {hotPokemon?.overview.stats.map(
+                        (stat: ReturnType<typeof hotPokemon>) => (
+                          <li key={nanoid()}>
+                            <p>
+                              {stat.stat.name}: <span>{stat.base_stat}</span>
+                            </p>
+                          </li>
+                        )
+                      )}
+                    </ul>
+                  </div>
+                  <button onClick={() => console.log(hotPokemon)}>
+                    co tam w randomie slychac
+                  </button>
+                </div>
               </div>
-              <img
-                className={css.image}
-                src={hotPokemon?.overview.sprites.other.home.front_default}
-              />
-              <div>
-                <p>{hotPokemon.details.flavor_text_entries[38].flavor_text}</p>
-              </div>
-              <div>
-                <ul className={css.stats}>
-                  {hotPokemon?.overview.stats.map(
-                    (stat: ReturnType<typeof hotPokemon>) => (
-                      <li key={nanoid()}>
-                        <p>
-                          {stat.stat.name}: <span>{stat.base_stat}</span>
-                        </p>
-                      </li>
-                    )
-                  )}
-                </ul>
-              </div>
-              <button onClick={() => console.log(hotPokemon)}>
-                co tam w randomie slychac
-              </button>
-            </div>
+            </>
           )}
         </div>
       )}
