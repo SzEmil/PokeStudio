@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 import { selectFilteredPokemons } from '../../Redux/pokemons/pokemonsSelectors';
 import { nanoid } from '@reduxjs/toolkit';
-import { PokeCard } from '../pokeCard/pokeCard';
+import { PokeFront } from '../pokeFront/pokeFront';
 import { selectIsLoading } from '../../Redux/pokemons/pokemonsSelectors';
 import css from './PokemonList.module.css';
 import { PokeballLoader } from '../PokeballLoader/PokeballLoader';
@@ -15,11 +15,10 @@ export const PokemonList = () => {
         <PokeballLoader />
       ) : (
         <ul className={css.list}>
-
           {pokeData.length !== 0 ? (
             pokeData?.map(pokemon => (
               <li key={nanoid()}>
-                <PokeCard pokemon={pokemon} />
+                <PokeFront pokemon={pokemon} />
               </li>
             ))
           ) : (

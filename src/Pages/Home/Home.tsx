@@ -9,7 +9,9 @@ const Home = () => {
       <Section>
         <div className={css.wrapper}>
           <div className={css.pokeList}>
-            <SearchBar />
+            <div className={css.searchBar}>
+              <SearchBar />
+            </div>
             <PokemonList />
           </div>
           <div className={css.hotPokemon}>

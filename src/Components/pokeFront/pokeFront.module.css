@@ -1,0 +1,81 @@
+.card {
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+
+  border-radius: 5px;
+
+  /* background: rgb(227, 212, 108);
+  background: radial-gradient(
+    circle,
+    rgba(227, 212, 108, 1) 45%,
+    rgb(146, 138, 24) 80%
+  ); */
+  position: relative;
+}
+.card:before {
+  content: '';
+  position: absolute;
+  top: -20px; /* ustawianie pozycji */
+  left: -20px; /* ustawianie pozycji */
+  right: -20px; /* ustawianie pozycji */
+  bottom: -20px; /* ustawianie pozycji */
+  z-index: -1; /* ustaw z-index na -1, aby pozostał pod kartą */
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.4) 0%,
+    rgba(255, 255, 255, 0) 60%
+  ); /* dodaj gradient */
+  filter: blur(20px); /* dodaj rozmycie */
+  opacity: 1; /* ukryj połyskiwanie */
+  transition: opacity 0.3s ease-in-out; /* dodaj efekt przejścia */
+
+  transition: background-color 250ms ease-in-out;
+}
+
+.card:hover {
+  cursor: pointer;
+}
+.card:hover:before {
+  background: radial-gradient(
+    circle,
+    #ffd600 5%,
+    rgba(255, 255, 255, 0) 60%
+  ); /* dodaj gradient */
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.image {
+  transition: transform 0.5s ease;
+}
+.card:hover .image {
+  transform: scale(1.1);
+}
+
+.info {
+  padding: 30px 20px;
+}
+
+.name {
+  margin: 0;
+  text-align: center;
+
+  color: #ffd600;
+  /* color: white; */
+  font-style: normal;
+  font-family: 'Pokemon Solid';
+  font-weight: 300;
+  font-size: 28px;
+  line-height: 32px;
+
+}
+
+@media (max-width: 400px) {
+  .card {
+    width: 100%;
+  }
+}
