@@ -11,7 +11,7 @@ export const PokemonCard = ({ pokemon }: any) => {
     <>
       <div className={css.cardBox}>
         <div className={css.titleBox}>
-          <h2 className={css.title}>Pokemon of a day</h2>
+          <h2 className={css.title}>Pokemon of a day!</h2>
         </div>
         <div
           className={css.card}
