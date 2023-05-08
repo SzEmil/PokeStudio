@@ -1,17 +1,54 @@
-.card {
-  width: 400px;
+.wrapper {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100vh;
+}
+.headBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+}
 
-  border-radius: 5px;
+.titleBox {
+  z-index: 100;
+  width: 100%;
+  position: absolute;
 
-  /* background: rgb(227, 212, 108);
-    background: radial-gradient(
-      circle,
-      rgba(227, 212, 108, 1) 45%,
-      rgb(146, 138, 24) 80%
-    ); */
+  left: 50%;
+  /* top: -45px; */
+  transform: translateX(-25%);
+  top: -50px;
+
+  display: flex;
+}
+.title {
+  color: #ffd600;
+  font-style: normal;
+  font-family: 'Pokemon Solid';
+  font-weight: 300;
+  font-size: 28px;
+  line-height: 30px;
+
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.image {
+  width: 100%;
+}
+
+.cardBox {
   position: relative;
+}
+.card {
+  position: relative;
+
+  border: 0.1px solid rgba(255, 255, 255, 0.1);
+  overflow: hidden;
 }
 .card:before {
   content: '';
@@ -23,58 +60,189 @@
   z-index: -1; /* ustaw z-index na -1, aby pozostał pod kartą */
   background: radial-gradient(
     circle,
-    rgba(255, 255, 255, 0.4) 0%,
-    rgba(255, 255, 255, 0) 60%
+    rgb(0, 0, 0) 100%,
+    rgba(83, 83, 83, 0) 100%
   ); /* dodaj gradient */
   filter: blur(20px); /* dodaj rozmycie */
   opacity: 1; /* ukryj połyskiwanie */
   transition: opacity 0.3s ease-in-out; /* dodaj efekt przejścia */
 
   transition: background-color 250ms ease-in-out;
-}
-
-.card:hover {
-  cursor: pointer;
-}
-.card:hover:before {
-  background: radial-gradient(
-    circle,
-    #ffd600 5%,
-    rgba(255, 255, 255, 0) 60%
-  ); /* dodaj gradient */
-}
-
-.image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-.image {
-  transition: transform 0.5s ease;
-}
-.card:hover .image {
-  transform: scale(1.1);
-}
-
-.info {
-  padding: 30px 20px;
+  overflow: hidden;
 }
 
 .name {
-  margin: 0;
-  text-align: center;
-
+  font-style: normal;
+  font-family: 'Pokemon Solid';
+  font-weight: 300;
+  font-size: 36px;
+  line-height: 38px;
+}
+.nameTag {
+  color: rgba(167, 167, 167, 0.925);
+  font-style: normal;
+  font-family: 'Pokemon Solid';
+  font-weight: 300;
+  font-size: 24px;
+  line-height: 26px;
+}
+.overall {
   color: #ffd600;
-  /* color: white; */
   font-style: normal;
   font-family: 'Pokemon Solid';
   font-weight: 300;
   font-size: 28px;
-  line-height: 32px;
+  line-height: 30px;
+  text-align: center;
+  /* padding: 5px;
+  border: 0.1px solid white;
+  border-radius: 50%; */
+  margin-right: 5px;
+  position: relative;
+}
+.overall::after {
+  content: '';
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  left: 50%;
+  top: -8px;
+
+  transform: translateX(-50%);
+  transform: translateX(-50%);
+
+  border: 0.2px solid rgba(255, 255, 255, 0.8);
+}
+.typesBox {
+  display: flex;
+  align-items: center;
+  padding-top: 5px;
+  position: absolute;
+}
+.typeText {
+  color: white;
+  font-style: normal;
+  font-family: 'Roboto';
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 16px;
+  text-align: left;
+}
+.typeTextmodifier {
+  color: white;
+  font-style: normal;
+  font-family: 'Roboto';
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 16px;
+  text-align: left;
+  padding: 10px;
+  margin-left: 5px;
 }
 
-@media (max-width: 400px) {
-  .card {
-    width: 100%;
-  }
+.overview {
+  display: flex;
+  justify-content: space-between;
+  /* align-items: center; */
+  padding: 10px;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+.overviewTitleBox {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+.overviewTitle {
+  font-style: normal;
+  font-family: 'Roboto';
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 16px;
+}
+
+.stats {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  height: 85px;
+
+  display: inline-flex;
+}
+.statsText {
+  font-style: normal;
+  font-family: 'Roboto';
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 16px;
+  padding-top: 10px;
+  padding-right: 10px;
+}
+.statsTextOvrl {
+  font-weight: 200;
+}
+
+.abilities {
+  padding-top: 10px;
+}
+.ability {
+}
+.ability:nth-child(n + 2) {
+  margin-top: 5px;
+}
+.abilitiesText {
+  font-style: normal;
+  font-family: 'Roboto';
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 16px;
+
+  padding: 5px;
+  border-radius: 10px;
+  text-align: center;
+
+  background: rgb(255, 255, 255);
+}
+
+.checkDescription {
+  color: white;
+  padding: 10px;
+  margin-bottom: 10px;
+  cursor: default;
+  display: inline;
+
+  position: absolute;
+  left: 10px;
+  bottom: 120px;
+}
+.checkDescription:hover + .description {
+  left: 0;
+}
+.checkDescriptionText {
+  display: inline;
+  font-style: normal;
+  font-family: 'Pokemon Solid';
+  font-weight: 200;
+  font-size: 36px;
+  line-height: 38px;
+}
+.description {
+  position: absolute;
+  bottom: 50%;
+  left: -150%;
+
+  background-color: rgba(0, 0, 0, 0.5);
+  border-top: 0.1px solid rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: center;
+
+  transition: left 0.4s ease-in-out;
+}
+.descriptionText {
+  font-style: normal;
+  font-family: 'Roboto';
+  font-weight: 200;
+  font-size: 14px;
+  line-height: 18px;
+  padding: 5px 5px;
 }
