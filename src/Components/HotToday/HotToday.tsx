@@ -118,22 +118,49 @@ export const HotToday = () => {
                       }
                     </p>
                   </div>
-                  <div>
-                    <ul className={css.stats}>
-                      {hotPokemon?.overview.stats.map(
-                        (stat: ReturnType<typeof hotPokemon>) => (
-                          <li key={nanoid()}>
-                            <p>
-                              {stat.stat.name}: <span>{stat.base_stat}</span>
-                            </p>
-                          </li>
-                        )
-                      )}
-                    </ul>
+                  <div className={css.overview}>
+                    <div>
+                      <h2 className={css.overviewTitle}>Statistics</h2>
+                      <ul className={css.stats}>
+                        {hotPokemon?.overview.stats.map(
+                          (stat: ReturnType<typeof hotPokemon>) => (
+                            <li key={nanoid()}>
+                              <p className={css.statsText}>
+                                {stat.stat.name}:{' '}
+                                <span className={css.statsTextOvrl}>
+                                  {stat.base_stat}
+                                </span>
+                              </p>
+                            </li>
+                          )
+                        )}
+                      </ul>
+                    </div>
+
+                    <div>
+                      <h2 className={css.overviewTitle}>Abilities</h2>
+                      <ul className={css.abilities}>
+                        {hotPokemon?.overview.abilities.map(
+                          (
+                            ability: ReturnType<
+                              typeof hotPokemon.overview.abilities
+                            >
+                          ) => (
+                            <li className={css.ability}>
+                              <p
+                                className={css.abilitiesText}
+                                style={{
+                                  backgroundColor: `${hotPokemon?.details.color.name}`,
+                                }}
+                              >
+                                {ability.ability.name}
+                              </p>
+                            </li>
+                          )
+                        )}
+                      </ul>
+                    </div>
                   </div>
-                  <button onClick={() => console.log(hotPokemon)}>
-                    co tam w randomie slychac
-                  </button>
                 </div>
               </div>
             </>

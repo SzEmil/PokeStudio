@@ -1,6 +1,7 @@
 import { useDispatch } from 'react-redux';
 import { setFilterData } from '../../Redux/filter/filterSlice';
 import { ChangeEvent } from 'react';
+import css from './SearchBar.module.css';
 
 export const SearchBar = () => {
   const dispatch = useDispatch();
@@ -11,6 +12,7 @@ export const SearchBar = () => {
   return (
     <div>
       <input
+        className={css.input}
         type="text"
         placeholder="Input pokemon name"
         name="pokeName"

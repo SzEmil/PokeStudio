@@ -4,7 +4,6 @@ import { nanoid } from '@reduxjs/toolkit';
 import { PokeCard } from '../pokeCard/pokeCard';
 import { selectIsLoading } from '../../Redux/pokemons/pokemonsSelectors';
 import css from './PokemonList.module.css';
-import { ColorRing } from 'react-loader-spinner';
 import { PokeballLoader } from '../PokeballLoader/PokeballLoader';
 
 export const PokemonList = () => {

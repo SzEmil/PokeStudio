@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { create } from 'domain';
 
 axios.defaults.baseURL = `https://pokeapi.co/api/v2`;
 

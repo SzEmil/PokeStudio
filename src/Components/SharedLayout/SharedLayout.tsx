@@ -1,7 +1,6 @@
 import { NavLink, Outlet } from 'react-router-dom';
 import { Suspense } from 'react';
 import css from './SharedLayout.module.css';
-import { Section } from '../Section/Section';
 
 export const SharedLayout = () => {
   return (
