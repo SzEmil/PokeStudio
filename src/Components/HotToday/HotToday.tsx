@@ -10,7 +10,7 @@ import { selectRandomPokemonDate } from '../../Redux/pokemonInfo/pokemonInfoSele
 import { PokeballLoader } from '../PokeballLoader/PokeballLoader';
 import { fetchMoreDetailsPokemon } from '../../Redux/pokemonInfo/pokemonInfoOperations';
 import { selectisLoadingMoreInfo } from '../../Redux/pokemonInfo/pokemonInfoSelectors';
-import { PokeCard } from '../PokeCard/PokeCard';
+import { PokemonCard } from '../PokemonCard/PokemonCard';
 
 export const HotToday = () => {
   function getFormattedDate() {
@@ -69,7 +69,7 @@ export const HotToday = () => {
             <p>loading data...</p>
           ) : (
             <>
-              <PokeCard pokemon={hotPokemon} />
+              <PokemonCard pokemon={hotPokemon} />
             </>
           )}
         </div>
