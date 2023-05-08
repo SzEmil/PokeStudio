@@ -10,7 +10,7 @@ import { selectRandomPokemonDate } from '../../Redux/pokemonInfo/pokemonInfoSele
 import { PokeballLoader } from '../PokeballLoader/PokeballLoader';
 import { fetchMoreDetailsPokemon } from '../../Redux/pokemonInfo/pokemonInfoOperations';
 import { selectisLoadingMoreInfo } from '../../Redux/pokemonInfo/pokemonInfoSelectors';
-import { PokeCard } from '../PokeCard/PokeCard';
+
 
 export const HotToday = () => {
   function getFormattedDate() {
