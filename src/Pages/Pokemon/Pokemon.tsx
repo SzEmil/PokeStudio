@@ -21,7 +21,7 @@ const Pokemon = () => {
       ) : (
         <div>
           {id}
-          <h2>{pokemon.overview!.name}</h2>
+          {/* <h2>{pokemon.overview!.name}</h2> */}
         </div>
       )}
     </>
