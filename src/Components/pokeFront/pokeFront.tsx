@@ -1,7 +1,5 @@
 import css from './pokeFront.module.css';
 import { memo } from 'react';
-import { PokeballLoader } from '../PokeballLoader/PokeballLoader';
-import { nanoid } from '@reduxjs/toolkit';
 
 interface PokemonProps {
   pokemon: {
