@@ -27,7 +27,7 @@ export const PokemonCard = ({ pokemon }: any) => {
               </h2>
               <div className={css.typesBox}>
                 <p className={css.typeText}>Type: </p>
-                <ul>
+                <ul className={css.typeList}>
                   {hotPokemon?.overview.types.map(
                     (type: { type: { name: string } }) => (
                       <li key={`${type.type.name}+${nanoid()}`}>
@@ -45,10 +45,13 @@ export const PokemonCard = ({ pokemon }: any) => {
               </p>
             </div>
           </div>
-          <img
-            className={css.image}
-            src={hotPokemon?.overview.sprites.other.home.front_default}
-          />
+
+          <div className={css.imageBox}>
+            <img
+              className={css.image}
+              src={hotPokemon?.overview.sprites.other.home.front_default}
+            />
+          </div>
 
           <div className={css.checkDescription}>
             <p className={css.checkDescriptionText}>?</p>

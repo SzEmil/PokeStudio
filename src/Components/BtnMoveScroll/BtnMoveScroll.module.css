@@ -1,0 +1,46 @@
+.btnUp {
+  font-style: normal;
+  font-family: 'Roboto';
+  font-weight: 400;
+  font-size: 28px;
+  line-height: 28px;
+  padding: 5px 12px;
+  border-radius: 50%;
+  background-color: #818181;
+  color: white;
+  border: none;
+  cursor: pointer;
+
+  z-index: 99;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.btnDown {
+  font-style: normal;
+  font-family: 'Roboto';
+  font-weight: 400;
+  font-size: 28px;
+  line-height: 28px;
+  padding: 5px 12px;
+  transform: rotateX(180deg);
+  border-radius: 50%;
+  background-color: #818181;
+  color: white;
+  border: none;
+  cursor: pointer;
+  z-index: 99;
+  transition: background-color 0.2s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.btnUp:hover {
+  background-color: #4b4b4b;
+}
+
+.btnDown:hover {
+  background-color: #4b4b4b;
+}
+
+.btnUp:focus,
+.btnDown:focus {
+  outline: none;
+}

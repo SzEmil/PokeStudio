@@ -1,4 +1,7 @@
 import css from './pokeFront.module.css';
+import { memo } from 'react';
+import { PokeballLoader } from '../PokeballLoader/PokeballLoader';
+import { nanoid } from '@reduxjs/toolkit';
 
 interface PokemonProps {
   pokemon: {
@@ -8,7 +11,7 @@ interface PokemonProps {
 }
 //src={`https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${handlePokeIndex(url)}.png`}/>
 // src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${handlePokeIndex(url )}.png`}
-export const PokeFront = ({ pokemon: { name, url } }: PokemonProps) => {
+export const PokeFront = memo(({ pokemon: { name, url } }: PokemonProps) => {
   const handleGrowFirstLetter = (name: string) => {
     const bigLetter = name[0].toUpperCase();
     return name.replace(bigLetter.toLocaleLowerCase(), bigLetter);
@@ -30,6 +33,20 @@ export const PokeFront = ({ pokemon: { name, url } }: PokemonProps) => {
     // }
     return index;
   };
+
+  // {pokemons.length !== 0 ? (
+  //   pokemons?.map(pokemon => (
+  //     <li key={nanoid()}>
+  //       <PokeFront pokemon={pokemon} />
+  //       {children}
+  //     </li>
+  //   ))
+  // ) : (
+  //   <div>
+  //     Loading data...
+  //     <PokeballLoader />
+  //   </div>
+  // )}
   return (
     <>
       <div className={css.card}>
@@ -47,4 +64,4 @@ export const PokeFront = ({ pokemon: { name, url } }: PokemonProps) => {
       </div>
     </>
   );
-};
+});

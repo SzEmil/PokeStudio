@@ -1,7 +1,6 @@
 import { PayloadAction, SerializedError, createSlice } from '@reduxjs/toolkit';
 import { fetchPokemons } from './pokemonsOperations';
 
-
 export interface Pokemon {
   name: string;
   url: string;
@@ -40,7 +39,7 @@ const pokemonSlice = createSlice({
       (state: PokeState, action: PayloadAction<Pokemon[]>) => {
         state.isLoading = false;
         state.error = null;
-        state.pokemonsData = action.payload;
+        state.pokemonsData = [...state.pokemonsData, ...action.payload];
       }
     );
     builder.addCase(fetchPokemons.rejected, handleRejected);
