@@ -1,9 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { fetchPokemons } from './Redux/pokemons/pokemonsOperations';
 import { useSelector } from 'react-redux';
 import { selectPokemons } from './Redux/pokemons/pokemonsSelectors';
-import { AppDispatch } from './Redux/store';
 import { SharedLayout } from './Components/SharedLayout/SharedLayout';
 import { lazy } from 'react';
 import { selectRandomPokemon } from './Redux/pokemonInfo/pokemonInfoSelectors';
@@ -11,9 +8,7 @@ import { selectRandomPokemon } from './Redux/pokemonInfo/pokemonInfoSelectors';
 const HomePage = lazy(() => import('../src/Pages/Home/Home'));
 
 export const App = () => {
-  const dispatch: AppDispatch = useDispatch();
   const randomPoke = useSelector(selectRandomPokemon);
-
   const pokeData = useSelector(selectPokemons);
 
   const handlePokeData = () => {
