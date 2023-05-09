@@ -2,11 +2,13 @@ import { createSlice } from '@reduxjs/toolkit';
 import { fetchRandomPokemon } from './pokemonInfoOperations';
 import { PayloadAction } from '@reduxjs/toolkit';
 import { fetchMoreDetailsPokemon } from './pokemonInfoOperations';
+import { fetchPokemonById } from './pokemonInfoOperations';
 
 type PokeApiRandomType = Record<string, unknown>;
 
 export type PokeInfoStateType = {
-  pokeMoreInfo: PokeApiRandomType;
+  hotPoke: PokeApiRandomType;
+  pokeDetails: PokeApiRandomType;
   isLoading: boolean;
   isLoadingMoreDetails: boolean;
   error: any;
@@ -34,7 +36,11 @@ const handleRejected = (
 };
 
 const pokemonInfoInitialState: PokeInfoStateType = {
-  pokeMoreInfo: {
+  hotPoke: {
+    overview: null,
+    details: null,
+  },
+  pokeDetails: {
     overview: null,
     details: null,
   },
@@ -54,14 +60,14 @@ const pokemonInfoSlice = createSlice({
     builder.addCase(fetchRandomPokemon.pending, handlePending),
       builder.addCase(fetchRandomPokemon.rejected, handleRejected),
       builder.addCase(fetchRandomPokemon.fulfilled, (state, action) => {
-        state.pokeMoreInfo.overview = action.payload;
+        state.hotPoke.overview = action.payload;
         (state.isLoading = false),
           (state.error = null),
           (state.date = getFormattedDate());
       });
 
     builder.addCase(fetchMoreDetailsPokemon.fulfilled, (state, action) => {
-      state.pokeMoreInfo.details = action.payload;
+      state.hotPoke.details = action.payload;
       state.isLoadingMoreDetails = false;
     });
     builder.addCase(fetchMoreDetailsPokemon.pending, state => {
@@ -69,6 +75,18 @@ const pokemonInfoSlice = createSlice({
     });
     builder.addCase(fetchMoreDetailsPokemon.rejected, (state, action) => {
       state.error = action.payload;
+      state.isLoadingMoreDetails = false;
+    });
+
+    builder.addCase(fetchPokemonById.pending, state => {
+      state.isLoadingMoreDetails = true;
+    });
+    builder.addCase(fetchPokemonById.rejected, (state, action) => {
+      state.isLoadingMoreDetails = false;
+      state.error = action.payload;
+    });
+    builder.addCase(fetchPokemonById.fulfilled, (state, action) => {
+      state.pokeDetails.overview = action.payload;
       state.isLoadingMoreDetails = false;
     });
   },

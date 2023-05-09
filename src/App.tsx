@@ -4,8 +4,11 @@ import { selectPokemons } from './Redux/pokemons/pokemonsSelectors';
 import { SharedLayout } from './Components/SharedLayout/SharedLayout';
 import { lazy } from 'react';
 import { selectRandomPokemon } from './Redux/pokemonInfo/pokemonInfoSelectors';
-
+import Pokemon from '../src/Pages/Pokemon/Pokemon';
 const HomePage = lazy(() => import('../src/Pages/Home/Home'));
+const NotFoundPage = lazy(() => import('../src/Pages/NotFound/NotFound'));
+const PokeDexPage = lazy(() => import('../src/Pages/PokeDex/PokeDex'));
+// const PokemonPage = lazy(() => import('../src/Pages/Pokemon/Pokemon'));
 
 export const App = () => {
   const randomPoke = useSelector(selectRandomPokemon);
@@ -28,7 +31,10 @@ export const App = () => {
       <Routes>
         <Route path="/" element={<SharedLayout />}>
           <Route index element={<HomePage />} />
+          <Route path="pokedex" element={<PokeDexPage />} />
+          <Route path="pokemon/:id" element={<Pokemon />} />
         </Route>
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </>
   );

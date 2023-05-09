@@ -23,7 +23,7 @@ const pokemonsPersistConfig = {
 const pokemonInfoPersistConfig = {
   key: 'pokemonInfo',
   storage,
-  whitelist: ['pokeMoreInfo', 'date'],
+  whitelist: ['hotPoke', 'date'],
 };
 
 const ignoredActions = [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER];

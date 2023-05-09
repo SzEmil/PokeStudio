@@ -1,6 +1,6 @@
 import css from './pokeFront.module.css';
 import { memo } from 'react';
-
+import { NavLink } from 'react-router-dom';
 interface PokemonProps {
   pokemon: {
     name: string;
@@ -32,22 +32,23 @@ export const PokeFront = memo(({ pokemon: { name, url } }: PokemonProps) => {
     return index;
   };
 
-
   return (
     <>
-      <div className={css.card}>
-        <img
-          className={css.image}
-          alt={name}
-          src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${handlePokeIndex(
-            url
-          )}.png`}
-        />
+      <NavLink to={`/pokemon/${handlePokeIndex(url)}`}>
+        <div className={css.card}>
+          <img
+            className={css.image}
+            alt={name}
+            src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${handlePokeIndex(
+              url
+            )}.png`}
+          />
 
-        <div className={css.info}>
-          <h2 className={css.name}>{handleGrowFirstLetter(name)}</h2>
+          <div className={css.info}>
+            <h2 className={css.name}>{handleGrowFirstLetter(name)}</h2>
+          </div>
         </div>
-      </div>
+      </NavLink>
     </>
   );
 });

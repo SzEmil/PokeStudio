@@ -1,9 +1,4 @@
-.list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  justify-content: center;
-}
+
 .card {
   width: 400px;
   display: flex;

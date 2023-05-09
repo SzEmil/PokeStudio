@@ -2,7 +2,7 @@ import { PokeInfoStateType } from './pokemonInfoSlice';
 
 export const selectRandomPokemon = (state: {
   pokemonInfo: PokeInfoStateType;
-}) => state.pokemonInfo.pokeMoreInfo;
+}) => state.pokemonInfo.hotPoke;
 
 export const selectRandomPokemonIsLoading = (state: {
   pokemonInfo: PokeInfoStateType;
@@ -19,3 +19,7 @@ export const selectRandomPokemonDate = (state: {
 export const selectisLoadingMoreInfo = (state: {
   pokemonInfo: PokeInfoStateType;
 }) => state.pokemonInfo.isLoadingMoreDetails;
+
+export const selectPokemonDetails = (state: {
+  pokemonInfo: PokeInfoStateType;
+}) => state.pokemonInfo.pokeDetails;

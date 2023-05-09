@@ -21,6 +21,18 @@ export const fetchRandomPokemon = createAsyncThunk<MyData, number>(
   }
 );
 
+export const fetchPokemonById = createAsyncThunk(
+  'pokemons/fetchPokemonById',
+  async (id: string | undefined, thunkAPI) => {
+    try {
+      const response = await axios.get(`pokemon-species/${id}/`);
+      return response.data;
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
 export const fetchMoreDetailsPokemon = createAsyncThunk(
   'pokemons/fetchMoreDetails',
   async (url: string, thunkAPI) => {
