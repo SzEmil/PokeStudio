@@ -13,9 +13,7 @@ const HomePage = lazy(() => import('../src/Pages/Home/Home'));
 export const App = () => {
   const dispatch: AppDispatch = useDispatch();
   const randomPoke = useSelector(selectRandomPokemon);
-  const handleOnClick = () => {
-    dispatch(fetchPokemons());
-  };
+
   const pokeData = useSelector(selectPokemons);
 
   const handlePokeData = () => {
@@ -25,9 +23,6 @@ export const App = () => {
   return (
     <>
       <div>
-        <button type="button" onClick={handleOnClick}>
-          FETCH POKEMONS
-        </button>
         <button type="button" onClick={handlePokeData}>
           WHAT IN THE BOX
         </button>

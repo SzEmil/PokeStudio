@@ -32,19 +32,7 @@ export const PokeFront = memo(({ pokemon: { name, url } }: PokemonProps) => {
     return index;
   };
 
-  // {pokemons.length !== 0 ? (
-  //   pokemons?.map(pokemon => (
-  //     <li key={nanoid()}>
-  //       <PokeFront pokemon={pokemon} />
-  //       {children}
-  //     </li>
-  //   ))
-  // ) : (
-  //   <div>
-  //     Loading data...
-  //     <PokeballLoader />
-  //   </div>
-  // )}
+
   return (
     <>
       <div className={css.card}>
