@@ -25,7 +25,7 @@ export const fetchPokemonById = createAsyncThunk(
   'pokemons/fetchPokemonById',
   async (id: string | undefined, thunkAPI) => {
     try {
-      const response = await axios.get(`pokemon-species/${id}/`);
+      const response = await axios.get(`/pokemon/${id}`);
       return response.data;
     } catch (error: any) {
       return thunkAPI.rejectWithValue(error.message);
@@ -35,6 +35,18 @@ export const fetchPokemonById = createAsyncThunk(
 
 export const fetchMoreDetailsPokemon = createAsyncThunk(
   'pokemons/fetchMoreDetails',
+  async (url: string, thunkAPI) => {
+    try {
+      const response = await axios.get(`${url}`);
+      return response.data;
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const fetchPokemonInfo = createAsyncThunk(
+  'pokemons/fetchPokemonInfo',
   async (url: string, thunkAPI) => {
     try {
       const response = await axios.get(`${url}`);

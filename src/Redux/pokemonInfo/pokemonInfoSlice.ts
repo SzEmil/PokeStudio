@@ -3,6 +3,7 @@ import { fetchRandomPokemon } from './pokemonInfoOperations';
 import { PayloadAction } from '@reduxjs/toolkit';
 import { fetchMoreDetailsPokemon } from './pokemonInfoOperations';
 import { fetchPokemonById } from './pokemonInfoOperations';
+import { fetchPokemonInfo } from './pokemonInfoOperations';
 
 type PokeApiRandomType = Record<string, unknown>;
 
@@ -89,8 +90,20 @@ const pokemonInfoSlice = createSlice({
       state.pokeDetails.overview = action.payload;
       state.isLoadingMoreDetails = false;
     });
+
+    builder.addCase(fetchPokemonInfo.fulfilled, (state, action) => {
+      state.pokeDetails.details = action.payload;
+      state.isLoadingMoreDetails = false;
+    });
+    builder.addCase(fetchPokemonInfo.pending, state => {
+      state.isLoadingMoreDetails = true;
+    });
+    builder.addCase(fetchPokemonInfo.rejected, (state, action) => {
+      state.error = action.payload;
+      state.isLoadingMoreDetails = false;
+    });
   },
 });
-
+//fetchPokemonInfo
 export const { importInfoData } = pokemonInfoSlice.actions;
 export const pokemonInfoReducer = pokemonInfoSlice.reducer;

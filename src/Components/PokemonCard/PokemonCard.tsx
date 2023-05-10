@@ -10,9 +10,9 @@ export const PokemonCard = ({ pokemon }: any) => {
   return (
     <>
       <div className={css.cardBox}>
-        <div className={css.titleBox}>
+        {/* <div className={css.titleBox}>
           <h2 className={css.title}>Pokemon of a day</h2>
-        </div>
+        </div> */}
         <div
           className={css.card}
           style={{

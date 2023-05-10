@@ -5,6 +5,7 @@ import storage from 'redux-persist/lib/storage';
 import { pokemonsReducer } from './pokemons/pokemonsSlice';
 import { filterReducer } from './filter/filterSlice';
 import { pokemonInfoReducer } from './pokemonInfo/pokemonInfoSlice';
+
 import {
   FLUSH,
   REHYDRATE,
@@ -23,7 +24,7 @@ const pokemonsPersistConfig = {
 const pokemonInfoPersistConfig = {
   key: 'pokemonInfo',
   storage,
-  whitelist: ['hotPoke', 'date'],
+  whitelist: ['hotPoke', 'pokeDetails', 'date'],
 };
 
 const ignoredActions = [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER];
