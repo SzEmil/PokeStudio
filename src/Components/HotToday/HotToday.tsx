@@ -51,7 +51,6 @@ export const HotToday = () => {
 
   useEffect(() => {
     if (hotPokemon.overview === null) return;
-    if (hotPokemon.details !== null) return;
     if (hotPokemon?.overview.species) {
       dispatch(fetchMoreDetailsPokemon(hotPokemon.overview.species.url));
     }
