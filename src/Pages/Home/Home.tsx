@@ -32,7 +32,9 @@ const Home = () => {
             <div className={css.searchBar}>
               <SearchBar />
             </div>
-            <PokemonList pokemons={pokeData} />
+            <div className={css.pokemonList}>
+              <PokemonList pokemons={pokeData} />
+            </div>
           </div>
           <div className={css.hotPokemon}>
             <HotToday />

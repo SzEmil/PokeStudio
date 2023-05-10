@@ -42,3 +42,17 @@
 .btnMoveScrollBox {
   margin-top: 10px;
 }
+.notFound {
+  font-style: normal;
+  font-family: 'Roboto';
+  font-weight: 200;
+  font-size: 16px;
+  line-height: 16px;
+  color: white;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-top: 80px;
+}

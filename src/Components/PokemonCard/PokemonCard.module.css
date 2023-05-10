@@ -207,10 +207,10 @@
 .abilitiesText {
   font-style: normal;
   font-family: 'Roboto';
-  font-weight: 300;
+  font-weight: 400;
   font-size: 16px;
   line-height: 16px;
-
+  color: black;
   padding: 5px;
   border-radius: 10px;
   text-align: center;
@@ -230,7 +230,7 @@
   left: 0px;
   top: 80px;
 }
-.checkDescription:hover{
+.checkDescription:hover {
   cursor: pointer;
 }
 .checkDescription:hover + .description {

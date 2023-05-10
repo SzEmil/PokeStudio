@@ -10,6 +10,7 @@ import { AppDispatch } from '../../Redux/store';
 import { useState } from 'react';
 import { BtnMoveScroll } from '../BtnMoveScroll/BtnMoveScroll';
 import { Pokemon } from '../../Redux/pokemons/pokemonsSlice';
+import { selectFilterInput } from '../../Redux/filter/filterSelectors';
 
 type PokemonListPropsType = {
   pokemons: Pokemon[];
@@ -19,6 +20,7 @@ export const PokemonList = ({ pokemons }: PokemonListPropsType) => {
   const dispatch: AppDispatch = useDispatch();
   const isLoading = useSelector(selectIsLoading);
   const [listCounter, setListCounter] = useState(12);
+  const filterInput = useSelector(selectFilterInput);
 
   const handleOnClick = async () => {
     await dispatch(fetchPokemons(listCounter));
@@ -38,9 +40,9 @@ export const PokemonList = ({ pokemons }: PokemonListPropsType) => {
                 </li>
               ))
             ) : (
-              <div>
-                Loading data...
-                <PokeballLoader />
+              <div className={css.notFound}>
+                <p>There is no pokemon named: "{filterInput}".</p>
+
               </div>
             )}
           </ul>
@@ -63,4 +65,3 @@ export const PokemonList = ({ pokemons }: PokemonListPropsType) => {
     </>
   );
 };
-

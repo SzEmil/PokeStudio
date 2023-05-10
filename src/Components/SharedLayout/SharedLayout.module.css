@@ -1,4 +1,11 @@
 .head {
+  position: fixed;
+  width: 100%;
+  background-color: rgb(23, 32, 41);
+  z-index: 1000;
+  padding: 15px 0;
+}
+.headWrapper {
   display: flex;
   display: block;
   align-items: center;
@@ -6,7 +13,6 @@
   position: relative;
   padding: 15px 100px;
 }
-
 .logo {
   color: #ffd600;
   /* color: white; */
@@ -17,7 +23,7 @@
   line-height: 38px;
   position: absolute;
   left: 50%;
-  bottom: 10px;
+  bottom: 15px;
 
   transform: translateX(-50%);
 }
