@@ -36,13 +36,17 @@ export const Moves = ({ moves }: movePropsType) => {
   const movesDetails: any = useSelector(selectPokemonDetailsMovesInfo);
   const pokeDetails = useSelector(selectPokemonDetails);
   const [isOpen, setIsOpen] = useState(false);
+  const [movesOpen, setMovesOpen] = useState(false);
 
   const toggleList = () => {
     setIsOpen(!isOpen);
   };
-
+  const toggleMoves = () => {
+    setMovesOpen(!movesOpen);
+  };
   const handleOnClickInfo = (url: string | undefined) => {
     dispatch(fetchPokemonMoves(url));
+    toggleMoves();
   };
   return (
     <div className={css.container}>
@@ -60,13 +64,18 @@ export const Moves = ({ moves }: movePropsType) => {
         <ul className={`${css.list} ${isOpen ? css.visible : ''}`}>
           {moves.map(move => (
             <li className={css.listItem} key={`${move.move.name}_${nanoid()}`}>
-              <div className={css.moveTypeBar}>
-                <p>{move.move.name}</p>
+              <div
+                className={`${css.moveTypeBar} ${
+                  movesOpen ? css.moveTypeVisible : ''
+                }`}
+              >
+                <p className={css.moveTitle}>{move.move.name}</p>
                 <button
+                  className={css.moreInfoBtn}
                   type="button"
                   onClick={() => handleOnClickInfo(move.move.url)}
                 >
-                  Details
+                  ?
                 </button>
               </div>
               {movesDetails === null ||
@@ -75,10 +84,8 @@ export const Moves = ({ moves }: movePropsType) => {
                   {pokeDetails.isMovesLoading ? (
                     <p>Loading data...</p>
                   ) : (
-                    <div>
-                      <p>Accuracy: {movesDetails.accuracy}</p>
-                      <p>Power: {movesDetails.power}</p>
-                      <p>
+                    <div className={css.moveTypeWrapper}>
+                      <p className={css.moveType}>
                         {
                           movesDetails.flavor_text_entries.find(
                             (item: ReturnType<typeof movesDetails>) =>
@@ -86,7 +93,24 @@ export const Moves = ({ moves }: movePropsType) => {
                           ).flavor_text
                         }
                       </p>
-                      <p>Damage Class: {movesDetails.damage_class.name}</p>
+                      <p className={css.moveType}>
+                        Accuracy:{' '}
+                        <span className={css.moveTypeModifier}>
+                          {movesDetails.accuracy}
+                        </span>
+                      </p>
+                      <p className={css.moveType}>
+                        Power:{' '}
+                        <span className={css.moveTypeModifier}>
+                          {movesDetails.power}
+                        </span>
+                      </p>
+                      <p className={css.moveType}>
+                        Damage Class:{' '}
+                        <span className={css.moveTypeModifier}>
+                          {movesDetails.damage_class.name}
+                        </span>
+                      </p>
                     </div>
                   )}
                 </>

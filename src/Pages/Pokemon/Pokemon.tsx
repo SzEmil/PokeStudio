@@ -33,6 +33,11 @@ const Pokemon = () => {
     }
   }, [pokemon.overview, dispatch]);
 
+  const handleGrowFirstLetter = (name: string) => {
+    const bigLetter = name[0].toUpperCase();
+    return name.replace(bigLetter.toLocaleLowerCase(), bigLetter);
+  };
+
   return (
     <>
       {isRandomLoaded ? (
@@ -51,34 +56,40 @@ const Pokemon = () => {
                     <PokemonCard pokemon={pokemon} />
                   </div>
                   <div className={css.descriptionBox}>
-                    {pokemon.details.flavor_text_entries
-                      .filter(
-                        (
-                          item: ReturnType<typeof pokemon.details>,
-                          index: number,
-                          self: any
-                        ) =>
-                          item.language.name === 'en' &&
-                          self.findIndex(
-                            (t: any) => t.flavor_text === item.flavor_text
-                          ) === index
-                      )
-                      .map(
-                        (
-                          entry: ReturnType<typeof pokemon.details>,
-                          index: number
-                        ) => {
-                          if (index % 2 === 0) {
-                            return (
-                              <p key={index} className={css.descriptionText}>
-                                {entry.flavor_text}
-                              </p>
-                            );
-                          } else {
-                            return null;
+                    <h2 className={css.title}>
+                      {handleGrowFirstLetter(pokemon.overview.name)}
+                    </h2>
+                    <div>
+                      {pokemon.details.flavor_text_entries
+                        .filter(
+                          (
+                            item: ReturnType<typeof pokemon.details>,
+                            index: number,
+                            self: any
+                          ) =>
+                            item.language.name === 'en' &&
+                            self.findIndex(
+                              (t: any) => t.flavor_text === item.flavor_text
+                            ) === index
+                        )
+                        .map(
+                          (
+                            entry: ReturnType<typeof pokemon.details>,
+                            index: number
+                          ) => {
+                            if (index % 2 === 0) {
+                              return (
+                                <p key={index} className={css.descriptionText}>
+                                  {entry.flavor_text}
+                                </p>
+                              );
+                            } else {
+                              return null;
+                            }
                           }
-                        }
-                      )}
+                        )}
+                    </div>
+                    <button className={css.addBtn}>Add card</button>
                   </div>
                 </div>
                 <div className={css.movesWrapper}>

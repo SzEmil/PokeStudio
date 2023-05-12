@@ -53,12 +53,13 @@
   position: absolute;
   left: 0;
   width: 100%;
-  background-color: #fff;
+  background-color: rgba(0, 0, 0, 0.1);
   padding: 10px;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
   color: black;
   transition: opacity 0.3s ease, transform 0.3s ease;
 
+  display: inline-flex;
   flex-wrap: wrap;
   pointer-events: none;
   gap: 10px;
@@ -96,7 +97,7 @@
 
 .listItem {
   color: black;
-  display: flex;
+  display: inline;
   flex-direction: column;
   align-items: center;
 }
@@ -105,4 +106,54 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  border: 0.3px solid rgba(255, 255, 255, 0.3);
+  padding: 5px;
+  position: relative;
+  /* border-radius: 5px; */
+}
+
+.moveTitle {
+  font-style: normal;
+  font-family: 'Roboto';
+  font-weight: 200;
+  font-size: 18px;
+  line-height: 20px;
+  color: white;
+}
+.moreInfoBtn {
+  font-style: normal;
+  font-family: 'Pokemon Solid';
+  font-weight: 300;
+  font-size: 24px;
+  line-height: 26px;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  color: white;
+
+  margin-left: 30px;
+
+  transition: color 250ms ease;
+}
+.moreInfoBtn:hover {
+  color: #ffd600;
+}
+.moveTypeWrapper {
+  border: 0.3px solid rgba(255, 255, 255, 0.3);
+  padding: 5px;
+  display: block;
+}
+.moveType {
+  font-style: normal;
+  font-family: 'Roboto';
+  font-weight: 200;
+  font-size: 16px;
+  line-height: 20px;
+  color: white;
+}
+.moveTypeModifier {
+  font-weight: 300;
+}
+.moveTypeVisible {
+  /* border-radius: 5px 5px 0 0; */
 }

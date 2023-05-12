@@ -46,3 +46,27 @@
   max-width: 1200px;
   margin-top: 20px;
 }
+
+.title {
+  font-style: normal;
+  font-family: 'Pokemon Solid';
+  font-weight: 300;
+  font-size: 36px;
+  line-height: 38px;
+  text-align: center;
+  color: #ffd600;
+
+  padding-bottom: 80px;
+}
+.addBtn {
+  margin-top: 50px;
+  color: white;
+  font-weight: 300;
+  font-size: 24px;
+  line-height: 24px;
+  text-align: center;
+  background-color: transparent;
+  padding: 10px;
+
+  cursor: pointer;
+}
