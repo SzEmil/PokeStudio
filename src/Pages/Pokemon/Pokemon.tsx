@@ -13,6 +13,7 @@ import { fetchPokemonInfo } from '../../Redux/pokemonInfo/pokemonInfoOperations'
 import css from './Pokemon.module.css';
 import { PokemonCard } from '../../Components/PokemonCard/PokemonCard';
 import { Section } from '../../Components/Section/Section';
+import { Moves } from '../../Components/Moves/Moves';
 
 const Pokemon = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -44,39 +45,44 @@ const Pokemon = () => {
             pokemon.details === null ? (
               <p>Loading more data...</p>
             ) : (
-              <div className={css.pokemonWrapper}>
-                <div className={css.cardWrapper}>
-                  <PokemonCard pokemon={pokemon} />
-                </div>
-                <div className={css.descriptionBox}>
-                  {pokemon.details.flavor_text_entries
-                    .filter(
-                      (
-                        item: ReturnType<typeof pokemon.details>,
-                        index: number,
-                        self: any
-                      ) =>
-                        item.language.name === 'en' &&
-                        self.findIndex(
-                          (t: any) => t.flavor_text === item.flavor_text
-                        ) === index
-                    )
-                    .map(
-                      (
-                        entry: ReturnType<typeof pokemon.details>,
-                        index: number
-                      ) => {
-                        if (index % 2 === 0) {
-                          return (
-                            <p key={index} className={css.descriptionText}>
-                              {entry.flavor_text}
-                            </p>
-                          );
-                        } else {
-                          return null;
+              <div className={css.container}>
+                <div className={css.pokemonWrapper}>
+                  <div className={css.cardWrapper}>
+                    <PokemonCard pokemon={pokemon} />
+                  </div>
+                  <div className={css.descriptionBox}>
+                    {pokemon.details.flavor_text_entries
+                      .filter(
+                        (
+                          item: ReturnType<typeof pokemon.details>,
+                          index: number,
+                          self: any
+                        ) =>
+                          item.language.name === 'en' &&
+                          self.findIndex(
+                            (t: any) => t.flavor_text === item.flavor_text
+                          ) === index
+                      )
+                      .map(
+                        (
+                          entry: ReturnType<typeof pokemon.details>,
+                          index: number
+                        ) => {
+                          if (index % 2 === 0) {
+                            return (
+                              <p key={index} className={css.descriptionText}>
+                                {entry.flavor_text}
+                              </p>
+                            );
+                          } else {
+                            return null;
+                          }
                         }
-                      }
-                    )}
+                      )}
+                  </div>
+                </div>
+                <div className={css.movesWrapper}>
+                  <Moves moves={pokemon.overview.moves} />
                 </div>
               </div>
             )}

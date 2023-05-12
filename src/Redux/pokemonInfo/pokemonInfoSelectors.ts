@@ -23,3 +23,7 @@ export const selectisLoadingMoreInfo = (state: {
 export const selectPokemonDetails = (state: {
   pokemonInfo: PokeInfoStateType;
 }) => state.pokemonInfo.pokeDetails;
+
+export const selectPokemonDetailsMovesInfo = (state: {
+  pokemonInfo: PokeInfoStateType;
+}) => state.pokemonInfo.pokeDetails.moves;

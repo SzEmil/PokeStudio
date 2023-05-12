@@ -1,5 +1,9 @@
+.container {
+  display: flex;
+  flex-direction: column;
+}
 .wrapper {
-  padding-top: 100px;
+  padding-top: 120px;
   width: 100%;
   height: 100%;
   /* background-image: url(https://img.freepik.com/free-vector/comic-style-background-flat-design_52683-53321.jpg?w=1380&t=st=1683719904~exp=1683720504~hmac=751bf8259ca7b680e60956866c4b23f123e16e083224b2c74a636272eec3257e); */
@@ -11,6 +15,7 @@
 .pokemonWrapper {
   display: flex;
   justify-content: space-around;
+  align-items: center;
 }
 .img {
   width: 100%;
@@ -36,4 +41,8 @@
   font-weight: 300;
   font-size: 18px;
   line-height: 22px;
+}
+.movesWrapper {
+  max-width: 1200px;
+  margin-top: 20px;
 }

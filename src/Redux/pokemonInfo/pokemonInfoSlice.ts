@@ -4,6 +4,7 @@ import { PayloadAction } from '@reduxjs/toolkit';
 import { fetchMoreDetailsPokemon } from './pokemonInfoOperations';
 import { fetchPokemonById } from './pokemonInfoOperations';
 import { fetchPokemonInfo } from './pokemonInfoOperations';
+import { fetchPokemonMoves } from './pokemonInfoOperations';
 
 type PokeApiRandomType = Record<string, unknown>;
 
@@ -44,6 +45,9 @@ const pokemonInfoInitialState: PokeInfoStateType = {
   pokeDetails: {
     overview: null,
     details: null,
+    moves: null,
+    isMovesLoading: false,
+    errorMoves: null,
   },
   isLoading: false,
   isLoadingMoreDetails: false,
@@ -101,6 +105,18 @@ const pokemonInfoSlice = createSlice({
     builder.addCase(fetchPokemonInfo.rejected, (state, action) => {
       state.error = action.payload;
       state.isLoadingMoreDetails = false;
+    });
+
+    builder.addCase(fetchPokemonMoves.fulfilled, (state, action) => {
+      state.pokeDetails.moves = action.payload;
+      state.pokeDetails.isMovesLoading = false;
+    });
+    builder.addCase(fetchPokemonMoves.pending, state => {
+      state.pokeDetails.isMovesLoading = true;
+    });
+    builder.addCase(fetchPokemonMoves.rejected, (state, action) => {
+      state.pokeDetails.errorMoves = action.payload;
+      state.pokeDetails.isMovesLoading = false;
     });
   },
 });

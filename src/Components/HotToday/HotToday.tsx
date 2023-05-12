@@ -11,6 +11,7 @@ import { PokeballLoader } from '../PokeballLoader/PokeballLoader';
 import { fetchMoreDetailsPokemon } from '../../Redux/pokemonInfo/pokemonInfoOperations';
 import { selectisLoadingMoreInfo } from '../../Redux/pokemonInfo/pokemonInfoSelectors';
 import { PokemonCard } from '../PokemonCard/PokemonCard';
+import { NavLink } from 'react-router-dom';
 
 export const HotToday = () => {
   function getFormattedDate() {
@@ -68,7 +69,12 @@ export const HotToday = () => {
             <p>loading data...</p>
           ) : (
             <>
-              <PokemonCard pokemon={hotPokemon} />
+              <NavLink
+                className={css.link}
+                to={`/pokemon/${hotPokemon.overview.id}`}
+              >
+                <PokemonCard pokemon={hotPokemon} />
+              </NavLink>
             </>
           )}
         </div>

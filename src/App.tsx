@@ -5,6 +5,8 @@ import { SharedLayout } from './Components/SharedLayout/SharedLayout';
 import { lazy } from 'react';
 import { selectRandomPokemon } from './Redux/pokemonInfo/pokemonInfoSelectors';
 import Pokemon from '../src/Pages/Pokemon/Pokemon';
+import { selectPokemonDetails } from './Redux/pokemonInfo/pokemonInfoSelectors';
+
 const HomePage = lazy(() => import('../src/Pages/Home/Home'));
 const NotFoundPage = lazy(() => import('../src/Pages/NotFound/NotFound'));
 const PokeDexPage = lazy(() => import('../src/Pages/PokeDex/PokeDex'));
@@ -13,7 +15,7 @@ const PokeDexPage = lazy(() => import('../src/Pages/PokeDex/PokeDex'));
 export const App = () => {
   const randomPoke = useSelector(selectRandomPokemon);
   const pokeData = useSelector(selectPokemons);
-
+  const pokeDetails = useSelector(selectPokemonDetails);
   const handlePokeData = () => {
     console.log(pokeData);
   };
@@ -27,12 +29,13 @@ export const App = () => {
         <button onClick={() => console.log(randomPoke)}>
           co tam w randomie slychac
         </button>
+        <button onClick={() => console.log(pokeDetails)}>Pokemon detale</button>
       </div>
       <Routes>
         <Route path="/" element={<SharedLayout />}>
           <Route index element={<HomePage />} />
           <Route path="pokedex" element={<PokeDexPage />} />
-          <Route path="pokemon/:id" element={<Pokemon />} />
+          <Route path="pokemon/:id" element={<Pokemon />}></Route>
         </Route>
         <Route path="*" element={<NotFoundPage />} />
       </Routes>

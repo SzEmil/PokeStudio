@@ -56,3 +56,15 @@ export const fetchPokemonInfo = createAsyncThunk(
     }
   }
 );
+
+export const fetchPokemonMoves = createAsyncThunk(
+  'pokemons/fetchPokemonMovesInfo',
+  async (url: string | undefined, thunkAPI) => {
+    try {
+      const response = await axios.get(`${url}`);
+      return response.data;
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
