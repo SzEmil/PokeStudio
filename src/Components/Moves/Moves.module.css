@@ -68,7 +68,6 @@
 
   opacity: 0;
   transform: translateY(-100%);
-  display: flex;
   pointer-events: none;
 
   border: 0.2px solid rgba(0, 0, 0, 0.1);
