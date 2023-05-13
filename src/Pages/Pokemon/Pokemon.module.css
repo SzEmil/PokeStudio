@@ -42,9 +42,16 @@
   font-size: 18px;
   line-height: 22px;
 }
-.movesWrapper {
-  max-width: 1200px;
+.listWrapper {
+  width: 100%;
+  display: flex;
   margin-top: 20px;
+}
+.listItem {
+  width: 100%;
+}
+.listItem:nth-child(2) {
+  margin-left: 20px;
 }
 
 .title {

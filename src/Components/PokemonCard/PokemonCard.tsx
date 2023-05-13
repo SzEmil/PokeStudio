@@ -14,7 +14,9 @@ export const PokemonCard = ({ pokemon }: any) => {
           <h2 className={css.title}>Pokemon of a day</h2>
         </div> */}
         <div
-          className={css.card}
+          className={`${css.card} ${
+            hotPokemon.details.is_legendary ? css.isLegendary : ''
+          }`}
           style={{
             background: `radial-gradient(circle,${hotPokemon?.details.color.name} 10%,rgba(255, 255, 255, 0) 87%)`,
           }}
@@ -37,6 +39,9 @@ export const PokemonCard = ({ pokemon }: any) => {
                   )}
                 </ul>
               </div>
+              {hotPokemon?.details.is_legendary ? (
+                <p className={css.legendary}>Legendary</p>
+              ) : null}
             </div>
 
             <div>

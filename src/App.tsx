@@ -6,9 +6,10 @@ import { lazy } from 'react';
 import { selectRandomPokemon } from './Redux/pokemonInfo/pokemonInfoSelectors';
 import Pokemon from '../src/Pages/Pokemon/Pokemon';
 import { selectPokemonDetails } from './Redux/pokemonInfo/pokemonInfoSelectors';
+import NotFound from '../src/Pages/NotFound/NotFound';
 
 const HomePage = lazy(() => import('../src/Pages/Home/Home'));
-const NotFoundPage = lazy(() => import('../src/Pages/NotFound/NotFound'));
+// const NotFoundPage = lazy(() => import('../src/Pages/NotFound/NotFound'));
 const PokeDexPage = lazy(() => import('../src/Pages/PokeDex/PokeDex'));
 // const PokemonPage = lazy(() => import('../src/Pages/Pokemon/Pokemon'));
 
@@ -37,7 +38,7 @@ export const App = () => {
           <Route path="pokedex" element={<PokeDexPage />} />
           <Route path="pokemon/:id" element={<Pokemon />}></Route>
         </Route>
-        <Route path="*" element={<NotFoundPage />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </>
   );

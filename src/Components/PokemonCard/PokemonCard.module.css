@@ -134,6 +134,7 @@
 }
 .typeList {
   display: flex;
+  z-index: 1000;
 }
 .typeTextmodifier {
   color: white;
@@ -146,6 +147,8 @@
   padding: 5px;
   margin-left: 5px;
 
+  
+
   /* border-radius: 20px;
   background: rgb(255, 255, 255);
   background: linear-gradient(
@@ -153,6 +156,22 @@
     rgba(255, 255, 255, 1) 0%,
     rgba(75, 75, 75, 0) 60%
   ); */
+}
+.legendary {
+  position: absolute;
+  right: 10px;
+  top: 80px;
+
+  color: white;
+  font-style: normal;
+  font-family: 'Pokemon Solid';
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 16px;
+}
+.isLegendary {
+  border: 2px solid rgba(255, 231, 16, 0.589);
+  border-radius: 5px;
 }
 
 .overview {

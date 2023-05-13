@@ -14,6 +14,7 @@ import css from './Pokemon.module.css';
 import { PokemonCard } from '../../Components/PokemonCard/PokemonCard';
 import { Section } from '../../Components/Section/Section';
 import { Moves } from '../../Components/Moves/Moves';
+import { PokeGallery } from '../../Components/PokeGallery/PokeGallery';
 
 const Pokemon = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -92,8 +93,13 @@ const Pokemon = () => {
                     <button className={css.addBtn}>Add card</button>
                   </div>
                 </div>
-                <div className={css.movesWrapper}>
-                  <Moves moves={pokemon.overview.moves} />
+                <div className={css.listWrapper}>
+                  <div className={css.listItem}>
+                    <Moves moves={pokemon.overview.moves} />
+                  </div>
+                  <div className={css.listItem}>
+                    <PokeGallery sprites={pokemon.overview.sprites} />
+                  </div>
                 </div>
               </div>
             )}
