@@ -1,5 +1,5 @@
 import { PayloadAction, SerializedError, createSlice } from '@reduxjs/toolkit';
-import { fetchPokemons } from './pokemonsOperations';
+import { fetchPokemonByName, fetchPokemons } from './pokemonsOperations';
 
 export interface Pokemon {
   name: string;
@@ -7,6 +7,9 @@ export interface Pokemon {
 }
 export interface PokeState {
   pokemonsData: Pokemon[];
+  searchPokemons: Pokemon[];
+  searchLoading: boolean;
+  searchError: any;
   isLoading: boolean;
   error: SerializedError | boolean | null;
 }
@@ -22,6 +25,10 @@ const handleRejected = (state: PokeState, action: PayloadAction<any>) => {
 
 const pokemonsInitialState: PokeState = {
   pokemonsData: [],
+  searchPokemons: [],
+  searchLoading: false,
+  searchError: null,
+
   isLoading: false,
   error: null,
 };
@@ -43,6 +50,19 @@ const pokemonSlice = createSlice({
       }
     );
     builder.addCase(fetchPokemons.rejected, handleRejected);
+
+    builder.addCase(fetchPokemonByName.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.error = null;
+      state.searchPokemons = action.payload;
+    });
+    builder.addCase(fetchPokemonByName.pending, state => {
+      state.searchLoading = true;
+    });
+    builder.addCase(fetchPokemonByName.rejected, (state, action) => {
+      state.searchLoading = false;
+      state.searchError = action.payload;
+    });
   },
 });
 

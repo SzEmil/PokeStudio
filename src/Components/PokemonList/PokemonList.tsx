@@ -4,9 +4,6 @@ import { PokeFront } from '../pokeFront/pokeFront';
 import { selectIsLoading } from '../../Redux/pokemons/pokemonsSelectors';
 import css from './PokemonList.module.css';
 import { PokeballLoader } from '../PokeballLoader/PokeballLoader';
-import { useDispatch } from 'react-redux';
-import { fetchPokemons } from '../../Redux/pokemons/pokemonsOperations';
-import { AppDispatch } from '../../Redux/store';
 import { useState } from 'react';
 import { BtnMoveScroll } from '../BtnMoveScroll/BtnMoveScroll';
 import { Pokemon } from '../../Redux/pokemons/pokemonsSlice';
@@ -17,13 +14,12 @@ type PokemonListPropsType = {
 };
 
 export const PokemonList = ({ pokemons }: PokemonListPropsType) => {
-  const dispatch: AppDispatch = useDispatch();
   const isLoading = useSelector(selectIsLoading);
   const [listCounter, setListCounter] = useState(12);
   const filterInput = useSelector(selectFilterInput);
+  const slicedPokemons = pokemons.slice(0, listCounter);
 
-  const handleOnClick = async () => {
-    await dispatch(fetchPokemons(listCounter));
+  const handleOnClick = () => {
     setListCounter(prevVal => (prevVal += 12));
   };
   return (
@@ -33,8 +29,8 @@ export const PokemonList = ({ pokemons }: PokemonListPropsType) => {
       ) : (
         <div className={css.listBox}>
           <ul className={css.list}>
-            {pokemons.length !== 0 ? (
-              pokemons?.map(pokemon => (
+            {slicedPokemons.length !== 0 ? (
+              slicedPokemons?.map(pokemon => (
                 <li key={nanoid()}>
                   <PokeFront pokemon={pokemon} />
                 </li>
@@ -42,7 +38,6 @@ export const PokemonList = ({ pokemons }: PokemonListPropsType) => {
             ) : (
               <div className={css.notFound}>
                 <p>There is no pokemon named: "{filterInput}".</p>
-
               </div>
             )}
           </ul>

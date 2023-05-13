@@ -18,7 +18,7 @@ import {
 const pokemonsPersistConfig = {
   key: 'pokemons',
   storage,
-  whitelist: ['pokemonsData'],
+  whitelist: ['pokemonsData', 'searchPokemons'],
 };
 
 const pokemonInfoPersistConfig = {

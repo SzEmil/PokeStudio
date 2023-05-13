@@ -7,6 +7,7 @@ import { selectRandomPokemon } from './Redux/pokemonInfo/pokemonInfoSelectors';
 import Pokemon from '../src/Pages/Pokemon/Pokemon';
 import { selectPokemonDetails } from './Redux/pokemonInfo/pokemonInfoSelectors';
 import NotFound from '../src/Pages/NotFound/NotFound';
+import { selectSearchPokemons } from './Redux/pokemons/pokemonsSelectors';
 
 const HomePage = lazy(() => import('../src/Pages/Home/Home'));
 // const NotFoundPage = lazy(() => import('../src/Pages/NotFound/NotFound'));
@@ -17,6 +18,7 @@ export const App = () => {
   const randomPoke = useSelector(selectRandomPokemon);
   const pokeData = useSelector(selectPokemons);
   const pokeDetails = useSelector(selectPokemonDetails);
+  const searchPokemon = useSelector(selectSearchPokemons);
   const handlePokeData = () => {
     console.log(pokeData);
   };
@@ -31,6 +33,9 @@ export const App = () => {
           co tam w randomie slychac
         </button>
         <button onClick={() => console.log(pokeDetails)}>Pokemon detale</button>
+        <button onClick={() => console.log(searchPokemon)}>
+          Serach Pokemon co tam masz
+        </button>
       </div>
       <Routes>
         <Route path="/" element={<SharedLayout />}>

@@ -22,3 +22,8 @@ export const selectFilteredPokemons = createSelector(
     );
   }
 );
+
+export const selectSearchPokemons = (state: { pokemons: PokeState }): Pokemon[] => {
+
+  return state.pokemons.searchPokemons;
+};

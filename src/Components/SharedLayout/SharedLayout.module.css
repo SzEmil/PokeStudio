@@ -1,7 +1,7 @@
 .head {
   position: fixed;
   width: 100%;
-  background-color: rgb(23, 31, 39);
+  background-color: rgb(26, 32, 37);
   z-index: 1000;
   padding: 15px 0;
 }

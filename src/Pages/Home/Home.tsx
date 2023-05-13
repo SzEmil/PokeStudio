@@ -17,7 +17,7 @@ const Home = () => {
   const pokeData = useSelector(selectFilteredPokemons);
   const fetchStartData = () => {
     if (pokeList.length !== 0) return;
-    if (pokeList.length === 0) return dispatch(fetchPokemons(0));
+    if (pokeList.length === 0) return dispatch(fetchPokemons());
   };
 
   useEffect(() => {
@@ -30,7 +30,7 @@ const Home = () => {
         <div className={css.wrapper}>
           <div className={css.pokeList}>
             <div className={css.searchBar}>
-              <SearchBar />
+              <SearchBar filterType="home" />
             </div>
             <div className={css.pokemonList}>
               <PokemonList pokemons={pokeData} />

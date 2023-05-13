@@ -15,7 +15,11 @@ export const SharedLayout = () => {
               <NavLink className={css.link} to="/">
                 HOME
               </NavLink>
-              <NavLink className={css.link} to="/pokedex">
+              <NavLink
+                className={css.link}
+                style={{ color: 'grey', pointerEvents: 'none' }}
+                to="/pokedex"
+              >
                 Poke-Dex
               </NavLink>
               <NavLink className={css.link} to="/">
