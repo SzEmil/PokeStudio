@@ -1,5 +1,6 @@
 import { NavLink, Outlet } from 'react-router-dom';
 import { Suspense } from 'react';
+import { BtnLogOut } from '../BtnLogOut/BtnLogOut';
 import css from './SharedLayout.module.css';
 
 export const SharedLayout = () => {
@@ -22,9 +23,13 @@ export const SharedLayout = () => {
               >
                 Poke-Dex
               </NavLink>
-              <NavLink className={css.link} to="/">
-                My account
+              <NavLink className={css.link} to="/login">
+                Login
               </NavLink>
+              <NavLink className={css.link} to="/register">
+                Register
+              </NavLink>
+              <BtnLogOut />
             </div>
           </nav>
         </div>

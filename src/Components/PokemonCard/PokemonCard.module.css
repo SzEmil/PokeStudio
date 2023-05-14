@@ -147,8 +147,6 @@
   padding: 5px;
   margin-left: 5px;
 
-  
-
   /* border-radius: 20px;
   background: rgb(255, 255, 255);
   background: linear-gradient(
@@ -168,6 +166,8 @@
   font-weight: 400;
   font-size: 14px;
   line-height: 16px;
+
+  z-index: 100;
 }
 .isLegendary {
   border: 2px solid rgba(255, 231, 16, 0.589);

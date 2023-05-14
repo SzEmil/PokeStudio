@@ -5,6 +5,7 @@ import storage from 'redux-persist/lib/storage';
 import { pokemonsReducer } from './pokemons/pokemonsSlice';
 import { filterReducer } from './filter/filterSlice';
 import { pokemonInfoReducer } from './pokemonInfo/pokemonInfoSlice';
+import { authReducer } from './auth/authSlice';
 
 import {
   FLUSH,
@@ -27,12 +28,19 @@ const pokemonInfoPersistConfig = {
   whitelist: ['hotPoke', 'pokeDetails', 'date'],
 };
 
+const authPersistConfig = {
+  key: 'authPokeStudio',
+  storage,
+  whitelist: ['token', 'isLoggedIn', 'user'],
+};
+
 const ignoredActions = [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER];
 export const store = configureStore({
   reducer: {
     pokemonInfo: persistReducer(pokemonInfoPersistConfig, pokemonInfoReducer),
     pokemons: persistReducer(pokemonsPersistConfig, pokemonsReducer),
     filter: filterReducer,
+    auth: persistReducer(authPersistConfig, authReducer),
   },
 
   middleware: getDefaultMiddleware({
