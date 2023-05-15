@@ -1,1 +1,2 @@
 # poke-dex
+Pokemon Application where users can browse their favorite pokemons, view detailed information about them. Additionally, upon registration, users receive access to their own Pokédex where they can store unique Pokemon cards obtained from packs. The cards will be used for battling against an AI opponent to win coins, which can be used to purchase packs. In future updates, features such as packs containing Pokemon, a shop for buying cards, and a user-versus-AI duel system will be added.
