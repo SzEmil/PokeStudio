@@ -1,7 +1,7 @@
 {
   "name": "poke-dex",
   "private": true,
-  "homepage": "https://SzEmil.github.io/poke-dex/",
+  "homepage": "https://SzEmil.github.io/PokeStudio/",
   "version": "0.0.0",
   "type": "module",
   "scripts": {
