@@ -1,2 +1,6 @@
-# poke-dex
-Pokemon Application where users can browse their favorite pokemons, view detailed information about them. Additionally, upon registration, users receive access to their own Pokédex where they can store unique Pokemon cards obtained from packs. The cards will be used for battling against an AI opponent to win coins, which can be used to purchase packs. In future updates, features such as packs containing Pokemon, a shop for buying cards, and a user-versus-AI duel system will be added.
+# PokeStudio
+The PokéStudio is not just an ordinary Pokedex app you've seen multiple times. 
+It goes beyond that, allowing users to browse their favorite Pokémon, access detailed information, and more. 
+Upon registration, users gain access to their personal Pokédex, a storage for unique Pokémon cards obtained from packs. 
+These cards play a crucial role in battling against an AI opponent, earning coins to purchase additional packs. 
+Exciting updates are planned, including Pokémon packs, a card shop, and a user-versus-AI duel system.
