@@ -2,8 +2,12 @@ import { NavLink, Outlet } from 'react-router-dom';
 import { Suspense } from 'react';
 import { BtnLogOut } from '../BtnLogOut/BtnLogOut';
 import css from './SharedLayout.module.css';
+import { useAuth } from '../../hooks/useAuth';
+import { User } from '../User/User';
+import { PokeballLoader } from '../PokeballLoader/PokeballLoader';
 
 export const SharedLayout = () => {
+  const { isLoggedIn } = useAuth();
   return (
     <div>
       <header className={css.head}>
@@ -16,25 +20,32 @@ export const SharedLayout = () => {
               <NavLink className={css.link} to="/">
                 HOME
               </NavLink>
-              <NavLink
-                className={css.link}
-                style={{ color: 'grey', pointerEvents: 'none' }}
-                to="/pokedex"
-              >
+              <NavLink className={css.link} to="/pokedex">
                 Poke-Dex
               </NavLink>
-              <NavLink className={css.link} to="/login">
-                Login
-              </NavLink>
-              <NavLink className={css.link} to="/register">
-                Register
-              </NavLink>
-              <BtnLogOut />
+              {!isLoggedIn ? (
+                <NavLink className={css.link} to="/register">
+                  Register
+                </NavLink>
+              ) : (
+                <div className={css.user}>
+                  <User />
+                  <div className={css.userBtn}>
+                    <BtnLogOut />
+                  </div>
+                </div>
+              )}
             </div>
           </nav>
         </div>
       </header>
-      <Suspense fallback={<div>Loading components...</div>}>
+      <Suspense
+        fallback={
+          <div>
+            <PokeballLoader />
+          </div>
+        }
+      >
         <Outlet />
       </Suspense>
     </div>

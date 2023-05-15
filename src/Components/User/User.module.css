@@ -1,0 +1,14 @@
+.user {
+  display: flex;
+  align-items: center;
+}
+.userTitle {
+  font-style: normal;
+  font-family: 'Roboto';
+  font-weight: 200;
+  font-size: 16px;
+  line-height: 16px;
+  color: white;
+
+  margin-left: 10px;
+}

@@ -40,6 +40,7 @@
 .linksBar {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 .link {
   color: white;
@@ -51,4 +52,14 @@
 }
 .link:nth-child(n + 2) {
   padding-left: 15px;
+}
+.user {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-left: 10px;
+}
+.userBtn {
+  margin-left: 10px;
+  margin-top: 10px;
 }

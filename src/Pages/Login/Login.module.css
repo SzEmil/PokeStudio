@@ -53,3 +53,14 @@
 .form-submit:hover {
   background-color: #bd9d00;
 }
+.info {
+  margin-top: 20px;
+}
+.navLink {
+  color: #ffd600;
+  font-style: normal;
+  font-family: 'Roboto';
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 20px;
+}

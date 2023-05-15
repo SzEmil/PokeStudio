@@ -3,6 +3,7 @@ import { FormEvent } from 'react';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../Redux/store';
 import { registerUser } from '../../Redux/auth/authOperations';
+import { NavLink } from 'react-router-dom';
 
 const Register = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -22,7 +23,7 @@ const Register = () => {
         form.elements.namedItem('password') as HTMLInputElement
       ).value.toLowerCase(),
     };
-    dispatch(registerUser(credentials))
+    dispatch(registerUser(credentials));
     console.log(credentials);
     form.reset();
   };
@@ -68,6 +69,12 @@ const Register = () => {
           Register
         </button>
       </form>
+      <p className={css.info}>
+        Already have an account? Sign in{' '}
+        <NavLink className={css.navLink} to="/login">
+          here
+        </NavLink>
+      </p>
     </div>
   );
 };

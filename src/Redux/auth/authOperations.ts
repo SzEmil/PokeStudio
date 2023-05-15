@@ -4,6 +4,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
+  onAuthStateChanged,
 } from 'firebase/auth';
 import { set, ref, update, get } from 'firebase/database';
 import { createAsyncThunk } from '@reduxjs/toolkit';
@@ -20,6 +21,7 @@ export const registerUser = createAsyncThunk(
   'auth/register',
   async ({ username, email, password }: UserType, thunkAPI) => {
     try {
+      const cardsArr: hotpokeData[] = [{ dummy: 'dummy' }];
       const userCredential = await createUserWithEmailAndPassword(
         fireAuth,
         email!,
@@ -36,6 +38,7 @@ export const registerUser = createAsyncThunk(
         email: email,
         password: password,
         userCreated: Date(),
+        cards: cardsArr,
         // profile_picture : imageUrl
       })
         .then(() => {
@@ -69,8 +72,9 @@ export const loginUser = createAsyncThunk(
 
       const userSnapshot = await get(ref(fireDatabase, 'users/' + user.uid));
       const { email: userEmail, username }: UserType = userSnapshot.val();
+      const { cards } = userSnapshot.val();
 
-      return { email: userEmail, username };
+      return { email: userEmail, username, cards };
     } catch (error: any) {
       return thunkAPI.rejectWithValue(error.message);
     }
@@ -82,6 +86,66 @@ export const logOutUser = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       await signOut(fireAuth);
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const refreshUser = createAsyncThunk<
+  { email: string; username: string; cards: hotpokeData[] | null },
+  void,
+  { rejectValue: string }
+>('auth/refreshUser', async (_, thunkAPI) => {
+  try {
+    return new Promise<{
+      email: string;
+      username: string;
+      cards: hotpokeData[] | null;
+    }>((resolve, reject) => {
+      onAuthStateChanged(fireAuth, async user => {
+        if (user) {
+          try {
+            const userSnapshot = await get(
+              ref(fireDatabase, 'users/' + user.uid)
+            );
+            const { email: userEmail, username, cards } = userSnapshot.val();
+            resolve({ email: userEmail, username, cards });
+            console.log('użtkownik autoryzowany i zalogowany');
+          } catch (error) {
+            reject(error);
+          }
+        } else {
+          console.log('użtkownik brak autoryzacji');
+          resolve({ email: '', username: '', cards: null }); // Jeżeli użytkownik nie jest zalogowany, zwróć puste dane
+        }
+      });
+    });
+  } catch (error: any) {
+    return thunkAPI.rejectWithValue(error.message);
+  }
+});
+
+type hotpokeData = Record<string, unknown>;
+export const addCard = createAsyncThunk(
+  'auth/addCard',
+  async (card: hotpokeData, thunkAPI) => {
+    try {
+      const auth = getAuth();
+      const user = auth.currentUser;
+
+      if (user) {
+        const userSnapshot = await get(ref(fireDatabase, 'users/' + user.uid));
+        const { cards } = userSnapshot.val();
+
+        await update(ref(fireDatabase, 'users/' + user.uid), {
+          cards: [...cards, card],
+        });
+
+        return card;
+      } else {
+        throw new Error('Użytkownik niezalogowany');
+      }
     } catch (error: any) {
       return thunkAPI.rejectWithValue(error.message);
     }

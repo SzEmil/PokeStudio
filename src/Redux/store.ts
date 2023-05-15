@@ -31,7 +31,7 @@ const pokemonInfoPersistConfig = {
 const authPersistConfig = {
   key: 'authPokeStudio',
   storage,
-  whitelist: ['token', 'isLoggedIn', 'user'],
+  whitelist: ['token', 'user'],
 };
 
 const ignoredActions = [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER];

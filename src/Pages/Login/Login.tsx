@@ -3,6 +3,8 @@ import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../Redux/store';
 import { FormEvent } from 'react';
 import { loginUser } from '../../Redux/auth/authOperations';
+import { NavLink } from 'react-router-dom';
+
 const Login = () => {
   const dispatch: AppDispatch = useDispatch();
 
@@ -52,6 +54,12 @@ const Login = () => {
           Login
         </button>
       </form>
+      <p className={css.info}>
+        Still no account? Sign up{' '}
+        <NavLink className={css.navLink} to="/register">
+          here
+        </NavLink>
+      </p>
     </div>
   );
 };

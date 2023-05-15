@@ -8,17 +8,18 @@
   max-width: 600px;
 }
 .form-title {
-    font-style: normal;
-    font-family: 'Roboto';
-    font-weight: 500;
-    font-size: 28px;
-    line-height: 32px;
-    margin-bottom: 20px;
-  }
+  font-style: normal;
+  font-family: 'Roboto';
+  font-weight: 500;
+  font-size: 28px;
+  line-height: 32px;
+  margin-bottom: 20px;
+}
 .form-label {
   font-size: 16px;
   font-weight: bold;
   margin-bottom: 8px;
+  font-family: 'Roboto';
 }
 
 .form-input {
@@ -27,6 +28,7 @@
   margin-bottom: 16px;
   border: 1px solid #ccc;
   border-radius: 4px;
+  font-family: 'Roboto';
 }
 
 .form-input:focus {
@@ -52,4 +54,16 @@
 
 .form-submit:hover {
   background-color: #bd9d00;
+}
+
+.info {
+  margin-top: 20px;
+}
+.navLink {
+  color: #ffd600;
+  font-style: normal;
+  font-family: 'Roboto';
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 20px;
 }
