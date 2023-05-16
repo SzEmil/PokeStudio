@@ -12,3 +12,17 @@
 
   margin-left: 10px;
 }
+.coins {
+  font-style: normal;
+  font-family: 'Roboto';
+  font-weight: 200;
+  font-size: 16px;
+  line-height: 16px;
+  color: white;
+
+  margin-left: 10px;
+}
+.coinsVal {
+  font-weight: 400;
+  color: #ffd600;
+}

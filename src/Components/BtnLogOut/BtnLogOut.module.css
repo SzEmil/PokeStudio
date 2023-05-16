@@ -9,12 +9,11 @@
   border: none;
   border-radius: 5px;
 
-
   background-color: transparent;
   /* background-color: rgba(0, 0, 0, 0.589); */
 
-  transition: background-color 200ms ease-in-out;
+  transition: color 250ms ease;
 }
 .btn:hover {
-  background-color: rgba(53, 53, 53, 0.589);
+  color: #ffd600;
 }

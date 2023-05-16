@@ -39,6 +39,7 @@ export const registerUser = createAsyncThunk(
         password: password,
         userCreated: Date(),
         cards: cardsArr,
+        coins: 0,
         // profile_picture : imageUrl
       })
         .then(() => {
@@ -68,13 +69,15 @@ export const loginUser = createAsyncThunk(
 
       await update(ref(fireDatabase, 'users/' + user.uid), {
         last_login: Date(),
+        coins: 0,
       });
 
       const userSnapshot = await get(ref(fireDatabase, 'users/' + user.uid));
       const { email: userEmail, username }: UserType = userSnapshot.val();
       const { cards } = userSnapshot.val();
+      const { coins } = userSnapshot.val();
 
-      return { email: userEmail, username, cards };
+      return { email: userEmail, username, cards, coins };
     } catch (error: any) {
       return thunkAPI.rejectWithValue(error.message);
     }
@@ -93,7 +96,12 @@ export const logOutUser = createAsyncThunk(
 );
 
 export const refreshUser = createAsyncThunk<
-  { email: string; username: string; cards: hotpokeData[] | null },
+  {
+    email: string;
+    username: string;
+    cards: hotpokeData[] | null;
+    coins: number | null;
+  },
   void,
   { rejectValue: string }
 >('auth/refreshUser', async (_, thunkAPI) => {
@@ -102,6 +110,7 @@ export const refreshUser = createAsyncThunk<
       email: string;
       username: string;
       cards: hotpokeData[] | null;
+      coins: number | null;
     }>((resolve, reject) => {
       onAuthStateChanged(fireAuth, async user => {
         if (user) {
@@ -109,15 +118,20 @@ export const refreshUser = createAsyncThunk<
             const userSnapshot = await get(
               ref(fireDatabase, 'users/' + user.uid)
             );
-            const { email: userEmail, username, cards } = userSnapshot.val();
-            resolve({ email: userEmail, username, cards });
+            const {
+              email: userEmail,
+              username,
+              cards,
+              coins,
+            } = userSnapshot.val();
+            resolve({ email: userEmail, username, cards, coins });
             console.log('użtkownik autoryzowany i zalogowany');
           } catch (error) {
             reject(error);
           }
         } else {
           console.log('użtkownik brak autoryzacji');
-          resolve({ email: '', username: '', cards: null }); // Jeżeli użytkownik nie jest zalogowany, zwróć puste dane
+          resolve({ email: '', username: '', cards: null, coins: null }); // Jeżeli użytkownik nie jest zalogowany, zwróć puste dane
         }
       });
     });

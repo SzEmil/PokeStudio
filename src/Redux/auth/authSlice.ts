@@ -8,6 +8,7 @@ export type authStateType = {
     username: string | null | undefined;
     email: string | null | undefined;
     cards: hotpokeData[];
+    coins: number | null;
   };
   token: null | string;
   isLoggedIn: boolean;
@@ -17,7 +18,7 @@ export type authStateType = {
 };
 
 const authInitialState: authStateType = {
-  user: { username: null, email: null, cards: [] },
+  user: { username: null, email: null, cards: [], coins: null },
   token: null,
   isLoggedIn: false,
   isLoggingIn: false,
@@ -63,6 +64,7 @@ const authSlice = createSlice({
       state.user.email = action.payload.email;
       state.user.username = action.payload.username;
       state.user.cards = action.payload.cards;
+      state.user.coins = action.payload.coins;
     });
 
     builder.addCase(logOutUser.pending, state => {
@@ -77,6 +79,8 @@ const authSlice = createSlice({
       state.user.username = null;
       state.isLoggedIn = false;
       state.isLoggingIn = false;
+      state.user.cards = [];
+      state.user.coins = null;
     });
 
     builder.addCase(refreshUser.pending, state => {
@@ -96,6 +100,7 @@ const authSlice = createSlice({
         state.isRefreshing = false;
         state.user.email = action.payload.email;
         state.user.username = action.payload.username;
+        state.user.coins = action.payload.coins;
       } else {
         // LogOut User
         state.isLoggedIn = false;
@@ -103,6 +108,8 @@ const authSlice = createSlice({
         state.isRefreshing = false;
         state.user.email = null;
         state.user.username = null;
+        state.user.cards = [];
+        state.user.coins = null;
       }
     });
 

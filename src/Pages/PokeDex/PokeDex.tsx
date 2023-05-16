@@ -5,6 +5,7 @@ import { nanoid } from '@reduxjs/toolkit';
 import { useState } from 'react';
 const PokeDex = () => {
   const [isOpenShelf, setIsOpenShelf] = useState(false);
+
   return (
     <div className={css.pokeDex}>
       <ul className={css.list}>

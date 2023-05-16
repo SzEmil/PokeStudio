@@ -8,4 +8,8 @@ export const selectAuthIsRefreshing = (state: { auth: authStateType }) =>
 export const selectAuthIsLoggedIn = (state: { auth: authStateType }) =>
   state.auth.isLoggedIn;
 
-  export const selectAuthUser = (state: { auth: authStateType }) => state.auth.user;
+export const selectAuthUser = (state: { auth: authStateType }) =>
+  state.auth.user;
+
+export const selectAuthUserCoins = (state: { auth: authStateType }) =>
+  state.auth.user.coins;
