@@ -4,6 +4,8 @@
   background-color: rgb(26, 32, 37);
   z-index: 1000;
   padding: 15px 0;
+
+  border-bottom: 0.1px solid rgba(255, 255, 255, 0.05);
 }
 .headWrapper {
   display: flex;
@@ -49,6 +51,10 @@
   font-weight: 500;
   font-size: 28px;
   line-height: 30px;
+  transition: color 250ms ease;
+}
+.link:hover {
+  color: #ffd600;
 }
 .link:nth-child(n + 2) {
   padding-left: 15px;
@@ -62,4 +68,24 @@
 .userBtn {
   margin-left: 10px;
   margin-top: 10px;
+}
+.footer {
+  width: 100%;
+  border-top: 0.1px solid rgba(255, 255, 255, 0.05);
+}
+.footerBox {
+  padding: 15px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.footerDescription a {
+}
+.footerDescription {
+  font-style: normal;
+  font-family: 'Roboto';
+  font-weight: 300;
+  font-size: 18px;
+  line-height: 20px;
 }

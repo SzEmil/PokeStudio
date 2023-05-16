@@ -54,7 +54,12 @@ export const PokemonCard = ({ pokemon }: any) => {
           <div className={css.imageBox}>
             <img
               className={css.image}
-              src={hotPokemon?.overview.sprites.other.home.front_default}
+              src={
+                hotPokemon?.overview.sprites.other.home.front_default === null
+                  ? hotPokemon?.overview.sprites.other['official-artwork']
+                      .front_default
+                  : hotPokemon?.overview.sprites.other.home.front_default
+              }
             />
           </div>
 
@@ -64,12 +69,14 @@ export const PokemonCard = ({ pokemon }: any) => {
 
           <div className={css.description}>
             <p className={css.descriptionText}>
-              {
-                hotPokemon.details.flavor_text_entries.find(
+              {hotPokemon?.details.flavor_text_entries.length !== 0 ? (
+                hotPokemon?.details?.flavor_text_entries?.find(
                   (item: ReturnType<typeof hotPokemon.details>) =>
                     item.language.name === 'en'
                 ).flavor_text
-              }
+              ) : (
+                <p>No description was found</p>
+              )}
             </p>
           </div>
 

@@ -1,6 +1,39 @@
 .pokeDex {
-  padding-top: 200px;
+  padding-top: 130px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
-.link {
-  color: white;
+.userWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.list {
+  display: flex;
+  gap: 10px;
+
+  padding: 20px 0;
+}
+.listBtn {
+  font-style: normal;
+  font-family: 'Roboto';
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 16px;
+  color: black;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+
+  padding: 10px 15px;
+  background-color: rgba(255, 255, 255, 0.89);
+
+  transition: background-color 200ms ease-in-out;
+}
+.listBtn:hover {
+  background-color: rgba(199, 199, 199, 0.925);
 }

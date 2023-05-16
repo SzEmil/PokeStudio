@@ -6,7 +6,9 @@ import { useAuth } from '../../hooks/useAuth';
 import { User } from '../User/User';
 import { PokeballLoader } from '../PokeballLoader/PokeballLoader';
 
+
 export const SharedLayout = () => {
+  const currentYear: number = new Date().getFullYear();
   const { isLoggedIn } = useAuth();
   return (
     <div>
@@ -48,6 +50,14 @@ export const SharedLayout = () => {
       >
         <Outlet />
       </Suspense>
+      <footer className={css.footer}>
+        <div className={css.footerBox}>
+          <p className={css.footerDescription}>
+            <a>Resorces</a>
+          </p>
+          <p className={css.footerDescription}>PokeStudio © {currentYear}</p>
+        </div>
+      </footer>
     </div>
   );
 };

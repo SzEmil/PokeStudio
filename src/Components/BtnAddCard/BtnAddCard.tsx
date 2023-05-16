@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../Redux/store';
 import { addCard } from '../../Redux/auth/authOperations';
 import { selectPokemonDetails } from '../../Redux/pokemonInfo/pokemonInfoSelectors';
+import css from './BtnAddCard.module.css';
 
 type hotpokeData = Record<string, unknown>;
 export const BtnAddCard = () => {
@@ -14,7 +15,7 @@ export const BtnAddCard = () => {
     dispatch(addCard(card));
   };
   return (
-    <button type="button" onClick={handleOnClick}>
+    <button className={css.btn} type="button" onClick={handleOnClick}>
       Add card
     </button>
   );

@@ -1,0 +1,10 @@
+.list {
+  display: inline;
+  gap: 10px;
+  width: 1230px;
+  display: flex;
+  flex-wrap: wrap;
+}
+.link {
+  color: white;
+}

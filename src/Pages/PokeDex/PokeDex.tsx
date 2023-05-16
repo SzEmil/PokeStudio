@@ -1,36 +1,32 @@
-import { SearchForm } from '../../Components/SearchForm/SearchForm';
 import { Section } from '../../Components/Section/Section';
-import { useSelector } from 'react-redux';
-import { selectAuthUser } from '../../Redux/auth/authSelectors';
-import { PokemonCard } from '../../Components/PokemonCard/PokemonCard';
 import css from './PokeDex.module.css';
+import { UserShelf } from '../../Components/UserShelf/UserShelf';
 import { nanoid } from '@reduxjs/toolkit';
-import { NavLink } from 'react-router-dom';
-
+import { useState } from 'react';
 const PokeDex = () => {
-  const cardsArr = useSelector(selectAuthUser);
-  const cards = cardsArr.cards.slice(1);
-
+  const [isOpenShelf, setIsOpenShelf] = useState(false);
   return (
     <div className={css.pokeDex}>
+      <ul className={css.list}>
+        <li key={nanoid()}>
+          <button
+            className={css.listBtn}
+            type="button"
+            onClick={() => setIsOpenShelf(prevState => !prevState)}
+          >
+            Shelf
+          </button>
+        </li>
+        <li key={nanoid()}>
+          <button className={css.listBtn} type="button">
+            Store
+          </button>
+        </li>
+      </ul>
       <Section>
-        <SearchForm />
-        <ul
-          style={{
-            display: 'flex',
-            flexWrap: 'wrap',
-            gap: '10px',
-            width: '100%',
-          }}
-        >
-          {cards.map((card: any) => (
-            <li key={nanoid()} style={{ width: '400px' }}>
-              <NavLink className={css.link} to={`/pokemon/${card.overview.id}`}>
-                <PokemonCard pokemon={card} />
-              </NavLink>
-            </li>
-          ))}
-        </ul>
+        <div className={css.userWrapper}>
+          {isOpenShelf ? <UserShelf /> : null}
+        </div>
       </Section>
     </div>
   );

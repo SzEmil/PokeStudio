@@ -47,11 +47,17 @@
 .cardBox {
   position: relative;
 }
+
 .card {
   position: relative;
 
   border: 0.1px solid rgba(255, 255, 255, 0.1);
   overflow: hidden;
+
+  transition: border 250ms ease;
+}
+.card:hover {
+  border: 0.1px solid rgba(255, 255, 255, 0.8);
 }
 .card:before {
   content: '';

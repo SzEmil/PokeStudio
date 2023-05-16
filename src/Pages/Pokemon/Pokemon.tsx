@@ -91,7 +91,9 @@ const Pokemon = () => {
                           }
                         )}
                     </div>
-                    <BtnAddCard />
+                    <div className={css.btnBox}>
+                      <BtnAddCard />
+                    </div>
                   </div>
                 </div>
                 <div className={css.listWrapper}>
