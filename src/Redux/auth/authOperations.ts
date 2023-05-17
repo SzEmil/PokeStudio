@@ -39,7 +39,7 @@ export const registerUser = createAsyncThunk(
         password: password,
         userCreated: Date(),
         cards: cardsArr,
-        coins: 0,
+        coins: 1000,
         // profile_picture : imageUrl
       })
         .then(() => {
