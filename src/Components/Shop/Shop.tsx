@@ -4,7 +4,7 @@ import { AppDispatch } from '../../Redux/store';
 import { fetchPackedPokemon } from '../../Redux/pokeShop/pokeShopOperations';
 import { useSelector } from 'react-redux';
 import css from './Shop.module.css';
-import { useEffect, useState } from 'react';
+import { useEffect} from 'react';
 import { PokemonCard } from '../PokemonCard/PokemonCard';
 import {
   selectPackedPokemon,

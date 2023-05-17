@@ -15,7 +15,7 @@ import { PokemonCard } from '../../Components/PokemonCard/PokemonCard';
 import { Section } from '../../Components/Section/Section';
 import { Moves } from '../../Components/Moves/Moves';
 import { PokeGallery } from '../../Components/PokeGallery/PokeGallery';
-import { BtnAddCard } from '../../Components/BtnAddCard/BtnAddCard';
+
 
 const Pokemon = () => {
   const dispatch: AppDispatch = useDispatch();
