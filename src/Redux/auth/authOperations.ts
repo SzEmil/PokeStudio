@@ -21,7 +21,7 @@ export const registerUser = createAsyncThunk(
   'auth/register',
   async ({ username, email, password }: UserType, thunkAPI) => {
     try {
-      const cardsArr: hotpokeData[] = [{ dummy: 'dummy' }];
+      const cardsArr: hotpokeData[] = [{ card: { dummy: 'dummy' } }];
       const userCredential = await createUserWithEmailAndPassword(
         fireAuth,
         email!,
@@ -69,7 +69,7 @@ export const loginUser = createAsyncThunk(
 
       await update(ref(fireDatabase, 'users/' + user.uid), {
         last_login: Date(),
-        coins: 0,
+        // coins: 10000,
       });
 
       const userSnapshot = await get(ref(fireDatabase, 'users/' + user.uid));
@@ -125,7 +125,12 @@ export const refreshUser = createAsyncThunk<
               coins,
             } = userSnapshot.val();
             resolve({ email: userEmail, username, cards, coins });
-            console.log('użtkownik autoryzowany i zalogowany');
+            console.log(
+              'użtkownik autoryzowany i zalogowany',
+              username,
+              cards,
+              coins
+            );
           } catch (error) {
             reject(error);
           }
@@ -140,10 +145,13 @@ export const refreshUser = createAsyncThunk<
   }
 });
 
-type hotpokeData = Record<string, unknown>;
+type hotpokeData = {
+  card: { dummy?: string };
+  price?: number;
+};
 export const addCard = createAsyncThunk(
   'auth/addCard',
-  async (card: hotpokeData, thunkAPI) => {
+  async ({ card }: hotpokeData, thunkAPI) => {
     try {
       const auth = getAuth();
       const user = auth.currentUser;
@@ -156,7 +164,58 @@ export const addCard = createAsyncThunk(
           cards: [...cards, card],
         });
 
-        return card;
+        return { card };
+      } else {
+        throw new Error('Użytkownik niezalogowany');
+      }
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const buyPack = createAsyncThunk(
+  'auth/buyPack',
+  async (price: number, thunkAPI) => {
+    try {
+      const auth = getAuth();
+      const user = auth.currentUser;
+
+      if (user) {
+        const userSnapshot = await get(ref(fireDatabase, 'users/' + user.uid));
+        const { coins } = userSnapshot.val();
+        const newCoins = coins - price;
+        console.log(newCoins);
+        await update(ref(fireDatabase, 'users/' + user.uid), {
+          coins: newCoins,
+        });
+
+        return { newCoins };
+      } else {
+        throw new Error('Użytkownik niezalogowany');
+      }
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const quickSellCard = createAsyncThunk(
+  'auth/QuickSellCard',
+  async (price: number, thunkAPI) => {
+    try {
+      const auth = getAuth();
+      const user = auth.currentUser;
+
+      if (user) {
+        const userSnapshot = await get(ref(fireDatabase, 'users/' + user.uid));
+        const { coins } = userSnapshot.val();
+        const newCoins = coins + price;
+        await update(ref(fireDatabase, 'users/' + user.uid), {
+          coins: newCoins,
+        });
+
+        return { newCoins };
       } else {
         throw new Error('Użytkownik niezalogowany');
       }

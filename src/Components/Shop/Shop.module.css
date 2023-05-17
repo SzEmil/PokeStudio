@@ -1,0 +1,60 @@
+.pokeShop {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding: 50px 0;
+}
+.packedPokemon {
+  position: absolute;
+  max-width: 900px;
+  top: 0%;
+  left: 50%;
+  transform: translateY(-50%);
+  transform: translateX(-50%);
+
+  background-color: rgba(0, 0, 0, 0.8);
+  border-radius: 2px;
+  padding: 20px;
+}
+
+.packedPokemonWrapper {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.card {
+  max-width: 400px;
+  min-width: 360px;
+}
+.description {
+  padding-left: 20px;
+  min-width: 500px;
+  max-width: 600px;
+}
+.descriptionTitle {
+  color: white;
+  font-style: normal;
+  font-family: 'Roboto';
+  font-weight: 400;
+  font-size: 28px;
+  line-height: 30px;
+
+  text-align: center;
+  padding-bottom: 40px;
+}
+.descriptionText {
+  color: white;
+  font-style: normal;
+  font-family: 'Roboto';
+  font-weight: 300;
+  font-size: 22px;
+  line-height: 24px;
+}
+.btnCardBox {
+  margin-left: 20px;
+}
+.btnAddCardBox {
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+}

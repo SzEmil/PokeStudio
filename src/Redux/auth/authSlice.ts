@@ -1,7 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { registerUser, loginUser, logOutUser } from './authOperations';
 import { refreshUser } from './authOperations';
-import { addCard } from './authOperations';
+import { addCard, quickSellCard } from './authOperations';
+import { buyPack } from './authOperations';
+
 type hotpokeData = Record<string, unknown>;
 export type authStateType = {
   user: {
@@ -117,7 +119,22 @@ const authSlice = createSlice({
       state.error = action.payload;
     });
     builder.addCase(addCard.fulfilled, (state, action) => {
-      state.user.cards = [...state.user.cards, action.payload];
+      state.user.cards = [...state.user.cards, action.payload.card];
+
+    });
+
+    builder.addCase(quickSellCard.rejected, (state, action) => {
+      state.error = action.payload;
+    });
+    builder.addCase(quickSellCard.fulfilled, (state, action) => {
+      state.user.coins = action.payload.newCoins;
+    });
+
+    builder.addCase(buyPack.rejected, (state, action) => {
+      state.error = action.payload;
+    });
+    builder.addCase(buyPack.fulfilled, (state, action) => {
+      state.user.coins = action.payload.newCoins;
     });
   },
 });

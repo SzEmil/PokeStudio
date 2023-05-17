@@ -6,6 +6,7 @@ import { pokemonsReducer } from './pokemons/pokemonsSlice';
 import { filterReducer } from './filter/filterSlice';
 import { pokemonInfoReducer } from './pokemonInfo/pokemonInfoSlice';
 import { authReducer } from './auth/authSlice';
+import { pokeShopReducer } from './pokeShop/pokeShopSlice';
 
 import {
   FLUSH,
@@ -34,6 +35,12 @@ const authPersistConfig = {
   whitelist: ['token', 'user'],
 };
 
+const pokeShopPersistConfig = {
+  key: 'pokeShop',
+  storage,
+  whitelist: ['packedPokemon'],
+};
+
 const ignoredActions = [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER];
 export const store = configureStore({
   reducer: {
@@ -41,6 +48,7 @@ export const store = configureStore({
     pokemons: persistReducer(pokemonsPersistConfig, pokemonsReducer),
     filter: filterReducer,
     auth: persistReducer(authPersistConfig, authReducer),
+    pokeShop: persistReducer(pokeShopPersistConfig, pokeShopReducer),
   },
 
   middleware: getDefaultMiddleware({
