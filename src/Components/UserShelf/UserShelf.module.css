@@ -4,6 +4,7 @@
   width: 1230px;
   display: flex;
   flex-wrap: wrap;
+  padding-bottom: 20px;
 }
 .link {
   color: white;

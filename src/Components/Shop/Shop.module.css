@@ -58,3 +58,9 @@
   justify-content: center;
   margin-top: 50px;
 }
+
+.packList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+}

@@ -4,7 +4,7 @@ import { AppDispatch } from '../../Redux/store';
 import { fetchPackedPokemon } from '../../Redux/pokeShop/pokeShopOperations';
 import { useSelector } from 'react-redux';
 import css from './Shop.module.css';
-import { useEffect} from 'react';
+import { useEffect } from 'react';
 import { PokemonCard } from '../PokemonCard/PokemonCard';
 import {
   selectPackedPokemon,
@@ -23,16 +23,60 @@ export const Shop = () => {
   const isOverviewLoading = useSelector(selectPackedPokemonOverwievIsLoading);
   const isDetailsLoading = useSelector(selectPackedPokemonDetailsIsLoading);
 
+  const legendaryIDs = [
+    144, 145, 146, 150, 151, 243, 244, 245, 249, 250, 251, 377, 378, 379, 380,
+    381, 382, 383, 384, 385, 386, 480, 481, 482, 483, 484, 485, 486, 487, 488,
+    489, 490, 491, 492, 493, 494, 638, 639, 640, 641, 642, 643, 644, 645, 646,
+    647, 648, 649, 716, 717, 718, 719, 720, 721, 785, 786, 787, 788, 789, 790,
+    791, 792, 793, 794, 795, 796, 797, 798, 799, 800, 801, 802, 807, 808, 809,
+    888, 889, 890,
+  ];
   function randomNumberGold() {
     return Math.floor(Math.random() * 897) + 1;
   }
+  function randomNumberSilver() {
+    if (Math.random() <= 0.02) {
+      // Użytkownik ma 2% szansy, że wylosowane ID będzie należeć do ID legendarnych pokemonów
+      const randomIndex = Math.floor(Math.random() * legendaryIDs.length);
+      return legendaryIDs[randomIndex];
+    } else {
+      // Jeśli nie wylosowano legendarnego ID, zwracamy losową liczbę z przedziału 1-898
+      return Math.floor(Math.random() * 898) + 1;
+    }
+  }
+  function randomNumberLegendary() {
+    const randomIndex = Math.floor(Math.random() * legendaryIDs.length);
+    return legendaryIDs[randomIndex];
+  }
 
-  const handleOnClickPack = (event: React.MouseEvent<HTMLButtonElement>) => {
-    //6% szans na legendarnego
+  const handleOnClickPackGold = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    //9%na legendarnego
     event.stopPropagation();
     console.log('kupiono paczke');
     dispatch(buyPack(500));
     dispatch(fetchPackedPokemon(randomNumberGold()));
+  };
+
+  const handleOnClickPackSilver = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    //2% szans na legendarnego
+    event.stopPropagation();
+    console.log('kupiono paczke');
+    dispatch(buyPack(200));
+    dispatch(fetchPackedPokemon(randomNumberSilver()));
+  };
+
+  const handleOnClickPackLegendary = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    //100% szans na legendarnego
+    event.stopPropagation();
+    console.log('kupiono paczke');
+    dispatch(buyPack(2000));
+    dispatch(fetchPackedPokemon(randomNumberLegendary()));
   };
 
   useEffect(() => {
@@ -44,9 +88,18 @@ export const Shop = () => {
 
   return (
     <div className={css.pokeShop}>
-      <ul>
+      <ul className={css.packList}>
         <li>
-          <PokePack type="gold" handleOnClick={handleOnClickPack} />
+          <PokePack type="Silver" handleOnClick={handleOnClickPackSilver} />
+        </li>
+        <li>
+          <PokePack type="Gold" handleOnClick={handleOnClickPackGold} />
+        </li>
+        <li>
+          <PokePack
+            type="Legendary"
+            handleOnClick={handleOnClickPackLegendary}
+          />
         </li>
       </ul>
       <div>
