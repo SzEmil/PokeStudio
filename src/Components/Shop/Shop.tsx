@@ -16,12 +16,14 @@ import { fetchPackedPokemonDetails } from '../../Redux/pokeShop/pokeShopOperatio
 import { BtnAddCard } from '../BtnAddCard/BtnAddCard';
 import { BtnQuickSellCard } from '../BtnQuickSellCard/BtnQuickSellCard';
 import { buyPack } from '../../Redux/auth/authOperations';
+import { selectAuthUserCoins } from '../../Redux/auth/authSelectors';
 
 export const Shop = () => {
   const dispatch: AppDispatch = useDispatch();
   const packedPokemon: any = useSelector(selectPackedPokemon);
   const isOverviewLoading = useSelector(selectPackedPokemonOverwievIsLoading);
   const isDetailsLoading = useSelector(selectPackedPokemonDetailsIsLoading);
+  const coins = useSelector(selectAuthUserCoins);
 
   const legendaryIDs = [
     144, 145, 146, 150, 151, 243, 244, 245, 249, 250, 251, 377, 378, 379, 380,
@@ -54,6 +56,7 @@ export const Shop = () => {
   ) => {
     //9%na legendarnego
     event.stopPropagation();
+    if (coins! < 500) return;
     console.log('kupiono paczke');
     dispatch(buyPack(500));
     dispatch(fetchPackedPokemon(randomNumberGold()));
@@ -64,6 +67,7 @@ export const Shop = () => {
   ) => {
     //2% szans na legendarnego
     event.stopPropagation();
+    if (coins! < 200) return;
     console.log('kupiono paczke');
     dispatch(buyPack(200));
     dispatch(fetchPackedPokemon(randomNumberSilver()));
@@ -74,6 +78,7 @@ export const Shop = () => {
   ) => {
     //100% szans na legendarnego
     event.stopPropagation();
+    if (coins! < 2000) return;
     console.log('kupiono paczke');
     dispatch(buyPack(2000));
     dispatch(fetchPackedPokemon(randomNumberLegendary()));
