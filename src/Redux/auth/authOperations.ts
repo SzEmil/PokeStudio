@@ -66,10 +66,10 @@ export const loginUser = createAsyncThunk(
         password!
       );
       const user = userCredential.user;
-      const cardsArr: hotpokeData[] = [{ card: { dummy: 'dummy' } }];
+
       await update(ref(fireDatabase, 'users/' + user.uid), {
         last_login: Date(),
-        cards: cardsArr,
+
         // coins: 10000,
       });
 
