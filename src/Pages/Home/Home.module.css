@@ -10,6 +10,20 @@
   position: fixed;
   right: 0;
   margin-top: 80px;
+  z-index: 1;
+}
+.hotPokemonTitle {
+  position: absolute;
+  left: 77%;
+  transform: translateX(-50%);
+  top: 30px;
+
+  color: white;
+  font-style: normal;
+  font-family: 'Pokemon Solid';
+  font-weight: 500;
+  font-size: 28px;
+  width: 100%;
 }
 .pokeList {
   width: 70%;

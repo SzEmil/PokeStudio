@@ -66,9 +66,10 @@ export const loginUser = createAsyncThunk(
         password!
       );
       const user = userCredential.user;
-
+      const cardsArr: hotpokeData[] = [{ card: { dummy: 'dummy' } }];
       await update(ref(fireDatabase, 'users/' + user.uid), {
         last_login: Date(),
+        cards: cardsArr,
         // coins: 10000,
       });
 
@@ -99,7 +100,7 @@ export const refreshUser = createAsyncThunk<
   {
     email: string;
     username: string;
-    cards: hotpokeData[] | null;
+    cards: hotpokeData[] | [];
     coins: number | null;
   },
   void,
@@ -109,7 +110,7 @@ export const refreshUser = createAsyncThunk<
     return new Promise<{
       email: string;
       username: string;
-      cards: hotpokeData[] | null;
+      cards: hotpokeData[] | [];
       coins: number | null;
     }>((resolve, reject) => {
       onAuthStateChanged(fireAuth, async user => {
@@ -124,6 +125,7 @@ export const refreshUser = createAsyncThunk<
               cards,
               coins,
             } = userSnapshot.val();
+
             resolve({ email: userEmail, username, cards, coins });
             console.log(
               'użtkownik autoryzowany i zalogowany',
@@ -136,7 +138,7 @@ export const refreshUser = createAsyncThunk<
           }
         } else {
           console.log('użtkownik brak autoryzacji');
-          resolve({ email: '', username: '', cards: null, coins: null }); // Jeżeli użytkownik nie jest zalogowany, zwróć puste dane
+          resolve({ email: '', username: '', cards: [], coins: null }); // Jeżeli użytkownik nie jest zalogowany, zwróć puste dane
         }
       });
     });
@@ -218,6 +220,53 @@ export const quickSellCard = createAsyncThunk(
         return { newCoins };
       } else {
         throw new Error('Użytkownik niezalogowany');
+      }
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+type cardType = {
+  [x: string]: any;
+  card: {
+    overview: {
+      id: number;
+    };
+  };
+};
+type deleteCardPropType = {
+  id: number;
+  price: number;
+};
+export const deleteCard = createAsyncThunk(
+  'auth/deleteCard',
+  async ({ id, price }: deleteCardPropType, thunkAPI) => {
+    try {
+      const auth = getAuth();
+      const user = auth.currentUser;
+
+      if (user) {
+        const userSnapshot = await get(ref(fireDatabase, 'users/' + user.uid));
+        const { cards, coins } = userSnapshot.val();
+        const newCoins = coins + price;
+        const cardsArr = cards.slice(1);
+        const cardIndex = cardsArr.findIndex(
+          (card: cardType) => card.overview.id === id
+        );
+        const newCards = cards.filter(
+          (_: any, index: number) => index !== cardIndex
+        );
+
+        await update(ref(fireDatabase, 'users/' + user.uid), {
+          cards: [...newCards],
+          coins: newCoins,
+        });
+
+        return { newCards, newCoins };
+      } else {
+        throw new Error(
+          'Error using delete Card: propably this card doesnt exist in database'
+        );
       }
     } catch (error: any) {
       return thunkAPI.rejectWithValue(error.message);

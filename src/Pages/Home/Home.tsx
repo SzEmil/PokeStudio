@@ -37,6 +37,7 @@ const Home = () => {
             </div>
           </div>
           <div className={css.hotPokemon}>
+            <h2 className={css.hotPokemonTitle}>Pokemon of a day!</h2>
             <HotToday />
           </div>
         </div>

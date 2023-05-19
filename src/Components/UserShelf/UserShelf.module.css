@@ -9,3 +9,32 @@
 .link {
   color: white;
 }
+.btnBox {
+  margin: 10px 0;
+  display: flex;
+  justify-content: center;
+}
+.item {
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 5px;
+}
+.btn {
+  font-style: normal;
+  font-family: 'Roboto';
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 16px;
+  color: black;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+
+  padding: 10px 15px;
+  background-color: rgba(255, 255, 255, 0.89);
+
+  transition: background-color 200ms ease-in-out;
+  max-width: 300px;
+}
+.btn:hover {
+  background-color: rgba(199, 199, 199, 0.925);
+}

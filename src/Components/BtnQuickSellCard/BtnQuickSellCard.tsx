@@ -7,14 +7,13 @@ import { setPackedPokemonState } from '../../Redux/pokeShop/pokeShopSlice';
 type BtnQuickSellCardPropType = {
   ovrl: number;
 };
+export const calculatePrice = (ovrl: number) => {
+  return Number(ovrl * 3);
+};
 
 export const BtnQuickSellCard = ({ ovrl }: BtnQuickSellCardPropType) => {
-  function calculatePrice() {
-    return Number(ovrl * 3);
-  }
-
   const dispatch: AppDispatch = useDispatch();
-  const price: number = calculatePrice();
+  const price: number = calculatePrice(ovrl);
 
   const handleOnClick = () => {
     dispatch(quickSellCard(price));

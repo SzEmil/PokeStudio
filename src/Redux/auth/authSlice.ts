@@ -3,29 +3,32 @@ import { registerUser, loginUser, logOutUser } from './authOperations';
 import { refreshUser } from './authOperations';
 import { addCard, quickSellCard } from './authOperations';
 import { buyPack } from './authOperations';
+import { deleteCard } from './authOperations';
 
 type hotpokeData = Record<string, unknown>;
 export type authStateType = {
   user: {
     username: string | null | undefined;
     email: string | null | undefined;
-    cards: hotpokeData[];
+    cards: hotpokeData[] | [];
     coins: number | null;
   };
   token: null | string;
   isLoggedIn: boolean;
   isLoggingIn: boolean;
   isRefreshing: boolean;
+  isLoading?: boolean;
   error: any;
 };
 
 const authInitialState: authStateType = {
-  user: { username: null, email: null, cards: [], coins: null },
+  user: { username: null, email: null, cards: [], coins: 0 },
   token: null,
   isLoggedIn: false,
   isLoggingIn: false,
   isRefreshing: false,
   error: null,
+  isLoading: false,
 };
 
 const authSlice = createSlice({
@@ -103,6 +106,7 @@ const authSlice = createSlice({
         state.user.email = action.payload.email;
         state.user.username = action.payload.username;
         state.user.coins = action.payload.coins;
+        state.user.cards = action.payload.cards;
       } else {
         // LogOut User
         state.isLoggedIn = false;
@@ -120,7 +124,6 @@ const authSlice = createSlice({
     });
     builder.addCase(addCard.fulfilled, (state, action) => {
       state.user.cards = [...state.user.cards, action.payload.card];
-
     });
 
     builder.addCase(quickSellCard.rejected, (state, action) => {
@@ -134,6 +137,19 @@ const authSlice = createSlice({
       state.error = action.payload;
     });
     builder.addCase(buyPack.fulfilled, (state, action) => {
+      state.user.coins = action.payload.newCoins;
+    });
+
+    builder.addCase(deleteCard.pending, state => {
+      state.isLoading = true;
+    });
+    builder.addCase(deleteCard.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    });
+    builder.addCase(deleteCard.fulfilled, (state, action) => {
+      (state.isLoading = false), (state.error = null);
+      state.user.cards = action.payload.newCards;
       state.user.coins = action.payload.newCoins;
     });
   },

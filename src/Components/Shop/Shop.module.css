@@ -6,7 +6,7 @@
 }
 .packedPokemon {
   position: absolute;
-  max-width: 900px;
+  max-width: 1000px;
   top: 0%;
   left: 50%;
   transform: translateY(-50%);
@@ -21,10 +21,11 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
+  padding: 10px 30px;
 }
 .card {
-  max-width: 400px;
-  min-width: 360px;
+  max-width: 450px;
+  min-width: 400px;
 }
 .description {
   padding-left: 20px;
