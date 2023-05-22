@@ -24,7 +24,7 @@ export const UserShelf = () => {
   ) : (
     <ul className={css.list}>
       {cards.map((card: any) => (
-        <li key={nanoid()} style={{ width: '400px' }} className={css.item}>
+        <li key={nanoid()} className={css.item}>
           <NavLink className={css.link} to={`/pokemon/${card.overview.id}`}>
             <PokemonCard pokemon={card} />
           </NavLink>

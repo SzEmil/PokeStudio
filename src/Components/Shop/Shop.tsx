@@ -109,7 +109,9 @@ export const Shop = () => {
       </ul>
       <div>
         {isOverviewLoading ? (
-          <PokeballLoader />
+          <div className={css.loaderBox}>
+            <PokeballLoader />
+          </div>
         ) : (
           <div className={css.wrapper}>
             {packedPokemon!.overview === null ||
@@ -134,7 +136,7 @@ export const Shop = () => {
                         </p>
                       </div>
                       <div className={css.btnAddCardBox}>
-                        <BtnAddCard price={500} />
+                        <BtnAddCard />
                         <div className={css.btnCardBox}>
                           <BtnQuickSellCard
                             ovrl={packedPokemon.overview.base_experience}

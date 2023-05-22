@@ -66,10 +66,10 @@ export const loginUser = createAsyncThunk(
         password!
       );
       const user = userCredential.user;
-      const cardsArr: hotpokeData[] = [{ card: { dummy: 'dummy' } }];
+      // const cardsArr: hotpokeData[] = [{ card: { dummy: 'dummy' } }];
       await update(ref(fireDatabase, 'users/' + user.uid), {
         last_login: Date(),
-        cards: cardsArr,
+        // cards: cardsArr,
         // coins: 10000,
       });
 
@@ -249,6 +249,7 @@ export const deleteCard = createAsyncThunk(
         const userSnapshot = await get(ref(fireDatabase, 'users/' + user.uid));
         const { cards, coins } = userSnapshot.val();
         const newCoins = coins + price;
+
         const cardsArr = cards.slice(1);
         const cardIndex = cardsArr.findIndex(
           (card: cardType) => card.overview.id === id

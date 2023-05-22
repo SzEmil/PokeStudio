@@ -1,7 +1,7 @@
 .list {
   display: inline;
   gap: 10px;
-  width: 1230px;
+  width: 1380px;
   display: flex;
   flex-wrap: wrap;
   padding-bottom: 20px;
@@ -15,8 +15,9 @@
   justify-content: center;
 }
 .item {
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 5px;
+  /* border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 5px; */
+  width: 450px;
 }
 .btn {
   font-style: normal;

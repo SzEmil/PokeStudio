@@ -13,3 +13,6 @@ export const selectAuthUser = (state: { auth: authStateType }) =>
 
 export const selectAuthUserCoins = (state: { auth: authStateType }) =>
   state.auth.user.coins;
+
+export const selectAuthIsLoading = (state: { auth: authStateType }) =>
+  state.auth.isLoggingIn;

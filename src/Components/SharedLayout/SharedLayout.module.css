@@ -2,7 +2,7 @@
   position: fixed;
   width: 100%;
   background-color: rgb(26, 32, 37);
-  z-index: 1000;
+  z-index: 10000;
   padding: 15px 0;
 
   border-bottom: 0.1px solid rgba(255, 255, 255, 0.05);
@@ -89,4 +89,11 @@
   font-weight: 300;
   font-size: 18px;
   line-height: 20px;
+}
+.loaderBox {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translateX(-50%);
+  transform: translateY(-50%);
 }

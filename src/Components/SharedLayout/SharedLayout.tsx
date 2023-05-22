@@ -27,7 +27,7 @@ export const SharedLayout = () => {
               </NavLink>
               {!isLoggedIn ? (
                 <NavLink className={css.link} to="/register">
-                  Register
+                  Login/Register
                 </NavLink>
               ) : (
                 <div className={css.user}>
@@ -43,7 +43,7 @@ export const SharedLayout = () => {
       </header>
       <Suspense
         fallback={
-          <div>
+          <div className={css.loaderBox}>
             <PokeballLoader />
           </div>
         }
