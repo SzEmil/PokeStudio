@@ -140,7 +140,7 @@
 }
 .typeList {
   display: flex;
-  z-index: 1000;
+  z-index: 90;
 }
 .typeTextmodifier {
   color: white;
@@ -173,7 +173,7 @@
   font-size: 14px;
   line-height: 16px;
 
-  z-index: 100;
+  z-index: 90;
 }
 .isLegendary {
   border: 2px solid rgba(255, 231, 16, 0.589);
@@ -251,7 +251,7 @@
   display: inline;
 
   position: absolute;
-  z-index: 1000;
+  z-index: 91;
   left: 0px;
   top: 80px;
 }

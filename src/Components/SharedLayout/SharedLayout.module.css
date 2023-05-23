@@ -2,7 +2,7 @@
   position: fixed;
   width: 100%;
   background-color: rgb(26, 32, 37);
-  z-index: 10000;
+  z-index: 100;
   padding: 15px 0;
 
   border-bottom: 0.1px solid rgba(255, 255, 255, 0.05);

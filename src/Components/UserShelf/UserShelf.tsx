@@ -8,17 +8,36 @@ import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../Redux/store';
 import { calculatePrice } from '../BtnQuickSellCard/BtnQuickSellCard';
 import { deleteCard } from '../../Redux/auth/authOperations';
+import Notiflix from 'notiflix';
+import { selectBattleUser } from '../../Redux/battle/battleSelectors';
+import { setUserBattleCards } from '../../Redux/battle/battleSlice';
+import { deleteUserBattleCards } from '../../Redux/battle/battleSlice';
 
 export const UserShelf = () => {
   const cardsArr = useSelector(selectAuthUser);
   const cards = cardsArr.cards.slice(1);
+  const battleUser = useSelector(selectBattleUser);
+
   const dispatch: AppDispatch = useDispatch();
-  const handleOnClick = (id: number, ovrl: number) => {
+  const handleOnClickQuickSell = (id: number, ovrl: number) => {
     const price = calculatePrice(ovrl);
-    console.log('rozpoczeto quickSell');
     dispatch(deleteCard({ id, price }));
+    dispatch(deleteUserBattleCards(id));
   };
 
+  const handleOnClickTakeForBattle = (id: number) => {
+    if (battleUser.cards?.length! >= 3) {
+      Notiflix.Notify.failure('You reach limit of pokemons for battle 3/3');
+      return;
+    }
+    const battleCard = cards.find((card: any) => card.overview.id === id);
+    console.log(battleCard);
+    dispatch(setUserBattleCards(battleCard));
+  };
+
+  const handleOnClickUnPickPokemon = (id: number) => {
+    dispatch(deleteUserBattleCards(id));
+  };
   return cards.length === 0 ? (
     <p>You don't have any Pokémon in your shelf. Buy packs to get Pokémon</p>
   ) : (
@@ -33,10 +52,27 @@ export const UserShelf = () => {
               className={css.btn}
               type="button"
               onClick={() =>
-                handleOnClick(card.overview.id, card.overview.base_experience)
+                handleOnClickQuickSell(
+                  card.overview.id,
+                  card.overview.base_experience
+                )
               }
             >
               Quick Sell for {calculatePrice(card.overview.base_experience)}
+            </button>
+            <button
+              className={css.btn}
+              type="button"
+              onClick={() => handleOnClickTakeForBattle(card.overview.id)}
+            >
+              Take for battle: {battleUser.cards?.length}/3
+            </button>
+            <button
+              className={css.btn}
+              type="button"
+              onClick={() => handleOnClickUnPickPokemon(card.overview.id)}
+            >
+              Unpick
             </button>
           </div>
         </li>

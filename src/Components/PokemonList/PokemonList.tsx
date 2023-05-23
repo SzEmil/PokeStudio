@@ -31,7 +31,7 @@ export const PokemonList = ({ pokemons }: PokemonListPropsType) => {
           <ul className={css.list}>
             {slicedPokemons.length !== 0 ? (
               slicedPokemons?.map(pokemon => (
-                <li key={nanoid()}>
+                <li key={nanoid()} className={css.item}>
                   <PokeFront pokemon={pokemon} />
                 </li>
               ))

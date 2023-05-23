@@ -1,0 +1,96 @@
+.battle {
+  width: 100%;
+  position: relative;
+  display: flex;
+  justify-content: space-around;
+}
+.chosenPokemons {
+  margin-right: 50px;
+}
+.chosenPokemonsAI {
+  margin-left: 50px;
+}
+.arena {
+  margin-top: 5px;
+  margin-bottom: 0;
+  width: 1200px;
+  height: 720px;
+  border-radius: 2px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  overflow: hidden;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  left: 0;
+  bottom: 0%;
+}
+.item {
+  width: 150px;
+
+  transition: transform 250ms ease;
+}
+.itemAI {
+  width: 150px;
+}
+.item:hover {
+  transform: translateY(-10px);
+  cursor: pointer;
+}
+.pokeFrontBox {
+  pointer-events: none;
+}
+.name {
+  font-style: normal;
+  font-family: 'Pokemon SOlid';
+  font-weight: 400;
+  font-size: 26px;
+  line-height: 26px;
+  color: white;
+}
+
+.menu {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+}
+.difficultyBox {
+  padding: 0px 0;
+}
+.difficultyText {
+  font-style: normal;
+  font-family: 'Roboto';
+  font-weight: 300;
+  font-size: 24px;
+  line-height: 24px;
+  color: white;
+
+  padding-right: 10px;
+}
+
+.btn {
+  font-style: normal;
+  font-family: 'Roboto';
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 14px;
+  color: black;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+
+  padding: 7px 10px;
+  background-color: rgba(255, 255, 255, 0.89);
+
+  transition: background-color 200ms ease-in-out;
+}
+.btn:hover {
+  background-color: rgba(199, 199, 199, 0.925);
+}
+
+.btn:nth-child(2) {
+  margin-left: 10px;
+}

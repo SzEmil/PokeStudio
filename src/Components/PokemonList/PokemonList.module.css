@@ -10,7 +10,9 @@
   gap: 10px;
   justify-content: center;
 }
-
+.item {
+  width: 400px;
+}
 .btnBox {
   margin: 15px 0;
 }

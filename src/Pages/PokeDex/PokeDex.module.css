@@ -11,15 +11,15 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 70px;
+  /* margin-top: 70px; */
 }
 
 .list {
   display: flex;
   gap: 10px;
-  position: fixed;
-  padding: 10px 0;
-  z-index: 10000;
+  /* position: fixed; */
+  padding: 20px 0;
+  padding-bottom: 30px;
 }
 .listBtn {
   font-style: normal;

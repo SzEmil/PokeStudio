@@ -39,3 +39,9 @@
 .btn:hover {
   background-color: rgba(199, 199, 199, 0.925);
 }
+.btn:nth-child(2) {
+  margin-left: 20px;
+}
+.btn:nth-child(3) {
+  margin-left: 20px;
+}

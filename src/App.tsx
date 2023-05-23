@@ -15,6 +15,7 @@ import { AppDispatch } from './Redux/store';
 import { useEffect } from 'react';
 import { refreshUser } from './Redux/auth/authOperations';
 import { ProtectedRoute } from './Components/ProtectedRoute';
+
 const HomePage = lazy(() => import('../src/Pages/Home/Home'));
 // const NotFoundPage = lazy(() => import('../src/Pages/NotFound/NotFound'));
 const PokeDexPage = lazy(() => import('../src/Pages/PokeDex/PokeDex'));

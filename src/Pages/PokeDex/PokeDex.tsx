@@ -11,6 +11,7 @@ import { PokeballLoader } from '../../Components/PokeballLoader/PokeballLoader';
 const PokeNewsComponent = lazy(
   () => import('../../Components/PokeNews/PokeNews')
 );
+const BattleComponent = lazy(() => import('../../Components/Battle/Battle'));
 
 const PokeDex = () => {
   const [isOpenShelf, setIsOpenShelf] = useState(false);
@@ -29,7 +30,7 @@ const PokeDex = () => {
   };
 
   const handleOnCickBattle = () => {
-    setIsOpenBattle(true);
+    setIsOpenBattle(prevState => !prevState);
     setIsOpenShelf(false);
     setIsOpenStore(false);
   };
@@ -72,6 +73,7 @@ const PokeDex = () => {
             {!isOpenShelf && !isOpenStore && !isOpenBattle && (
               <PokeNewsComponent />
             )}
+            {isOpenBattle ? <BattleComponent /> : null}
           </Suspense>
         </div>
       </Section>
