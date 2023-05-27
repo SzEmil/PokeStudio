@@ -55,3 +55,4 @@ export const fetchAIPokemons = createAsyncThunk(
     }
   }
 );
+

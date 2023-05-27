@@ -15,7 +15,7 @@ import { AppDispatch } from './Redux/store';
 import { useEffect } from 'react';
 import { refreshUser } from './Redux/auth/authOperations';
 import { ProtectedRoute } from './Components/ProtectedRoute';
-
+import { selectBattleUser } from './Redux/battle/battleSelectors';
 const HomePage = lazy(() => import('../src/Pages/Home/Home'));
 // const NotFoundPage = lazy(() => import('../src/Pages/NotFound/NotFound'));
 const PokeDexPage = lazy(() => import('../src/Pages/PokeDex/PokeDex'));
@@ -30,6 +30,7 @@ export const App = () => {
   const pokeDetails = useSelector(selectPokemonDetails);
   const searchPokemon = useSelector(selectSearchPokemons);
   const AuthState = useSelector(selectAuthState);
+  const battleUser = useSelector(selectBattleUser);
   const handlePokeData = () => {
     console.log(pokeData);
   };
@@ -52,6 +53,7 @@ export const App = () => {
           Serach Pokemon co tam masz
         </button>
         <button onClick={() => console.log(AuthState)}>Stan Autoryzacji</button>
+        <button onClick={() => console.log(battleUser)}>BattleUser</button>
       </div>
       <Routes>
         <Route path="/" element={<SharedLayout />}>
