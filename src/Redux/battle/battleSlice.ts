@@ -122,6 +122,7 @@ const battleSlice = createSlice({
       state.computer.pokemonOnArena = null;
       state.user.pokemonOnArena = null;
       state.computer.cards = [];
+      state.user.cards = [];
     },
   },
   extraReducers(builder) {

@@ -2,6 +2,7 @@ import { PayloadAction, SerializedError, createSlice } from '@reduxjs/toolkit';
 import { fetchPokemonByName, fetchPokemons } from './pokemonsOperations';
 
 export interface Pokemon {
+  overview: any;
   name: string;
   url: string;
 }

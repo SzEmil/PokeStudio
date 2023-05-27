@@ -109,6 +109,10 @@
   flex-direction: column;
   justify-content: center;
 }
+.defeated {
+  pointer-events: none;
+  filter: brightness(0.5) grayscale(100%);
+}
 .pokemonArenaComputer {
   position: absolute;
   top: 25%;

@@ -28,6 +28,7 @@ import { useState, useEffect } from 'react';
 
 const Battle = () => {
   const [computerPokemonNumber, setComputerPokemonNumber] = useState(0);
+  const [defeatedPokemons, setDefeatedPokemons] = useState(['']);
 
   const dispatch: AppDispatch = useDispatch();
   const user = useSelector(selectBattleUser);
@@ -68,7 +69,7 @@ const Battle = () => {
     const arenaCard = userCards.filter(card => card.overview!.name === name);
     dispatch(addToArena(arenaCard[0]));
   };
-
+  //user make damage for computer
   const handleMakeDamageUser = (damage: number, id: number) => {
     if (userMove === false)
       return Notiflix.Notify.failure('wait for youre turn User!');
@@ -76,7 +77,7 @@ const Battle = () => {
     health -= damage;
     dispatch(damageForComputer({ health, id }));
   };
-
+  //computer make damage for user
   const handleMakeDamageComputer = () => {
     if (computerMove === false)
       return Notiflix.Notify.failure('wait for youre turn Computer!');
@@ -106,6 +107,7 @@ const Battle = () => {
   const handleOnClickStopGame = () => {
     dispatch(stopGame());
     setComputerPokemonNumber(0);
+    setDefeatedPokemons(['']);
   };
 
   useEffect(() => {
@@ -129,6 +131,27 @@ const Battle = () => {
       setComputerPokemonNumber(prevVal => (prevVal += 1));
     }
     if (userMove === false && computerMove === true) handleMakeDamageComputer();
+
+    if (pokemonOnArenaUser.overview.stats[0].base_stat <= 0) {
+      const indexOfHpPokemon = userCards.findIndex(
+        pokemon => pokemon.overview!.stats[0].base_stat > 0
+      );
+      console.log(indexOfHpPokemon);
+      if (indexOfHpPokemon < 0) {
+        handleOnClickStopGame();
+        return Notiflix.Notify.success(
+          `You lost! Dont worry ${userData.username}, You can try again!`
+        );
+      }
+
+      if (indexOfHpPokemon >= 0) {
+        dispatch(addToArena(userCards[indexOfHpPokemon]));
+        setDefeatedPokemons(prevVal => [
+          ...prevVal,
+          pokemonOnArenaUser.overview.name,
+        ]);
+      }
+    }
   }),
     [handleMakeDamageUser];
 
@@ -161,17 +184,27 @@ const Battle = () => {
             <p>Add more cards to start battle</p>
           ) : (
             <ul className={css.list}>
-              {chosenPokemons?.map(pokemon => (
-                <li
-                  key={nanoid()}
-                  className={css.item}
-                  onClick={() => handleOnClickTakeOnArena(pokemon.name)}
-                >
-                  <div className={css.pokeFrontBox}>
-                    <PokeFront pokemon={pokemon} />
-                  </div>
-                </li>
-              ))}
+              {chosenPokemons?.map(pokemon => {
+                let itemClass = css.item;
+
+                if (pokemonOnArenaUser !== null) {
+                  itemClass = defeatedPokemons.includes(pokemon.name)
+                    ? `${css.item} ${css.defeated}`
+                    : css.item;
+                }
+
+                return (
+                  <li
+                    key={nanoid()}
+                    className={itemClass}
+                    onClick={() => handleOnClickTakeOnArena(pokemon.name)}
+                  >
+                    <div className={css.pokeFrontBox}>
+                      <PokeFront pokemon={pokemon} />
+                    </div>
+                  </li>
+                );
+              })}
             </ul>
           )}
         </div>
@@ -259,13 +292,25 @@ const Battle = () => {
             </ul>
           ) : (
             <ul className={css.list}>
-              {AIPokemonsFront.map(pokemon => (
-                <li key={nanoid()} className={css.itemAI}>
-                  <div className={css.pokeFrontBox}>
-                    <PokeFront pokemon={pokemon} />
-                  </div>
-                </li>
-              ))}
+              {AIPokemonsFront?.map(pokemon => {
+                let itemClass = css.itemAI;
+
+                if (
+                  pokemonOnArenaComputer !== null &&
+                  pokemonOnArenaComputer.stats[0].base_stat <= 0 &&
+                  pokemon.name === pokemonOnArenaComputer.name
+                ) {
+                  itemClass += ` ${css.defeated}`;
+                }
+
+                return (
+                  <li key={nanoid()} className={itemClass}>
+                    <div className={css.pokeFrontBox}>
+                      <PokeFront pokemon={pokemon} />
+                    </div>
+                  </li>
+                );
+              })}
             </ul>
           )}
         </div>
@@ -275,3 +320,28 @@ const Battle = () => {
 };
 
 export default Battle;
+
+//        <ul className={css.list}>
+//               {AIPokemonsFront?.map(pokemon => {
+//                 let itemClass = css.itemAI;
+
+//                 if (
+//                   pokemonOnArenaComputer !== null &&
+//                   pokemonOnArenaComputer.stats[0].base_stat <= 0 &&
+//                   pokemon.name === pokemonOnArenaComputer.name
+//                 ) {
+//                   itemClass += ` ${css.defeated}`;
+//                 }
+
+//                 return (
+//                   <li
+//                     key={nanoid()}
+//                     className={itemClass}
+//                   >
+//                     <div className={css.pokeFrontBox}>
+//                       <PokeFront pokemon={pokemon} />
+//                     </div>
+//                   </li>
+//                 );
+//               })}
+//             </ul>
