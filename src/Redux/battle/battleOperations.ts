@@ -15,7 +15,9 @@ const easyTab = [
   455, 457, 459, 461, 463, 465, 467, 469, 471, 474, 476, 478, 480,
 ];
 
-const mediumTab = [2, 3, 5, 6];
+const mediumTab = [
+  2, 3, 5, 6, 8, 9, 11, 12, 14, 15, 17, 18, 20, 22, 24, 26, 28, 30, 31, 33, 34,
+];
 
 axios.defaults.baseURL = ` https://pokeapi.co/api/v2`;
 
@@ -55,4 +57,3 @@ export const fetchAIPokemons = createAsyncThunk(
     }
   }
 );
-

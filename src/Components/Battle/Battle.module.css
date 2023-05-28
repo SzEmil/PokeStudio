@@ -24,7 +24,21 @@
   background-size: cover;
   background-position: center;
 }
+.errorMessage {
+  font-style: normal;
+  font-family: 'Roboto';
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 20px;
+  color: white;
 
+  padding-top: 20px;
+}
+.moveBox {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+}
 .list {
   display: flex;
   flex-direction: column;
@@ -48,29 +62,72 @@
 }
 .name {
   font-style: normal;
-  font-family: 'Pokemon SOlid';
+  font-family: 'Pokemon Solid';
   font-weight: 400;
   font-size: 26px;
   line-height: 26px;
   color: white;
 }
+.menuGear {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  cursor: pointer;
+}
 
 .menu {
-  width: 100%;
+  width: 300px;
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-direction: row;
+  flex-direction: column;
+
+  position: absolute;
+  left: 50%;
+  top: 35%;
+
+  transform: translateX(-50%);
+  /* transform: translateY(-50%); */
+  padding: 30px 10px;
+  border: 0.2px solid rgba(255, 255, 255, 0.5);
+  border-radius: 5px;
+
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 100;
+}
+.menuBackdrop {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 10;
+}
+.menuTitle {
+  font-style: normal;
+  font-family: 'Roboto';
+  font-weight: 400;
+  font-size: 28px;
+  line-height: 30px;
+  color: white;
+}
+.menuList {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.menuItem {
+  padding-top: 20px;
 }
 .difficultyBox {
   padding: 0px 0;
+  display: flex;
 }
-.difficultyText {
+.menuText {
   font-style: normal;
   font-family: 'Roboto';
   font-weight: 300;
-  font-size: 24px;
-  line-height: 24px;
+  font-size: 22px;
+  line-height: 22px;
   color: white;
 
   padding-right: 10px;
@@ -96,10 +153,31 @@
   background-color: rgba(199, 199, 199, 0.925);
 }
 
-.btn:nth-child(2) {
+.btn:nth-child(n + 2) {
   margin-left: 10px;
 }
+.menuCloseBtn {
+  font-style: normal;
+  font-family: 'Roboto';
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 14px;
+  color: black;
+  cursor: pointer;
+  border: none;
+  border-radius: 50%;
+  padding: 8px 10px;
 
+  transition: background-color 200ms ease;
+
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+.menuCloseBtn:hover,
+.menuCloseBtn:focus {
+  background-color: rgba(255, 255, 255, 0.4);
+}
 .pokemonArenaUser {
   position: absolute;
   bottom: 25%;
@@ -109,6 +187,7 @@
   flex-direction: column;
   justify-content: center;
 }
+
 .defeated {
   pointer-events: none;
   filter: brightness(0.5) grayscale(100%);
@@ -158,4 +237,33 @@
   font-weight: 500;
   font-size: 14px;
   line-height: 14px;
+}
+.userGui {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+.userBtn {
+  font-style: normal;
+  font-family: 'Roboto';
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 14px;
+  color: black;
+  cursor: pointer;
+  border: none;
+
+  padding: 5px 10px;
+  /* margin-top: 10px; */
+  border-radius: 1px;
+  z-index: 1;
+
+  transition: background-color 200ms ease;
+}
+.userBtn:nth-child(n + 2) {
+  margin-left: 10px;
+}
+.userBtn:hover,
+.userBtn:focus {
+  background-color: rgb(180, 180, 180);
 }

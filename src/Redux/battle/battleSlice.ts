@@ -104,6 +104,14 @@ const battleSlice = createSlice({
       state.game.userMove = true;
       state.game.computerMove = false;
     },
+    defendUser(state) {
+      state.game.userMove = false;
+      state.game.computerMove = true;
+    },
+    defendComputer(state) {
+      state.game.userMove = true;
+      state.game.computerMove = false;
+    },
     startGame(state) {
       state.game.isStarted = true;
       state.game.isPaused = false;
@@ -141,5 +149,7 @@ export const {
   stopGame,
   addToArenaComputer,
   damageForUser,
+  defendUser,
+  defendComputer,
 } = battleSlice.actions;
 export const battleReducer = battleSlice.reducer;
