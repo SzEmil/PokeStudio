@@ -272,7 +272,7 @@
 .description {
   position: absolute;
   bottom: 50%;
-  right: -300%;
+  right: -500%;
 
   background-color: rgba(0, 0, 0, 0.5);
   border-top: 0.1px solid rgba(0, 0, 0, 0.1);

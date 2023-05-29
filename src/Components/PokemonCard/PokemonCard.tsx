@@ -7,6 +7,14 @@ export const PokemonCard = ({ pokemon }: any) => {
     return name.replace(bigLetter.toLocaleLowerCase(), bigLetter);
   };
   const hotPokemon = pokemon;
+
+  const handleChangeColor = (colorCard: string) => {
+    let color = 'white';
+    if (colorCard === 'yellow') color = 'black';
+    if (colorCard === 'blue') color = 'white';
+    if (colorCard === 'white') color = 'black';
+    return color;
+  };
   return (
     <>
       <div className={css.cardBox}>
@@ -114,6 +122,9 @@ export const PokemonCard = ({ pokemon }: any) => {
                         className={css.abilitiesText}
                         style={{
                           background: `linear-gradient(180deg, ${hotPokemon?.details.color.name} 40%, rgba(40,40,40,1) 100%)`,
+                          color: `${handleChangeColor(
+                            hotPokemon?.details.color.name
+                          )}`,
                         }}
                       >
                         {ability.ability.name}

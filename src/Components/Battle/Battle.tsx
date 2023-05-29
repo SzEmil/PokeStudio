@@ -6,7 +6,7 @@ import { PokeFront } from '../pokeFront/pokeFront';
 import {
   selectBattleComputer,
   selectBattleUser,
-  // selectIsGameEnded,
+  selectIsGameEnded,
   // selectIsGamePaused,
   selectIsGameStarted,
   selectComputerMove,
@@ -38,6 +38,10 @@ const Battle = () => {
   const [menuOpen, setMenuOpen] = useState(true);
   const [isUserDefending, setIsUserDefending] = useState(false);
   const [isComputerDefending, setIsComputerDefending] = useState(false);
+  const [gameResult, setGameResult] = useState<string>('');
+  const [gameEnded, setGameEnded] = useState(false);
+  const [endedScreenOpen, setEndedScreenOpen] = useState(false);
+  const [difficultyType, setDifficultyType] = useState<string>();
 
   const dispatch: AppDispatch = useDispatch();
   const user = useSelector(selectBattleUser);
@@ -50,7 +54,7 @@ const Battle = () => {
 
   const isGameStarted = useSelector(selectIsGameStarted);
   // const isGamePaused = useSelector(selectIsGamePaused);
-  // const isGameEnded = useSelector(selectIsGameEnded);
+  const isGameFinished = useSelector(selectIsGameEnded);
 
   let pokemonOnArenaUser: any = user.pokemonOnArena;
   let pokemonOnArenaComputer: any = battleComputer.pokemonOnArena;
@@ -73,6 +77,7 @@ const Battle = () => {
 
   const handleOnClickDifficulty = (type: string) => {
     dispatch(fetchAIPokemons(type));
+    setDifficultyType(type);
   };
   const handleOnClickTakeOnArena = (name: string) => {
     const arenaCard = userCards.filter(card => card.overview!.name === name);
@@ -155,13 +160,16 @@ const Battle = () => {
 
     console.log('game logic');
     //tutaj zasczepić logike AI
-    //if user lost pokemon
+    //if computer lost pokemon
     if (pokemonOnArenaComputer.stats[0].base_stat <= 0) {
       const indexOfHpPokemon = battleComputer.cards!.findIndex(
         pokemon => pokemon.stats[0].base_stat > 0
       );
 
       if (indexOfHpPokemon < 0) {
+        setGameResult('won');
+        setGameEnded(true);
+        setEndedScreenOpen(true);
         handleOnClickStopGame();
         return Notiflix.Notify.success(
           `Congrats ${userData.username}, You have won a battle!`
@@ -180,13 +188,16 @@ const Battle = () => {
       }, 2000);
     }
 
-    //if computer lost pokemon
+    //if user lost pokemon
     if (pokemonOnArenaUser.overview.stats[0].base_stat <= 0) {
       const indexOfHpPokemon = userCards.findIndex(
         pokemon => pokemon.overview!.stats[0].base_stat > 0
       );
 
       if (indexOfHpPokemon < 0) {
+        setGameResult('lost');
+        setGameEnded(true);
+        setEndedScreenOpen(true);
         handleOnClickStopGame();
         return Notiflix.Notify.success(
           `You lost! Dont worry ${userData.username}, You can try again!`
@@ -315,12 +326,62 @@ const Battle = () => {
             </div>
           ) : null}
 
+          {isGameFinished &&
+          menuOpen === false &&
+          gameEnded === true &&
+          endedScreenOpen === true ? (
+            <div className={css.gameFinished}>
+              <div className={css.gameFinishedModal}>
+                <button
+                  type="button"
+                  className={css.menuCloseBtn}
+                  onClick={() => setEndedScreenOpen(prevVal => !prevVal)}
+                >
+                  X
+                </button>
+                <h2 className={css.gameFinishedTitle}>
+                  {gameResult === 'won' ? (
+                    <span>Congrats You have won a duel!</span>
+                  ) : (
+                    <span>You lost!</span>
+                  )}
+                </h2>
+                {gameResult === 'won' && difficultyType === 'easy' && (
+                  <p className={css.gameFinishedText}>
+                    You have won 1000 coins! soon...
+                  </p>
+                )}
+                {gameResult === 'won' && difficultyType === 'medium' && (
+                  <p className={css.gameFinishedText}>
+                    You have won 2000 coins! soon...
+                  </p>
+                )}
+                {gameResult === 'lost' && difficultyType === 'easy' && (
+                  <p className={css.gameFinishedText}>
+                    You have lost one of youre cards!. You didnt get coins for
+                    this! soon...
+                  </p>
+                )}
+                {gameResult === 'lost' && difficultyType === 'medium' && (
+                  <p className={css.gameFinishedText}>
+                    You have lost two of youre cards!. You didnt get coins for
+                    this! soon...
+                  </p>
+                )}
+              </div>
+            </div>
+          ) : null}
+
           {pokemonOnArenaUser === null || isGameStarted === false ? null : (
             <div className={css.pokemonArenaUser}>
               <img
                 className={css.pokeArenaImage}
                 alt="picked Pokemon"
-                src={pokemonOnArenaUser.overview.sprites.back_default}
+                src={
+                  pokemonOnArenaUser.overview.sprites.back_default
+                    ? pokemonOnArenaUser.overview.sprites.back_default
+                    : pokemonOnArenaUser.overview.sprites.front_default
+                }
               />
               <h2>{pokemonOnArenaUser.overview.name}</h2>
               <div
