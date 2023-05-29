@@ -24,7 +24,7 @@ import {
 import {
   startGame,
   stopGame,
-  defendComputer,
+  // defendComputer,
   defendUser,
 } from '../../Redux/battle/battleSlice';
 import { addToArenaComputer } from '../../Redux/battle/battleSlice';
@@ -43,7 +43,7 @@ const Battle = () => {
   const [endedScreenOpen, setEndedScreenOpen] = useState(false);
   const [difficultyType, setDifficultyType] = useState<string>();
   const [userProAttackCharge, setUserProAttackCharge] = useState(0);
-  const [computerProAttackCharge, setComputerProAttackCharge] = useState(0);
+  // const [computerProAttackCharge, setComputerProAttackCharge] = useState(0);
   const [isRulesOpen, setIsRulesOpen] = useState(false);
 
   const dispatch: AppDispatch = useDispatch();
@@ -135,10 +135,10 @@ const Battle = () => {
     dispatch(defendUser());
   };
 
-  const handleOnClickDefendComputer = () => {
-    setIsComputerDefending(true);
-    dispatch(defendComputer());
-  };
+  // const handleOnClickDefendComputer = () => {
+  //   setIsComputerDefending(true);
+  //   dispatch(defendComputer());
+  // };
 
   const handleOnClickStartGame = () => {
     if (userCards.length < 3 || battleComputer.cards!.length < 3) {
