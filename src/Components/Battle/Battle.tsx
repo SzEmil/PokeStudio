@@ -24,7 +24,7 @@ import {
 import {
   startGame,
   stopGame,
-  // defendComputer,
+  defendComputer,
   defendUser,
 } from '../../Redux/battle/battleSlice';
 import { addToArenaComputer } from '../../Redux/battle/battleSlice';
@@ -42,6 +42,9 @@ const Battle = () => {
   const [gameEnded, setGameEnded] = useState(false);
   const [endedScreenOpen, setEndedScreenOpen] = useState(false);
   const [difficultyType, setDifficultyType] = useState<string>();
+  const [userProAttackCharge, setUserProAttackCharge] = useState(0);
+  const [computerProAttackCharge, setComputerProAttackCharge] = useState(0);
+  const [isRulesOpen, setIsRulesOpen] = useState(false);
 
   const dispatch: AppDispatch = useDispatch();
   const user = useSelector(selectBattleUser);
@@ -99,6 +102,10 @@ const Battle = () => {
     } else {
       health -= damageFromUser;
     }
+    if (userProAttackCharge !== 3) {
+      setUserProAttackCharge(prevVal => (prevVal += 1));
+      console.log(userProAttackCharge);
+    }
     dispatch(damageForComputer({ health, id }));
   };
   //computer make damage for user
@@ -122,13 +129,16 @@ const Battle = () => {
   };
   const handleOnClickDefendUser = () => {
     setIsUserDefending(true);
+    if (userProAttackCharge !== 3) {
+      setUserProAttackCharge(prevVal => (prevVal += 1));
+    }
     dispatch(defendUser());
   };
 
-  // const handleOnClickDefendComputer = () => {
-  //   setIsComputerDefending(true);
-  //   dispatch(defendComputer());
-  // };
+  const handleOnClickDefendComputer = () => {
+    setIsComputerDefending(true);
+    dispatch(defendComputer());
+  };
 
   const handleOnClickStartGame = () => {
     if (userCards.length < 3 || battleComputer.cards!.length < 3) {
@@ -152,6 +162,8 @@ const Battle = () => {
     dispatch(stopGame());
     setComputerPokemonNumber(0);
     setDefeatedPokemons(['']);
+    setUserProAttackCharge(0);
+
     // setMenuOpen(true);
   };
 
@@ -283,13 +295,15 @@ const Battle = () => {
                 >
                   X
                 </button>
-
                 <h2 className={css.menuTitle}>Menu</h2>
                 <ul className={css.menuList}>
                   <li key={nanoid()} className={css.menuItem}>
                     <button
-                      className={css.btn}
+                      className={`${css.btn} ${
+                        isGameStarted === false ? '' : css.disabledBtn
+                      }`}
                       onClick={() => handleOnClickStartGame()}
+                      disabled={isGameStarted ? true : false}
                     >
                       Start game
                     </button>
@@ -298,14 +312,18 @@ const Battle = () => {
                     <div className={css.difficultyBox}>
                       <h3 className={css.menuText}>Difficulty:</h3>
                       <button
-                        className={css.btn}
+                        className={`${css.btn} ${
+                          isGameStarted === false ? '' : css.disabledBtn
+                        }`}
                         type="button"
                         onClick={() => handleOnClickDifficulty('easy')}
                       >
                         Easy
                       </button>
                       <button
-                        className={css.btn}
+                        className={`${css.btn} ${
+                          isGameStarted === false ? '' : css.disabledBtn
+                        }`}
                         type="button"
                         onClick={() => handleOnClickDifficulty('medium')}
                       >
@@ -316,12 +334,39 @@ const Battle = () => {
                   <li key={nanoid()} className={css.menuItem}>
                     <button
                       className={css.btn}
+                      onClick={() => setIsRulesOpen(prevVal => !prevVal)}
+                    >
+                      Rules
+                    </button>
+                  </li>
+                  <li key={nanoid()} className={css.menuItem}>
+                    <button
+                      className={`${css.btn} ${
+                        isGameStarted ? '' : css.disabledBtn
+                      }`}
                       onClick={() => handleOnClickStopGame()}
+                      disabled={isGameStarted ? false : true}
                     >
                       End game
                     </button>
                   </li>
                 </ul>
+              </div>
+              <div
+                className={`${css.menuRulesBox} ${
+                  isRulesOpen ? css.menuRulesBoxOpen : ''
+                }`}
+              >
+                <h2 className={css.rulesTitle}>Rules</h2>
+                <p className={css.rulesText}>
+                  During the game you will use three of your pokemons. Use the
+                  buttons to perform the appropriate action, such as attack or
+                  defense. Your special attack takes 3 rounds to recharge. When
+                  you lose on easy you lose one pokemon. If you lose on Medium,
+                  you lose two Pokemon. When you win on easy you get 1000 coins.
+                  After winning on medium level you get 2000 coins. Have fun
+                  pokemon trainer!
+                </p>
               </div>
             </div>
           ) : null}
@@ -427,28 +472,81 @@ const Battle = () => {
           isGameStarted === false ||
           menuOpen === true ? null : (
             <div className={css.userGui}>
-              <button
-                className={css.userBtn}
-                type="button"
-                onClick={() => handleMakeDamageUser(pokemonOnArenaComputer.id)}
-              >
-                Hit {pokemonOnArenaUser.overview.stats[1].base_stat}
-              </button>
-              <button
-                className={css.userBtn}
-                type="button"
-                onClick={() => handleMakeDamageUser(pokemonOnArenaComputer.id)}
-              >
-                Special Attack {pokemonOnArenaUser.overview.stats[3].base_stat}
-              </button>
+              <h2 className={css.guiPokemonName}>
+                {pokemonOnArenaUser.overview.name}
+              </h2>
+              <div>
+                <button
+                  className={css.userBtn}
+                  type="button"
+                  onClick={() =>
+                    handleMakeDamageUser(pokemonOnArenaComputer.id)
+                  }
+                >
+                  Hit {pokemonOnArenaUser.overview.stats[1].base_stat}
+                </button>
+                <button
+                  className={`${css.userBtn} ${
+                    userProAttackCharge < 3 ? css.disabledBtn : ''
+                  }`}
+                  type="button"
+                  onClick={() => {
+                    handleMakeDamageUser(pokemonOnArenaComputer.id);
+                    setUserProAttackCharge(0);
+                  }}
+                  disabled={userProAttackCharge < 3 ? true : false}
+                >
+                  Special Attack{' '}
+                  {pokemonOnArenaUser.overview.stats[3].base_stat}
+                </button>
 
-              <button
-                className={css.userBtn}
-                type="button"
-                onClick={() => handleOnClickDefendUser()}
-              >
-                Defend {pokemonOnArenaUser.overview.stats[2].base_stat}
-              </button>
+                <button
+                  className={css.userBtn}
+                  type="button"
+                  onClick={() => handleOnClickDefendUser()}
+                >
+                  Defend {pokemonOnArenaUser.overview.stats[2].base_stat}
+                </button>
+              </div>
+
+              <ul className={css.userGuiPokemonStats}>
+                {pokemonOnArenaUser?.overview.stats.map(
+                  (stat: ReturnType<typeof pokemonOnArenaUser>) => (
+                    <li key={nanoid()}>
+                      <p className={css.statsText}>
+                        {stat.stat.name}:{' '}
+                        <span className={css.statsTextOvrl}>
+                          {stat.base_stat}
+                        </span>
+                      </p>
+                    </li>
+                  )
+                )}
+              </ul>
+            </div>
+          )}
+
+          {pokemonOnArenaComputer === null ||
+          isGameStarted === false ||
+          menuOpen === true ? null : (
+            <div className={css.computerGui}>
+              <h2 className={css.guiPokemonName}>
+                {pokemonOnArenaComputer.name}
+              </h2>
+              <ul className={css.userGuiPokemonStats}>
+                {pokemonOnArenaComputer?.stats.map(
+                  (stat: ReturnType<typeof pokemonOnArenaComputer>) => (
+                    <li key={nanoid()}>
+                      <p className={css.statsText}>
+                        {stat.stat.name}:{' '}
+                        <span className={css.statsTextOvrl}>
+                          {stat.base_stat}
+                        </span>
+                      </p>
+                    </li>
+                  )
+                )}
+              </ul>
             </div>
           )}
         </div>

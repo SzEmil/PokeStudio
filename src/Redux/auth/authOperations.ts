@@ -31,6 +31,7 @@ export const registerUser = createAsyncThunk(
       const userData = {
         username: username!,
         email: user.email,
+        coins: 1000,
       };
 
       set(ref(fireDatabase, 'users/' + user.uid), {
@@ -40,6 +41,7 @@ export const registerUser = createAsyncThunk(
         userCreated: Date(),
         cards: cardsArr,
         coins: 1000,
+        cookies: false,
         // profile_picture : imageUrl
       })
         .then(() => {

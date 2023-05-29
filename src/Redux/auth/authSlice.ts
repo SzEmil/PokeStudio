@@ -12,6 +12,7 @@ export type authStateType = {
     email: string | null | undefined;
     cards: hotpokeData[] | [];
     coins: number | null;
+    cookies: boolean;
   };
   token: null | string;
   isLoggedIn: boolean;
@@ -22,7 +23,7 @@ export type authStateType = {
 };
 
 const authInitialState: authStateType = {
-  user: { username: null, email: null, cards: [], coins: 0 },
+  user: { username: null, email: null, cards: [], coins: 0, cookies: false },
   token: null,
   isLoggedIn: false,
   isLoggingIn: false,
@@ -52,6 +53,7 @@ const authSlice = createSlice({
       state.isLoggingIn = false;
       state.isLoggedIn = true;
       state.user.email = action.payload.email;
+      state.user.coins = action.payload.coins;
       state.user.username = action.payload.username;
     });
 
