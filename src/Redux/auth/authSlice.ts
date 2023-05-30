@@ -4,6 +4,8 @@ import { refreshUser } from './authOperations';
 import { addCard, quickSellCard } from './authOperations';
 import { buyPack } from './authOperations';
 import { deleteCard } from './authOperations';
+import { userLostCard } from './authOperations';
+import { getMoneyForBattle } from './authOperations';
 
 type hotpokeData = Record<string, unknown>;
 export type authStateType = {
@@ -152,6 +154,20 @@ const authSlice = createSlice({
     builder.addCase(deleteCard.fulfilled, (state, action) => {
       (state.isLoading = false), (state.error = null);
       state.user.cards = action.payload.newCards;
+      state.user.coins = action.payload.newCoins;
+    });
+
+    builder.addCase(userLostCard.rejected, (state, action) => {
+      state.error = action.payload;
+    });
+    builder.addCase(userLostCard.fulfilled, (state, action) => {
+      state.user.cards = action.payload.cardsToResponse;
+    });
+
+    builder.addCase(getMoneyForBattle.rejected, (state, action) => {
+      state.error = action.payload;
+    });
+    builder.addCase(getMoneyForBattle.fulfilled, (state, action) => {
       state.user.coins = action.payload.newCoins;
     });
   },

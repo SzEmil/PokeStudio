@@ -68,10 +68,10 @@ export const loginUser = createAsyncThunk(
         password!
       );
       const user = userCredential.user;
-      // const cardsArr: hotpokeData[] = [{ card: { dummy: 'dummy' } }];
+      //const cardsArr: hotpokeData[] = [{ card: { dummy: 'dummy' } }];
       await update(ref(fireDatabase, 'users/' + user.uid), {
         last_login: Date(),
-        // cards: cardsArr,
+        //cards: cardsArr,
         // coins: 10000,
       });
 
@@ -270,6 +270,63 @@ export const deleteCard = createAsyncThunk(
         throw new Error(
           'Error using delete Card: propably this card doesnt exist in database'
         );
+      }
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const userLostCard = createAsyncThunk(
+  'auth/UserLostCard',
+  async (idToLost: number[], thunkAPI) => {
+    try {
+      const auth = getAuth();
+      const user = auth.currentUser;
+
+      if (user) {
+        const userSnapshot = await get(ref(fireDatabase, 'users/' + user.uid));
+        const { cards } = userSnapshot.val();
+        const dummyCard = cards[0];
+        const cardsSlice = cards.slice(1);
+        const updatedCards = cardsSlice.filter(
+          (card: { overview?: { id: number } }) =>
+            !idToLost.includes(card?.overview!.id)
+        );
+        const cardsToResponse = [dummyCard, ...updatedCards];
+        console.log(updatedCards);
+        await update(ref(fireDatabase, 'users/' + user.uid), {
+          cards: [...cardsToResponse],
+        });
+
+        return { cardsToResponse };
+      } else {
+        throw new Error('error druing update cards');
+      }
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const getMoneyForBattle = createAsyncThunk(
+  'auth/GetMoneyForBattle',
+  async (money: number, thunkAPI) => {
+    try {
+      const auth = getAuth();
+      const user = auth.currentUser;
+
+      if (user) {
+        const userSnapshot = await get(ref(fireDatabase, 'users/' + user.uid));
+        const { coins } = userSnapshot.val();
+        const newCoins = coins + money;
+        await update(ref(fireDatabase, 'users/' + user.uid), {
+          coins: newCoins,
+        });
+
+        return { newCoins };
+      } else {
+        throw new Error('Użytkownik niezalogowany');
       }
     } catch (error: any) {
       return thunkAPI.rejectWithValue(error.message);

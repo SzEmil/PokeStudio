@@ -12,6 +12,7 @@ import {
   selectComputerMove,
   selectUserMove,
 } from '../../Redux/battle/battleSelectors';
+import { PokemonCard } from '../PokemonCard/PokemonCard';
 import { selectAuthUser } from '../../Redux/auth/authSelectors';
 import { fetchAIPokemons } from '../../Redux/battle/battleOperations';
 import { useDispatch } from 'react-redux';
@@ -24,13 +25,17 @@ import {
 import {
   startGame,
   stopGame,
-  // defendComputer,
+  defendComputer,
   defendUser,
 } from '../../Redux/battle/battleSlice';
 import { addToArenaComputer } from '../../Redux/battle/battleSlice';
 import Notiflix from 'notiflix';
 import { useState, useEffect } from 'react';
 import { RxGear } from 'react-icons/rx';
+import {
+  userLostCard,
+  getMoneyForBattle,
+} from '../../Redux/auth/authOperations';
 
 const Battle = () => {
   const [computerPokemonNumber, setComputerPokemonNumber] = useState(0);
@@ -43,8 +48,14 @@ const Battle = () => {
   const [endedScreenOpen, setEndedScreenOpen] = useState(false);
   const [difficultyType, setDifficultyType] = useState<string>();
   const [userProAttackCharge, setUserProAttackCharge] = useState(0);
-  // const [computerProAttackCharge, setComputerProAttackCharge] = useState(0);
+  const [computerProAttackCharge, setComputerProAttackCharge] = useState(0);
   const [isRulesOpen, setIsRulesOpen] = useState(false);
+  const [lostPokemons, setLostPokemons] = useState([]);
+  const [defeatedComputerPokemons, setDefeatedComputerPokemons] = useState([
+    '',
+  ]);
+  const [isUserAttacking, setIsUserAttacking] = useState(false);
+  const [isComputerAttacking, setIsComputerAttacking] = useState(false);
 
   const dispatch: AppDispatch = useDispatch();
   const user = useSelector(selectBattleUser);
@@ -87,18 +98,20 @@ const Battle = () => {
     dispatch(addToArena(arenaCard[0]));
   };
   //user make damage for computer
-  const handleMakeDamageUser = (id: number) => {
+  const handleMakeDamageUser = (id: number, damageFromUser: number) => {
     if (userMove === false)
       return Notiflix.Notify.failure('wait for youre turn User!');
-    const damageFromUser = pokemonOnArenaUser.overview!.stats[1].base_stat / 10;
+
     let health = pokemonOnArenaComputer.stats[0].base_stat;
-    const computerDefence = pokemonOnArenaComputer.stats[2].base_stat;
+    const computerDefence = pokemonOnArenaComputer.stats[2].base_stat / 10;
 
     if (isComputerDefending) {
       let damage = damageFromUser - computerDefence;
       if (damage < 0) damage = 0;
       health -= damage;
-      setIsComputerDefending(false);
+      setTimeout(() => {
+        setIsComputerDefending(false);
+      }, 1000);
     } else {
       health -= damageFromUser;
     }
@@ -106,26 +119,38 @@ const Battle = () => {
       setUserProAttackCharge(prevVal => (prevVal += 1));
       console.log(userProAttackCharge);
     }
+    setIsUserAttacking(true);
     dispatch(damageForComputer({ health, id }));
+    setTimeout(() => {
+      setIsUserAttacking(false);
+    }, 1500);
   };
   //computer make damage for user
-  const handleMakeDamageComputer = () => {
+  const handleMakeDamageComputer = (damageFromComputer: number) => {
     if (computerMove === false)
       return Notiflix.Notify.failure('wait for youre turn Computer!');
     const id = pokemonOnArenaUser.overview.id;
     const userDefence = pokemonOnArenaUser.overview!.stats[2].base_stat / 10;
-    const damageFromComputer = pokemonOnArenaComputer.stats[1].base_stat / 10;
     let health = pokemonOnArenaUser.overview.stats[0].base_stat;
     if (isUserDefending) {
       let damage = damageFromComputer - userDefence;
       if (damage < 0) damage = 0;
       health -= damage;
-      setIsUserDefending(false);
+      setTimeout(() => {
+        setIsUserDefending(false);
+      }, 2000);
     } else {
       health -= damageFromComputer;
     }
-
+    if (computerProAttackCharge !== 3) {
+      setComputerProAttackCharge(prevVal => (prevVal += 1));
+      console.log(userProAttackCharge);
+    }
+    setIsComputerAttacking(true);
     dispatch(damageForUser({ health, id }));
+    setTimeout(() => {
+      setIsComputerAttacking(false);
+    }, 1500);
   };
   const handleOnClickDefendUser = () => {
     setIsUserDefending(true);
@@ -133,12 +158,21 @@ const Battle = () => {
       setUserProAttackCharge(prevVal => (prevVal += 1));
     }
     dispatch(defendUser());
+    setTimeout(() => {
+      setIsComputerDefending(false);
+    }, 2000);
   };
 
-  // const handleOnClickDefendComputer = () => {
-  //   setIsComputerDefending(true);
-  //   dispatch(defendComputer());
-  // };
+  const handleDefendComputer = () => {
+    setIsComputerDefending(true);
+    if (computerProAttackCharge !== 3) {
+      setComputerProAttackCharge(prevVal => (prevVal += 1));
+      console.log(userProAttackCharge);
+    }
+    dispatch(defendComputer());
+
+    setIsUserDefending(false);
+  };
 
   const handleOnClickStartGame = () => {
     if (userCards.length < 3 || battleComputer.cards!.length < 3) {
@@ -166,6 +200,34 @@ const Battle = () => {
 
     // setMenuOpen(true);
   };
+  const handleGiveReward = (type: string, mode: string | undefined) => {
+    if (type === 'won') {
+      let money = 0;
+      if (mode === 'easy') money = 1000;
+      if (mode === 'medium') money = 1500;
+      dispatch(getMoneyForBattle(money));
+    }
+    if (type === 'lost') {
+      const idTab = userCards.map(card => card.overview!.id);
+      let idToLost: number[] = [];
+      if (mode === 'easy')
+        idToLost.push(idTab[Math.floor(Math.random() * idTab.length)]);
+      if (mode === 'medium') {
+        while (idToLost.length < 2) {
+          const randomIndex = Math.floor(Math.random() * idTab.length);
+          if (!idToLost.includes(idTab[randomIndex])) {
+            idToLost.push(idTab[randomIndex]);
+          }
+        }
+      }
+      const userLostThisCards: any = userCards.filter(
+        (card: { overview?: { id: number } }) =>
+          idToLost.includes(card.overview!.id)
+      );
+      setLostPokemons(userLostThisCards);
+      dispatch(userLostCard(idToLost));
+    }
+  };
 
   useEffect(() => {
     if (isGameStarted === false) return;
@@ -183,21 +245,41 @@ const Battle = () => {
         setGameEnded(true);
         setEndedScreenOpen(true);
         handleOnClickStopGame();
+        handleGiveReward('won', difficultyType);
         return Notiflix.Notify.success(
           `Congrats ${userData.username}, You have won a battle!`
         );
       }
       if (pokemonOnArenaComputer.stats[0].base_stat <= 0) {
         dispatch(addToArenaComputer(battleComputer.cards![indexOfHpPokemon]));
-        setComputerPokemonNumber(prevVal => (prevVal += 1));
+        setTimeout(() => {
+          setDefeatedComputerPokemons(prevVal => [
+            ...prevVal,
+            pokemonOnArenaComputer.name,
+          ]);
+        }, 100);
       }
     }
     //computer response for user move
     if (userMove === false && computerMove === true) {
-      setTimeout(() => {
-        console.log('pc atakuje');
-        handleMakeDamageComputer();
-      }, 2000);
+      const damageFromComputer = pokemonOnArenaComputer.stats[1].base_stat / 10;
+      const computerSpecialAttack =
+        pokemonOnArenaComputer.stats[3].base_stat / 10;
+      console.log(computerProAttackCharge);
+      if (computerProAttackCharge === 3 && Math.random() > 0.1) {
+        handleMakeDamageComputer(computerSpecialAttack);
+        console.log('pc SUPERatakuje');
+        setComputerProAttackCharge(0);
+      } else if (Math.random() < 0.1) {
+        handleDefendComputer();
+        console.log('pc DEFENDUJE SIE');
+      } else if (userProAttackCharge === 3 && Math.random() < 0.5) {
+        handleDefendComputer();
+        console.log('pc DEFENDUJE SIE');
+      } else {
+        handleMakeDamageComputer(damageFromComputer);
+        console.log('pc ATAKUJE');
+      }
     }
 
     //if user lost pokemon
@@ -211,6 +293,7 @@ const Battle = () => {
         setGameEnded(true);
         setEndedScreenOpen(true);
         handleOnClickStopGame();
+        handleGiveReward('lost', difficultyType);
         return Notiflix.Notify.success(
           `You lost! Dont worry ${userData.username}, You can try again!`
         );
@@ -218,14 +301,21 @@ const Battle = () => {
 
       if (indexOfHpPokemon >= 0) {
         dispatch(addToArena(userCards[indexOfHpPokemon]));
-        setDefeatedPokemons(prevVal => [
-          ...prevVal,
-          pokemonOnArenaUser.overview.name,
-        ]);
+        setTimeout(() => {
+          setDefeatedPokemons(prevVal => [
+            ...prevVal,
+            pokemonOnArenaUser.overview.name,
+          ]);
+        }, 100);
       }
     }
   }),
-    [handleMakeDamageUser];
+    [
+      handleMakeDamageUser,
+      handleOnClickDefendUser,
+      handleDefendComputer,
+      handleMakeDamageComputer,
+    ];
 
   return (
     <>
@@ -248,7 +338,12 @@ const Battle = () => {
                 return (
                   <li
                     key={nanoid()}
-                    className={itemClass}
+                    className={`${itemClass} ${
+                      pokemonOnArenaUser !== null &&
+                      pokemonOnArenaUser.overview.name === pokemon.name
+                        ? css.pickedPokemonBar
+                        : ''
+                    }`}
                     onClick={() => handleOnClickTakeOnArena(pokemon.name)}
                   >
                     <div className={css.pokeFrontBox}>
@@ -263,11 +358,6 @@ const Battle = () => {
 
         <div
           className={css.arena}
-          // style={
-          //   isGameStarted
-          //     ? { backgroundImage: 'url(https://i.redd.it/dnlz6c3xni951.jpg)' }
-          //     : {}
-          // }
           style={{
             backgroundImage: 'url(https://i.redd.it/dnlz6c3xni951.jpg)',
           }}
@@ -392,26 +482,46 @@ const Battle = () => {
                   )}
                 </h2>
                 {gameResult === 'won' && difficultyType === 'easy' && (
-                  <p className={css.gameFinishedText}>
-                    You have won 1000 coins! soon...
-                  </p>
+                  <div>
+                    <p className={css.gameFinishedText}>
+                      You have won 1000 coins!
+                    </p>
+                  </div>
                 )}
                 {gameResult === 'won' && difficultyType === 'medium' && (
                   <p className={css.gameFinishedText}>
-                    You have won 2000 coins! soon...
+                    You have won 1500 coins!
                   </p>
                 )}
                 {gameResult === 'lost' && difficultyType === 'easy' && (
-                  <p className={css.gameFinishedText}>
-                    You have lost one of youre cards!. You didnt get coins for
-                    this! soon...
-                  </p>
+                  <div>
+                    <p className={css.gameFinishedText}>
+                      You have lost one of youre cards!. You didnt get coins for
+                      this!
+                    </p>
+                    <ul>
+                      {lostPokemons!.map((pokemon: any) => (
+                        <li key={nanoid()} className={css.lostPokemon}>
+                          {<PokemonCard pokemon={pokemon} />}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 )}
                 {gameResult === 'lost' && difficultyType === 'medium' && (
-                  <p className={css.gameFinishedText}>
-                    You have lost two of youre cards!. You didnt get coins for
-                    this! soon...
-                  </p>
+                  <div>
+                    <p className={css.gameFinishedText}>
+                      You have lost two of youre cards!. You didnt get coins for
+                      this!
+                    </p>
+                    <ul className={css.lostPokemonList}>
+                      {lostPokemons!.map((pokemon: any) => (
+                        <li key={nanoid()} className={css.lostPokemon}>
+                          {<PokemonCard pokemon={pokemon} />}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 )}
               </div>
             </div>
@@ -420,7 +530,9 @@ const Battle = () => {
           {pokemonOnArenaUser === null || isGameStarted === false ? null : (
             <div className={css.pokemonArenaUser}>
               <img
-                className={css.pokeArenaImage}
+                className={`${css.pokeArenaImage} ${
+                  isUserDefending ? css.pokemonDefending : ''
+                } ${isUserAttacking ? css.userAtacking : ''}`}
                 alt="picked Pokemon"
                 src={
                   pokemonOnArenaUser.overview.sprites.back_default
@@ -448,7 +560,9 @@ const Battle = () => {
           {pokemonOnArenaComputer === null && isGameStarted === false ? null : (
             <div className={css.pokemonArenaComputer}>
               <img
-                className={css.pokeArenaImage}
+                className={`${css.pokeArenaImage} ${
+                  isComputerDefending ? css.pokemonDefending : ''
+                } ${isComputerAttacking ? css.computerAtacking : ''}`}
                 alt="picked Pokemon"
                 src={pokemonOnArenaComputer.sprites.front_default}
               />
@@ -480,7 +594,10 @@ const Battle = () => {
                   className={css.userBtn}
                   type="button"
                   onClick={() =>
-                    handleMakeDamageUser(pokemonOnArenaComputer.id)
+                    handleMakeDamageUser(
+                      pokemonOnArenaComputer.id,
+                      pokemonOnArenaUser.overview.stats[1].base_stat / 10
+                    )
                   }
                 >
                   Hit {pokemonOnArenaUser.overview.stats[1].base_stat}
@@ -491,7 +608,10 @@ const Battle = () => {
                   }`}
                   type="button"
                   onClick={() => {
-                    handleMakeDamageUser(pokemonOnArenaComputer.id);
+                    handleMakeDamageUser(
+                      pokemonOnArenaComputer.id,
+                      pokemonOnArenaUser.overview.stats[3].base_stat / 10
+                    );
                     setUserProAttackCharge(0);
                   }}
                   disabled={userProAttackCharge < 3 ? true : false}
@@ -562,18 +682,24 @@ const Battle = () => {
           ) : (
             <ul className={css.list}>
               {AIPokemonsFront?.map(pokemon => {
-                let itemClass = css.itemAI;
+                let itemClass = css.item;
 
-                if (
-                  pokemonOnArenaComputer !== null &&
-                  pokemonOnArenaComputer.stats[0].base_stat <= 0 &&
-                  pokemon.name === pokemonOnArenaComputer.name
-                ) {
-                  itemClass += ` ${css.defeated}`;
+                if (pokemonOnArenaComputer !== null) {
+                  itemClass = defeatedComputerPokemons.includes(pokemon.name)
+                    ? `${css.itemAI} ${css.defeated}`
+                    : css.item;
                 }
 
                 return (
-                  <li key={nanoid()} className={itemClass}>
+                  <li
+                    key={nanoid()}
+                    className={`${itemClass} ${
+                      pokemonOnArenaComputer !== null &&
+                      pokemonOnArenaComputer.name === pokemon.name
+                        ? css.pickedPokemonBar
+                        : ''
+                    }`}
+                  >
                     <div className={css.pokeFrontBox}>
                       <PokeFront pokemon={pokemon} />
                     </div>

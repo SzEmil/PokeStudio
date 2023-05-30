@@ -246,6 +246,35 @@
 .pokeArenaImage {
   width: 200px;
   animation: moveUpDown 2s infinite;
+  transition: transform 2s ease;
+}
+.userAtacking {
+  animation: attackAI 1500ms linear;
+}
+@keyframes attackAI {
+  0% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(300px, -30px);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+.computerAtacking {
+  animation: attackUser 1500ms linear;
+}
+@keyframes attackUser {
+  0% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(-300px, 30px);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
 }
 @keyframes moveUpDown {
   0% {
@@ -351,7 +380,7 @@
   align-items: center;
   z-index: 100;
   position: absolute;
-  top: 40%;
+  top: 3%;
   left: 50%;
 
   transform: translateX(-50%);
@@ -382,4 +411,35 @@
   background-color: rgba(255, 255, 255, 0.5);
   pointer-events: none;
   cursor: default;
+}
+.pokemonDefending {
+  border: 5px solid rgba(214, 228, 16, 0.568);
+  width: 200px;
+  border-radius: 50%;
+}
+.pickedPokemonBar {
+  position: relative;
+}
+.pickedPokemonBar:after {
+  content: '';
+  position: absolute;
+  background-color: rgba(255, 255, 0, 0.295);
+  filter: blur(20px);
+  left: 0;
+  top: 0;
+  transform: translateY(25%);
+
+  border-radius: 50%;
+
+  width: 100%;
+  height: 60%;
+  z-index: -1;
+}
+.lostPokemon {
+  width: 350px;
+}
+.lostPokemonList {
+  margin-top: 10px;
+  display: flex;
+  gap: 10px;
 }

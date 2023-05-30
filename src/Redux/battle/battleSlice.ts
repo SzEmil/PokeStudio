@@ -93,6 +93,7 @@ const battleSlice = createSlice({
       state.game.computerMove = true;
     },
     damageForUser(state, action) {
+      if (state.user.pokemonOnArena === null) return;
       state.user.pokemonOnArena!.overview!.stats[0].base_stat =
         action.payload.health;
       const cardIndex = state.user.cards!.findIndex(
