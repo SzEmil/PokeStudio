@@ -82,12 +82,12 @@ const battleSlice = createSlice({
       state.computer.pokemonOnArena = action.payload;
     },
     damageForComputer(state, action) {
-      state.computer.pokemonOnArena!.stats[0].base_stat = action.payload.health;
+      state.computer.pokemonOnArena!.stats[0].base_stat = action.payload.healtForDispatch;
       const cardIndex = state.computer.cards!.findIndex(
         card => card.id === action.payload.id
       );
       state.computer.cards![cardIndex].stats[0].base_stat =
-        action.payload.health;
+        action.payload.healtForDispatch;
 
       state.game.userMove = false;
       state.game.computerMove = true;
@@ -95,12 +95,12 @@ const battleSlice = createSlice({
     damageForUser(state, action) {
       if (state.user.pokemonOnArena === null) return;
       state.user.pokemonOnArena!.overview!.stats[0].base_stat =
-        action.payload.health;
+        action.payload.healtForDispatch;
       const cardIndex = state.user.cards!.findIndex(
         card => card.overview!.id === action.payload.id
       );
       state.user.cards![cardIndex].overview!.stats[0].base_stat =
-        action.payload.health;
+        action.payload.healtForDispatch;
 
       state.game.userMove = true;
       state.game.computerMove = false;

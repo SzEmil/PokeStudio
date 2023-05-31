@@ -12,18 +12,18 @@ export const PokePack = ({ type, handleOnClick }: PokePackPropsType) => {
   let price = 0;
   let legendary;
   if (type === 'Gold') {
-    price = 500;
+    price = 1000;
     legendary = 9;
     backgroundImage =
       'https://cdn.leonardo.ai/users/0b683e71-42fa-4e1b-8356-6df8f6f5706e/generations/6606818d-b1ce-47ce-99b9-c2e7043f0a46/Leonardo_Diffusion_pokemon_pack_background_golden_background_v_2.jpg';
   }
   if (type === 'Silver') {
-    price = 200;
+    price = 500;
     legendary = 2;
     backgroundImage = `https://cdn.leonardo.ai/users/0b683e71-42fa-4e1b-8356-6df8f6f5706e/generations/acead86b-1e48-4ef9-ae3a-5d49cb4d2695/Leonardo_Diffusion_Squirtle_pokemon_pack_background_Silver_col_0.jpg`;
   }
   if (type === 'Legendary') {
-    price = 2000;
+    price = 5000;
     legendary = 100;
     backgroundImage = `https://cdn.leonardo.ai/users/0b683e71-42fa-4e1b-8356-6df8f6f5706e/generations/7ff1a077-f5c6-44f6-bf9a-9b096834f2a5/Leonardo_Diffusion_Legendary_pokemon_pack_background_epic_colo_1.jpg`;
   }

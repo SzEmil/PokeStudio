@@ -38,8 +38,8 @@
 
 .btnScrollWrapper {
   position: fixed;
-  bottom: 10px;
-  left: 10px;
+  bottom: 30px;
+  left: 30px;
 }
 .btnMoveScrollBox {
   margin-top: 10px;

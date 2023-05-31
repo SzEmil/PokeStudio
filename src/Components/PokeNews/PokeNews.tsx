@@ -3,7 +3,7 @@ import { nanoid } from '@reduxjs/toolkit';
 const PokeNews = () => {
   return (
     <div>
-      <h2>PokeNews</h2>
+      <h2>PokeNews soon...</h2>
       <ul className={css.list}>
         <li key={nanoid()}>
           <div className={css.card}>

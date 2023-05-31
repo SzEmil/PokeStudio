@@ -43,6 +43,8 @@ const Battle = () => {
   const [menuOpen, setMenuOpen] = useState(true);
   const [isUserDefending, setIsUserDefending] = useState(false);
   const [isComputerDefending, setIsComputerDefending] = useState(false);
+  const [isComputerDefendingAnimation, setIsComputerDefendingAnimation] =
+    useState(false);
   const [gameResult, setGameResult] = useState<string>('');
   const [gameEnded, setGameEnded] = useState(false);
   const [endedScreenOpen, setEndedScreenOpen] = useState(false);
@@ -98,29 +100,37 @@ const Battle = () => {
     dispatch(addToArena(arenaCard[0]));
   };
   //user make damage for computer
+
   const handleMakeDamageUser = (id: number, damageFromUser: number) => {
     if (userMove === false)
       return Notiflix.Notify.failure('wait for youre turn User!');
-
+    console.log('user atakuje');
     let health = pokemonOnArenaComputer.stats[0].base_stat;
     const computerDefence = pokemonOnArenaComputer.stats[2].base_stat / 10;
+    console.log(isComputerDefending, 'poza warunkiem');
 
     if (isComputerDefending) {
+      console.log(isComputerDefending);
       let damage = damageFromUser - computerDefence;
       if (damage < 0) damage = 0;
       health -= damage;
+      setIsComputerDefending(false);
       setTimeout(() => {
-        setIsComputerDefending(false);
-      }, 1000);
+        setIsComputerDefendingAnimation(false);
+      }, 2000);
     } else {
       health -= damageFromUser;
     }
+    const healtForDispatch = health.toFixed(2);
+
+    dispatch(damageForComputer({ healtForDispatch, id }));
+
     if (userProAttackCharge !== 3) {
       setUserProAttackCharge(prevVal => (prevVal += 1));
       console.log(userProAttackCharge);
     }
     setIsUserAttacking(true);
-    dispatch(damageForComputer({ health, id }));
+
     setTimeout(() => {
       setIsUserAttacking(false);
     }, 1500);
@@ -129,6 +139,9 @@ const Battle = () => {
   const handleMakeDamageComputer = (damageFromComputer: number) => {
     if (computerMove === false)
       return Notiflix.Notify.failure('wait for youre turn Computer!');
+    console.log(isComputerDefending, 'poza warunkiem');
+    setIsComputerDefending(false);
+    setIsComputerDefendingAnimation(false);
     const id = pokemonOnArenaUser.overview.id;
     const userDefence = pokemonOnArenaUser.overview!.stats[2].base_stat / 10;
     let health = pokemonOnArenaUser.overview.stats[0].base_stat;
@@ -146,8 +159,10 @@ const Battle = () => {
       setComputerProAttackCharge(prevVal => (prevVal += 1));
       console.log(userProAttackCharge);
     }
+
     setIsComputerAttacking(true);
-    dispatch(damageForUser({ health, id }));
+    const healtForDispatch = health.toFixed(2);
+    dispatch(damageForUser({ healtForDispatch, id }));
     setTimeout(() => {
       setIsComputerAttacking(false);
     }, 1500);
@@ -158,20 +173,26 @@ const Battle = () => {
       setUserProAttackCharge(prevVal => (prevVal += 1));
     }
     dispatch(defendUser());
+    setIsComputerDefending(false);
     setTimeout(() => {
-      setIsComputerDefending(false);
+      setIsComputerDefendingAnimation(false);
     }, 2000);
   };
 
   const handleDefendComputer = () => {
+    setIsComputerDefendingAnimation(true);
     setIsComputerDefending(true);
+    setTimeout(() => {
+      setIsUserDefending(false);
+    }, 2000);
     if (computerProAttackCharge !== 3) {
       setComputerProAttackCharge(prevVal => (prevVal += 1));
       console.log(userProAttackCharge);
     }
     dispatch(defendComputer());
-
-    setIsUserDefending(false);
+    setTimeout(() => {
+      setIsComputerDefendingAnimation(false);
+    }, 2000);
   };
 
   const handleOnClickStartGame = () => {
@@ -251,7 +272,9 @@ const Battle = () => {
         );
       }
       if (pokemonOnArenaComputer.stats[0].base_stat <= 0) {
-        dispatch(addToArenaComputer(battleComputer.cards![indexOfHpPokemon]));
+        setTimeout(() => {
+          dispatch(addToArenaComputer(battleComputer.cards![indexOfHpPokemon]));
+        }, 1500);
         setTimeout(() => {
           setDefeatedComputerPokemons(prevVal => [
             ...prevVal,
@@ -264,21 +287,25 @@ const Battle = () => {
     if (userMove === false && computerMove === true) {
       const damageFromComputer = pokemonOnArenaComputer.stats[1].base_stat / 10;
       const computerSpecialAttack =
-        pokemonOnArenaComputer.stats[3].base_stat / 10;
+        pokemonOnArenaComputer.stats[3].base_stat ;
       console.log(computerProAttackCharge);
       if (computerProAttackCharge === 3 && Math.random() > 0.1) {
         handleMakeDamageComputer(computerSpecialAttack);
         console.log('pc SUPERatakuje');
+        console.log(isComputerDefending);
         setComputerProAttackCharge(0);
-      } else if (Math.random() < 0.1) {
+      } else if (Math.random() < 0.3) {
         handleDefendComputer();
         console.log('pc DEFENDUJE SIE');
+        console.log(isComputerDefending);
       } else if (userProAttackCharge === 3 && Math.random() < 0.5) {
         handleDefendComputer();
         console.log('pc DEFENDUJE SIE');
+        console.log(isComputerDefending);
       } else {
         handleMakeDamageComputer(damageFromComputer);
         console.log('pc ATAKUJE');
+        console.log(isComputerDefending);
       }
     }
 
@@ -301,12 +328,11 @@ const Battle = () => {
 
       if (indexOfHpPokemon >= 0) {
         dispatch(addToArena(userCards[indexOfHpPokemon]));
-        setTimeout(() => {
-          setDefeatedPokemons(prevVal => [
-            ...prevVal,
-            pokemonOnArenaUser.overview.name,
-          ]);
-        }, 100);
+
+        setDefeatedPokemons(prevVal => [
+          ...prevVal,
+          pokemonOnArenaUser.overview.name,
+        ]);
       }
     }
   }),
@@ -561,7 +587,7 @@ const Battle = () => {
             <div className={css.pokemonArenaComputer}>
               <img
                 className={`${css.pokeArenaImage} ${
-                  isComputerDefending ? css.pokemonDefending : ''
+                  isComputerDefendingAnimation ? css.pokemonDefending : ''
                 } ${isComputerAttacking ? css.computerAtacking : ''}`}
                 alt="picked Pokemon"
                 src={pokemonOnArenaComputer.sprites.front_default}

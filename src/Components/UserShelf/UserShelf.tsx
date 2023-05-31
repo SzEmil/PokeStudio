@@ -13,11 +13,12 @@ import { selectBattleUser } from '../../Redux/battle/battleSelectors';
 import { setUserBattleCards } from '../../Redux/battle/battleSlice';
 import { deleteUserBattleCards } from '../../Redux/battle/battleSlice';
 
+
 export const UserShelf = () => {
   const cardsArr = useSelector(selectAuthUser);
   const cards = cardsArr.cards.slice(1);
   const battleUser = useSelector(selectBattleUser);
-
+  const userCards = battleUser.cards;
   const dispatch: AppDispatch = useDispatch();
   const handleOnClickQuickSell = (id: number, ovrl: number) => {
     const price = calculatePrice(ovrl);
@@ -49,7 +50,13 @@ export const UserShelf = () => {
           </NavLink>
           <div className={css.btnBox}>
             <button
-              className={css.btn}
+              className={`${css.btn} ${
+                userCards
+                  .map(card => card.overview!.name)
+                  .includes(card.overview.name)
+                  ? css.noActiveBtn
+                  : ''
+              }`}
               type="button"
               onClick={() =>
                 handleOnClickQuickSell(
@@ -61,14 +68,26 @@ export const UserShelf = () => {
               Quick Sell for {calculatePrice(card.overview.base_experience)}
             </button>
             <button
-              className={css.btn}
+              className={`${css.btn} ${
+                userCards
+                  .map(card => card.overview!.name)
+                  .includes(card.overview.name)
+                  ? css.noActiveBtn
+                  : ''
+              }`}
               type="button"
               onClick={() => handleOnClickTakeForBattle(card.overview.id)}
             >
               Take for battle: {battleUser.cards?.length}/3
             </button>
             <button
-              className={css.btn}
+              className={`${css.btn} ${
+                !userCards
+                  .map(card => card.overview!.name)
+                  .includes(card.overview.name)
+                  ? css.noActiveBtn
+                  : ''
+              }`}
               type="button"
               onClick={() => handleOnClickUnPickPokemon(card.overview.id)}
             >

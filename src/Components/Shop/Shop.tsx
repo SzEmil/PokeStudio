@@ -56,9 +56,9 @@ export const Shop = () => {
   ) => {
     //9%na legendarnego
     event.stopPropagation();
-    if (coins! < 500) return;
+    if (coins! < 1000) return;
     console.log('kupiono paczke');
-    dispatch(buyPack(500));
+    dispatch(buyPack(1000));
     dispatch(fetchPackedPokemon(randomNumberGold()));
   };
 
@@ -67,9 +67,9 @@ export const Shop = () => {
   ) => {
     //2% szans na legendarnego
     event.stopPropagation();
-    if (coins! < 200) return;
+    if (coins! < 500) return;
     console.log('kupiono paczke');
-    dispatch(buyPack(200));
+    dispatch(buyPack(500));
     dispatch(fetchPackedPokemon(randomNumberSilver()));
   };
 
@@ -78,9 +78,9 @@ export const Shop = () => {
   ) => {
     //100% szans na legendarnego
     event.stopPropagation();
-    if (coins! < 2000) return;
+    if (coins! < 5000) return;
     console.log('kupiono paczke');
-    dispatch(buyPack(2000));
+    dispatch(buyPack(5000));
     dispatch(fetchPackedPokemon(randomNumberLegendary()));
   };
 
