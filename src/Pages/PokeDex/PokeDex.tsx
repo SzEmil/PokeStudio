@@ -8,6 +8,7 @@ import { lazy } from 'react';
 import { Suspense } from 'react';
 import { PokeballLoader } from '../../Components/PokeballLoader/PokeballLoader';
 
+
 const PokeNewsComponent = lazy(
   () => import('../../Components/PokeNews/PokeNews')
 );

@@ -8,14 +8,17 @@ import { PokeballLoader } from '../PokeballLoader/PokeballLoader';
 import { useState } from 'react';
 import { Recorces } from '../Recorses/Recorces';
 
+
 export const SharedLayout = () => {
   const currentYear: number = new Date().getFullYear();
   const { isLoggedIn } = useAuth();
   const [isRecorcesOpen, setIsRecorcesOpen] = useState(false);
+
   return (
     <div>
       <header className={css.head}>
         <div className={css.headWrapper}>
+          <p className={css.version}>Alpha 1.0</p>
           <NavLink className={css.logo} to="/">
             Poke<span className={css.logoColor}>Studio</span>
           </NavLink>
