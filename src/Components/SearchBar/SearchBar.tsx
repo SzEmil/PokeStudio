@@ -20,7 +20,7 @@ export const SearchBar = ({ filterType }: SearchBarPropsType) => {
       <input
         className={css.input}
         type="text"
-        placeholder="Input pokemon name"
+        placeholder="Pokemon name"
         name="pokeName"
         value={filterInput}
         onChange={filterType === 'home' ? handleInputOnChange : undefined}

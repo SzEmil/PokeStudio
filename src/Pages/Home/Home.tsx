@@ -28,6 +28,10 @@ const Home = () => {
     <>
       <Section>
         <div className={css.wrapper}>
+          <div className={css.hotPokemon}>
+            <h2 className={css.hotPokemonTitle}>Pokemon of a day!</h2>
+            <HotToday />
+          </div>
           <div className={css.pokeList}>
             <div className={css.searchBar}>
               <SearchBar filterType="home" />
@@ -35,10 +39,6 @@ const Home = () => {
             <div className={css.pokemonList}>
               <PokemonList pokemons={pokeData} />
             </div>
-          </div>
-          <div className={css.hotPokemon}>
-            <h2 className={css.hotPokemonTitle}>Pokemon of a day!</h2>
-            <HotToday />
           </div>
         </div>
       </Section>

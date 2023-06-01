@@ -7,22 +7,36 @@ import { User } from '../User/User';
 import { PokeballLoader } from '../PokeballLoader/PokeballLoader';
 import { useState } from 'react';
 import { Recorces } from '../Recorses/Recorces';
-
+import { RxHamburgerMenu } from 'react-icons/rx';
+import { MobileMenu } from '../MobileMenu/MobileMenu';
 
 export const SharedLayout = () => {
   const currentYear: number = new Date().getFullYear();
   const { isLoggedIn } = useAuth();
   const [isRecorcesOpen, setIsRecorcesOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  window.matchMedia('(min-width: 768px)').addEventListener('change', e => {
+    if (!e.matches) return;
+    setIsMobileMenuOpen(false);
+  });
 
   return (
     <div>
       <header className={css.head}>
         <div className={css.headWrapper}>
-          <p className={css.version}>Alpha 1.0</p>
+          <p className={css.version}>Alpha 1.1</p>
           <NavLink className={css.logo} to="/">
             Poke<span className={css.logoColor}>Studio</span>
           </NavLink>
+
           <nav className={css.nav}>
+            <div
+              className={css.menuMobileBtn}
+              onClick={() => setIsMobileMenuOpen(prevVal => !prevVal)}
+            >
+              <RxHamburgerMenu size={'24px'} />
+            </div>
             <div className={css.linksBar}>
               <NavLink
                 className={({ isActive }) =>
@@ -83,7 +97,15 @@ export const SharedLayout = () => {
           <p className={css.footerDescription}>PokeStudio © {currentYear}</p>
         </div>
       </footer>
+
       {isRecorcesOpen ? <Recorces /> : null}
+      <div
+        className={`${css.mobileMenuBox} ${
+          isMobileMenuOpen ? css.mobileOpen : null
+        }`}
+      >
+        <MobileMenu setIsMobileMenuOpen={setIsMobileMenuOpen} />
+      </div>
     </div>
   );
 };

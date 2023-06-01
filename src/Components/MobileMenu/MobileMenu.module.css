@@ -1,0 +1,68 @@
+
+.mobileMenu {
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 999999;
+  align-items: center;
+  background-color: rgba(26, 32, 37, 0.95);
+  padding: 0 15px;
+
+  overflow: hidden;
+}
+.nav {
+  padding-top: 100px;
+}
+.linksBar {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.item {
+  display: inline;
+}
+.link {
+  font-style: normal;
+  font-family: 'Roboto';
+  font-weight: 500;
+  font-size: 28px;
+  line-height: 30px;
+  transition: color 250ms ease;
+}
+.link:hover {
+  color: #ffd600;
+}
+.activeLink {
+  color: #ffd600;
+}
+.noActiveLink {
+  color: white;
+}
+.btnClose {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  cursor: pointer;
+
+  font-style: normal;
+  font-family: 'Roboto';
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 14px;
+  color: black;
+  cursor: pointer;
+  border: none;
+  border-radius: 50%;
+  padding: 8px 10px;
+
+  transition: background-color 200ms ease;
+}
+.btnClose:hover,
+.btnClose:focus {
+  background-color: rgba(255, 255, 255, 0.4);
+}
+.userBtn {
+  padding-top: 20px;
+}

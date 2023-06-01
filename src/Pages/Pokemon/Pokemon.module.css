@@ -14,6 +14,7 @@
 
 .pokemonWrapper {
   display: flex;
+  flex-direction: column;
   justify-content: space-around;
   align-items: center;
 }
@@ -26,12 +27,11 @@
 }
 .cardWrapper {
   max-width: 600px;
-  min-width: 400px;
+  min-width: 350px;
 }
 
 .descriptionBox {
   gap: 2px;
-  width: 700px;
 }
 .descriptionText {
   display: inline;
@@ -45,6 +45,7 @@
 .listWrapper {
   width: 100%;
   display: flex;
+  flex-direction: column;
   margin-top: 20px;
   margin-bottom: 20px;
 }
@@ -52,7 +53,7 @@
   width: 100%;
 }
 .listItem:nth-child(2) {
-  margin-left: 20px;
+  margin-top: 20px;
 }
 
 .title {
@@ -64,7 +65,8 @@
   text-align: center;
   color: #ffd600;
 
-  padding-bottom: 80px;
+  padding-bottom: 50px;
+  padding-top: 20px;
 }
 .addBtn {
   margin-top: 50px;
@@ -80,4 +82,39 @@
 }
 .btnBox {
   margin-top: 30px;
+}
+
+@media screen and (min-width: 768px) {
+  .pokemonWrapper {
+    flex-direction: row;
+  }
+  .descriptionBox {
+    padding-left: 20px;
+    width: 700px;
+  }
+  .listItem:nth-child(2) {
+    margin-top: 0px;
+    margin-left: 20px;
+  }
+  .listWrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+  .title {
+    padding-bottom: 50px;
+    padding-top: 0;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .container {
+    display: flex;
+    flex-direction: column;
+  }
+  .title {
+    padding-bottom: 80px;
+  }
 }

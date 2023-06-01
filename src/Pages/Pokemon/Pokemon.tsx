@@ -16,7 +16,6 @@ import { Section } from '../../Components/Section/Section';
 import { Moves } from '../../Components/Moves/Moves';
 import { PokeGallery } from '../../Components/PokeGallery/PokeGallery';
 
-
 const Pokemon = () => {
   const dispatch: AppDispatch = useDispatch();
   const pokemon: any = useSelector(selectPokemonDetails);

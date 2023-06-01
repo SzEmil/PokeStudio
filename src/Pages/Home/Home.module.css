@@ -1,39 +1,118 @@
 .wrapper {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   width: 100%;
   position: relative;
 }
 .hotPokemon {
   display: flex;
-  width: 30%;
-  position: fixed;
-  right: 0;
+  width: 350px;
   margin-top: 80px;
   z-index: 1;
+  flex-direction: column;
+  align-items: center;
 }
 .hotPokemonTitle {
   position: absolute;
-  left: 77%;
-  transform: translateX(-50%);
-  top: 30px;
+
+  top: 100px;
 
   color: white;
   font-style: normal;
   font-family: 'Pokemon Solid';
   font-weight: 500;
   font-size: 28px;
-  width: 100%;
 }
 .pokeList {
-  width: 70%;
+  width: 100%;
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .searchBar {
-  margin-bottom: 20px;
-  position: fixed;
-  z-index: 10001;
-  top: 40px;
+  margin-bottom: 0px;
+  position: absolute;
+  z-index: 1;
+  top: 800px;
 }
 .pokemonList {
   margin-top: 80px;
+}
+
+@media screen and (min-width: 768px) {
+  .wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    position: relative;
+  }
+  .hotPokemon {
+    display: flex;
+    width: 650px;
+    margin-top: 80px;
+    z-index: 1;
+    flex-direction: column;
+    align-items: center;
+  }
+  .hotPokemonTitle {
+    position: absolute;
+    top: 100px;
+    font-weight: 500;
+    font-size: 28px;
+  }
+  .pokeList {
+    width: 100%;
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .searchBar {
+    margin-bottom: 0px;
+    position: absolute;
+    z-index: 1;
+    top: 960px;
+  }
+  .pokemonList {
+    margin-top: 80px;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+  .hotPokemon {
+    display: flex;
+    width: 30%;
+    position: fixed;
+    right: 15px;
+    margin-top: 80px;
+    z-index: 1;
+    align-items: center;
+  }
+  .hotPokemonTitle {
+    position: absolute;
+    top: 30px;
+    font-weight: 500;
+    font-size: 28px;
+  }
+  .pokeList {
+    width: 70%;
+    margin-top: 40px;
+  }
+  .searchBar {
+    margin-bottom: 20px;
+    position: fixed;
+    z-index: 10001;
+    left: 20px;
+    top: 60px;
+  }
 }

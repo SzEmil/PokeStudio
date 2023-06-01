@@ -1,10 +1,11 @@
 .list {
-  display: inline;
-  gap: 10px;
-  width: 1380px;
   display: flex;
+  gap: 10px;
+
   flex-wrap: wrap;
   padding-bottom: 20px;
+  justify-content: center;
+  align-items: center;
 }
 .link {
   color: white;
@@ -17,7 +18,8 @@
 .item {
   /* border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 5px; */
-  width: 450px;
+  display: inline;
+  max-width: 450px;
 }
 .btn {
   font-style: normal;
