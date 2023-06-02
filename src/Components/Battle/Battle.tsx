@@ -287,7 +287,7 @@ const Battle = () => {
     if (userMove === false && computerMove === true) {
       const damageFromComputer = pokemonOnArenaComputer.stats[1].base_stat / 10;
       const computerSpecialAttack =
-        pokemonOnArenaComputer.stats[3].base_stat ;
+        pokemonOnArenaComputer.stats[3].base_stat / 10;
       console.log(computerProAttackCharge);
       if (computerProAttackCharge === 3 && Math.random() > 0.1) {
         handleMakeDamageComputer(computerSpecialAttack);
@@ -477,11 +477,12 @@ const Battle = () => {
                 <p className={css.rulesText}>
                   During the game you will use three of your pokemons. Use the
                   buttons to perform the appropriate action, such as attack or
-                  defense. Your special attack takes 3 rounds to recharge. When
-                  you lose on easy you lose one pokemon. If you lose on Medium,
-                  you lose two Pokemon. When you win on easy you get 1000 coins.
-                  After winning on medium level you get 2000 coins. Have fun
-                  pokemon trainer!
+                  defense. Your special attack takes 3 rounds to recharge.
+                  Attack and defence stats of pokemons stats are divided by 10.
+                  When you lose on easy you lose one pokemon. If you lose on
+                  Medium, you lose two Pokemon. When you win on easy you get
+                  1000 coins. After winning on medium level you get 2000 coins.
+                  Have fun pokemon trainer!
                 </p>
               </div>
             </div>
