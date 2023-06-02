@@ -25,7 +25,7 @@ export const SharedLayout = () => {
     <div>
       <header className={css.head}>
         <div className={css.headWrapper}>
-          <p className={css.version}>Alpha 1.1</p>
+          <p className={css.version}>Alpha 1.2</p>
           <NavLink className={css.logo} to="/">
             Poke<span className={css.logoColor}>Studio</span>
           </NavLink>
