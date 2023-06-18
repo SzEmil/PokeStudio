@@ -46,6 +46,7 @@ export const MobileMenu = ({ setIsMobileMenuOpen }: MobileMenuProps) => {
           {!isLoggedIn ? (
             <li key={nanoid()}>
               <NavLink
+                onClick={() => setIsMobileMenuOpen(false)}
                 className={({ isActive }) =>
                   isActive ? css.activeLink : css.noActiveLink
                 }
