@@ -7,7 +7,9 @@
 }
 .packedPokemon {
   position: absolute;
-  max-width: 1000px;
+
+  width: 100%;
+
   z-index: 1000;
   top: 0%;
   left: 50%;
@@ -16,22 +18,23 @@
 
   background-color: rgba(0, 0, 0, 0.8);
   border-radius: 2px;
-  padding: 20px;
+  padding: 20px 0;
 }
 
 .packedPokemonWrapper {
   display: flex;
+  flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  padding: 10px 30px;
+  padding: 10px 0px;
 }
 .card {
-  max-width: 450px;
-  min-width: 400px;
+  min-width: 350px;
+  padding: 0 10px;
 }
 .description {
   padding-left: 20px;
-  min-width: 500px;
+  min-width: 330px;
   max-width: 600px;
 }
 .descriptionTitle {
@@ -39,19 +42,20 @@
   font-style: normal;
   font-family: 'Roboto';
   font-weight: 400;
-  font-size: 28px;
-  line-height: 30px;
+  font-size: 18px;
+  line-height: 20px;
 
   text-align: center;
-  padding-bottom: 40px;
+  padding-bottom: 20px;
+  padding-top: 20px;
 }
 .descriptionText {
   color: white;
   font-style: normal;
   font-family: 'Roboto';
   font-weight: 300;
-  font-size: 22px;
-  line-height: 24px;
+  font-size: 16px;
+  line-height: 20px;
 }
 .btnCardBox {
   margin-left: 20px;
@@ -59,7 +63,7 @@
 .btnAddCardBox {
   display: flex;
   justify-content: center;
-  margin-top: 50px;
+  margin-top: 20px;
 }
 
 .packList {
@@ -75,4 +79,71 @@
   top: 50%;
   transform: translateX(-50%);
   transform: translateY(-50%);
+}
+
+@media screen and (min-width: 1200px) {
+  .packedPokemon {
+    position: absolute;
+    max-width: 1000px;
+    z-index: 1000;
+    top: 0%;
+    left: 50%;
+    transform: translateY(-50%);
+    transform: translateX(-50%);
+
+    background-color: rgba(0, 0, 0, 0.8);
+    border-radius: 2px;
+    padding: 20px;
+  }
+  .packedPokemonWrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px 30px;
+  }
+  .card {
+    max-width: 450px;
+    min-width: 400px;
+  }
+  .description {
+    padding-left: 20px;
+    min-width: 500px;
+    max-width: 600px;
+  }
+  .descriptionTitle {
+    color: white;
+    font-style: normal;
+    font-family: 'Roboto';
+    font-weight: 400;
+    font-size: 28px;
+    line-height: 30px;
+
+    text-align: center;
+    padding-bottom: 40px;
+  }
+  .descriptionText {
+    color: white;
+    font-style: normal;
+    font-family: 'Roboto';
+    font-weight: 300;
+    font-size: 22px;
+    line-height: 24px;
+  }
+  .btnCardBox {
+    margin-left: 20px;
+  }
+  .btnAddCardBox {
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+  }
+
+  .packList {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+  }
 }

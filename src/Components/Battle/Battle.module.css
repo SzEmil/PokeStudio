@@ -389,11 +389,10 @@
 .gameFinishedModal {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+
   z-index: 100;
   position: absolute;
-  top: 15%;
+  top: 5%;
   left: 50%;
 
   transform: translateX(-50%);
@@ -403,9 +402,9 @@
   border-radius: 5px;
 
   padding: 40px 10px;
-
-  width: 90%;
-  max-width: 600px;
+  height: 700px;
+  z-index: 999999;
+  overflow-y: scroll;
 }
 .gameFinishedTitle {
   font-style: normal;
@@ -422,6 +421,8 @@
   font-weight: 400;
   font-size: 16px;
   line-height: 18px;
+  text-align: center;
+  padding-bottom: 15px;
 }
 .disabledBtn {
   background-color: rgba(255, 255, 255, 0.5);
@@ -457,6 +458,7 @@
 .lostPokemonList {
   margin-top: 10px;
   display: flex;
+  flex-wrap: wrap;
   gap: 10px;
 }
 @media screen and (min-width: 500px) {
@@ -486,8 +488,6 @@
   .gameFinishedModal {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
     z-index: 100;
     position: absolute;
     top: 3%;
@@ -500,6 +500,31 @@
     border-radius: 5px;
 
     padding: 30px 60px;
+  }
+  @keyframes attackAI {
+    0% {
+      transform: translate(0, 0);
+    }
+    50% {
+      transform: translate(250px, -60px);
+    }
+    100% {
+      transform: translate(0, 0);
+    }
+  }
+  .computerAtacking {
+    animation: attackUser 1500ms linear;
+  }
+  @keyframes attackUser {
+    0% {
+      transform: translate(0, 0);
+    }
+    50% {
+      transform: translate(-250px, 60px);
+    }
+    100% {
+      transform: translate(0, 0);
+    }
   }
 }
 
