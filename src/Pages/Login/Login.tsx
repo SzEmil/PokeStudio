@@ -7,6 +7,7 @@ import { NavLink } from 'react-router-dom';
 import { selectAuthIsLoading } from '../../Redux/auth/authSelectors';
 import { PokeballLoader } from '../../Components/PokeballLoader/PokeballLoader';
 import { useSelector } from 'react-redux';
+import Notiflix from 'notiflix';
 
 const Login = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -14,7 +15,11 @@ const Login = () => {
   const handleOnSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const form = event.currentTarget;
+    const userPassword: string = (
+      form.elements.namedItem('password') as HTMLInputElement
+    ).value.toLowerCase();
 
+    if (userPassword.length < 6) return Notiflix.Notify.failure("Password must be at least 6 characters")
     const credentials = {
       email: (
         form.elements.namedItem('email') as HTMLInputElement
