@@ -1,15 +1,70 @@
 .list {
   display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
+  flex-direction: column;
+  gap: 25px;
   margin-bottom: 20px;
 }
 .card {
-  width: 500px;
+  width: 330px;
   border-radius: 5px;
   border: 1px solid rgba(255, 255, 255, 0.2);
+  position: relative;
+  background-color: rgba(255, 255, 255, 1);
 }
 .image {
   width: 100%;
   border-radius: 5px;
+  display: block;
+}
+.title {
+  color: black;
+  font-style: normal;
+  font-family: 'Roboto';
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 20px;
+
+  text-align: center;
+  width: 100%;
+  padding: 10px;
+}
+
+.description {
+  color: black;
+  font-style: normal;
+  font-family: 'Roboto';
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 18px;
+  padding: 5px;
+}
+
+@media screen and (min-width: 768px) {
+  .card {
+    width: 450px;
+  }
+  .title {
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 26px;
+  }
+  .description {
+    font-size: 16px;
+    line-height: 18px;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .card {
+    width: 500px;
+  }
+  .title {
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 26px;
+  }
+  .description {
+    font-size: 18px;
+    line-height: 20px;
+  }
 }

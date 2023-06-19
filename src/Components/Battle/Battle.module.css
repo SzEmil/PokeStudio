@@ -656,4 +656,7 @@
     border: 2px solid white;
     border-radius: 5px 0 0 0;
   }
+  .menu {
+    top: 25%;
+  }
 }

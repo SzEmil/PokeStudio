@@ -45,7 +45,7 @@ export const registerUser = createAsyncThunk(
         // profile_picture : imageUrl
       })
         .then(() => {
-          console.log('user registered and loged');
+          // console.log('user registered and loged');
         })
         .catch(error => {
           console.error(error);
@@ -129,17 +129,17 @@ export const refreshUser = createAsyncThunk<
             } = userSnapshot.val();
 
             resolve({ email: userEmail, username, cards, coins });
-            console.log(
-              'użtkownik autoryzowany i zalogowany',
-              username,
-              cards,
-              coins
-            );
+            // console.log(
+            //   'użtkownik autoryzowany i zalogowany',
+            //   username,
+            //   cards,
+            //   coins
+            // );
           } catch (error) {
             reject(error);
           }
         } else {
-          console.log('użtkownik brak autoryzacji');
+          // console.log('użtkownik brak autoryzacji');
           resolve({ email: '', username: '', cards: [], coins: null }); // Jeżeli użytkownik nie jest zalogowany, zwróć puste dane
         }
       });
@@ -189,7 +189,6 @@ export const buyPack = createAsyncThunk(
         const userSnapshot = await get(ref(fireDatabase, 'users/' + user.uid));
         const { coins } = userSnapshot.val();
         const newCoins = coins - price;
-        console.log(newCoins);
         await update(ref(fireDatabase, 'users/' + user.uid), {
           coins: newCoins,
         });
@@ -294,7 +293,7 @@ export const userLostCard = createAsyncThunk(
             !idToLost.includes(card?.overview!.id)
         );
         const cardsToResponse = [dummyCard, ...updatedCards];
-        console.log(updatedCards);
+
         await update(ref(fireDatabase, 'users/' + user.uid), {
           cards: [...cardsToResponse],
         });
