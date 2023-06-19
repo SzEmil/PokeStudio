@@ -17,7 +17,7 @@ import { BtnAddCard } from '../BtnAddCard/BtnAddCard';
 import { BtnQuickSellCard } from '../BtnQuickSellCard/BtnQuickSellCard';
 import { buyPack } from '../../Redux/auth/authOperations';
 import { selectAuthUserCoins } from '../../Redux/auth/authSelectors';
-//tescik
+
 export const Shop = () => {
   const dispatch: AppDispatch = useDispatch();
   const packedPokemon: any = useSelector(selectPackedPokemon);

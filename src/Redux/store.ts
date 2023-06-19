@@ -8,6 +8,7 @@ import { pokemonInfoReducer } from './pokemonInfo/pokemonInfoSlice';
 import { authReducer } from './auth/authSlice';
 import { pokeShopReducer } from './pokeShop/pokeShopSlice';
 import { battleReducer } from './battle/battleSlice';
+import { pokeNewsReducer } from './pokeNews/pokeNewsSlice';
 
 import {
   FLUSH,
@@ -57,6 +58,7 @@ export const store = configureStore({
     auth: persistReducer(authPersistConfig, authReducer),
     pokeShop: persistReducer(pokeShopPersistConfig, pokeShopReducer),
     battle: persistReducer(battlePersistConfig, battleReducer),
+    pokeNews: pokeNewsReducer,
   },
 
   middleware: getDefaultMiddleware({

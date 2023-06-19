@@ -1,16 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-// import { fireApp, fireDatabase } from '../../firebase';
-// import {
-//   getAuth,
-//   createUserWithEmailAndPassword,
-//   signInWithEmailAndPassword,
-//   signOut,
-//   onAuthStateChanged,
-// } from 'firebase/auth';
-// import { set, ref, update, get } from 'firebase/database';
 
-// const fireAuth = getAuth(fireApp);
 axios.defaults.baseURL = `https://pokeapi.co/api/v2`;
 
 export const fetchPackedPokemon = createAsyncThunk(
