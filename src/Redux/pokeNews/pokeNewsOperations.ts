@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { fireDatabase } from '../../firebase';
-import { push, ref, get, remove } from 'firebase/database';
+import { push, ref, get, set } from 'firebase/database';
 import { post } from './pokeNewsSlice';
 
 export const fetchPosts = createAsyncThunk(
@@ -43,7 +43,15 @@ export const deletePost = createAsyncThunk(
   'pokeNews/deletePost',
   async (postId: string | number, thunkAPI) => {
     try {
-      await remove(ref(fireDatabase, `posts/${postId}`));
+      const postsRef = ref(fireDatabase, 'posts');
+      const snapshot = await get(ref(fireDatabase, 'posts'));
+      if (snapshot.exists()) {
+        const posts: post[] = snapshot.val();
+
+        const postsArr = Object.values(posts);
+        const filteredPosts = postsArr.filter(post => post.id !== postId);
+        await set(postsRef, filteredPosts);
+      }
       console.log('Post deleted from the database');
       return postId;
     } catch (error: any) {
