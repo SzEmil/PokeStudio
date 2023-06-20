@@ -49,6 +49,12 @@ const battlePersistConfig = {
   whitelist: ['user', 'computer'],
 };
 
+const pokeNewsConfig = {
+  key: 'pokeNews',
+  storage,
+  whitelist: ['posts'],
+};
+
 const ignoredActions = [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER];
 export const store = configureStore({
   reducer: {
@@ -58,7 +64,7 @@ export const store = configureStore({
     auth: persistReducer(authPersistConfig, authReducer),
     pokeShop: persistReducer(pokeShopPersistConfig, pokeShopReducer),
     battle: persistReducer(battlePersistConfig, battleReducer),
-    pokeNews: pokeNewsReducer,
+    pokeNews: persistReducer(pokeNewsConfig, pokeNewsReducer),
   },
 
   middleware: getDefaultMiddleware({
