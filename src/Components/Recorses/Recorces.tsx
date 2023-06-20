@@ -41,6 +41,30 @@ export const Recorces = () => {
             Legendary Pack (Leonardo.AI)
           </a>
         </li>
+        <li key={nanoid()}>
+          <a
+            className={css.link}
+            href="https://cdn.leonardo.ai/users/0b683e71-42fa-4e1b-8356-6df8f6f5706e/generations/84ef1cbe-d924-4718-b70a-fb412e6307e0/Leonardo_Diffusion_Mysterious_Encounter_Eevee_Pokemon_Sighted_2.jpg"
+          >
+            Pokenews1 (Leonardo.AI)
+          </a>
+        </li>
+        <li key={nanoid()}>
+          <a
+            className={css.link}
+            href="https://cdn.leonardo.ai/users/0b683e71-42fa-4e1b-8356-6df8f6f5706e/generations/af6d6b31-e137-402e-a87a-603967ff7312/Leonardo_Diffusion_Unforgettable_Journey_Lapras_Pokemon_Leads_0.jpg"
+          >
+            Pokenews2 (Leonardo.AI)
+          </a>
+        </li>
+        <li key={nanoid()}>
+          <a
+            className={css.link}
+            href="https://cdn.leonardo.ai/users/0b683e71-42fa-4e1b-8356-6df8f6f5706e/generations/cb7665e6-153b-4f3f-933e-fb99c53068a9/Leonardo_Diffusion_Floral_Symphony_Ludicolos_Pokemon_Dance_Del_1.jpg"
+          >
+            Pokenews3 (Leonardo.AI)
+          </a>
+        </li>
       </ul>
     </div>
   );

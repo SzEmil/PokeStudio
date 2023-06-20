@@ -39,5 +39,8 @@
   transition: background-color 200ms ease-in-out;
 }
 .listBtn:hover {
-  background-color: rgba(199, 199, 199, 0.925);
+  background-color: #ffd600;
+}
+.btnActive {
+  background-color: #ffd600;
 }

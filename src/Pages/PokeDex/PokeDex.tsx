@@ -7,11 +7,7 @@ import { Shop } from '../../Components/Shop/Shop';
 import { lazy } from 'react';
 import { Suspense } from 'react';
 import { PokeballLoader } from '../../Components/PokeballLoader/PokeballLoader';
-
-
-const PokeNewsComponent = lazy(
-  () => import('../../Components/PokeNews/PokeNews')
-);
+import PokeNews from '../../Components/PokeNews/PokeNews';
 const BattleComponent = lazy(() => import('../../Components/Battle/Battle'));
 
 const PokeDex = () => {
@@ -40,7 +36,7 @@ const PokeDex = () => {
       <ul className={css.list}>
         <li key={nanoid()}>
           <button
-            className={css.listBtn}
+            className={`${css.listBtn} ${isOpenShelf ? css.btnActive : ''}`}
             type="button"
             onClick={() => handleOnClickShelf()}
           >
@@ -49,7 +45,7 @@ const PokeDex = () => {
         </li>
         <li key={nanoid()}>
           <button
-            className={css.listBtn}
+            className={`${css.listBtn} ${isOpenStore ? css.btnActive : ''}`}
             type="button"
             onClick={() => handleOnCickStore()}
           >
@@ -58,7 +54,7 @@ const PokeDex = () => {
         </li>
         <li key={nanoid()}>
           <button
-            className={css.listBtn}
+            className={`${css.listBtn} ${isOpenBattle ? css.btnActive : ''}`}
             type="button"
             onClick={() => handleOnCickBattle()}
           >
@@ -71,9 +67,7 @@ const PokeDex = () => {
           <Suspense fallback={<PokeballLoader />}>
             {isOpenShelf ? <UserShelf /> : null}
             {isOpenStore ? <Shop /> : null}
-            {!isOpenShelf && !isOpenStore && !isOpenBattle && (
-              <PokeNewsComponent />
-            )}
+            {!isOpenShelf && !isOpenStore && !isOpenBattle && <PokeNews />}
             {isOpenBattle ? <BattleComponent /> : null}
           </Suspense>
         </div>

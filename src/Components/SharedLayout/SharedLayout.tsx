@@ -25,7 +25,7 @@ export const SharedLayout = () => {
     <div>
       <header className={css.head}>
         <div className={css.headWrapper}>
-          <p className={css.version}>Alpha 1.2</p>
+          <p className={css.version}>Alpha 1.3</p>
           <NavLink className={css.logo} to="/">
             Poke<span className={css.logoColor}>Studio</span>
           </NavLink>
@@ -86,14 +86,14 @@ export const SharedLayout = () => {
       </Suspense>
       <footer className={css.footer}>
         <div className={css.footerBox}>
-          <p className={css.footerDescription}>
+          <div className={css.footerDescription}>
             <p
               className={css.footerLink}
               onClick={() => setIsRecorcesOpen(prevVal => !prevVal)}
             >
               Resorces
             </p>
-          </p>
+          </div>
           <p className={css.footerDescription}>PokeStudio © {currentYear}</p>
         </div>
       </footer>
