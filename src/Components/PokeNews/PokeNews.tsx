@@ -15,6 +15,7 @@ import { useEffect } from 'react';
 import { fetchPosts } from '../../Redux/pokeNews/pokeNewsOperations';
 import { isContentClean } from '../../ts/badWordsFIlter';
 import Notiflix from 'notiflix';
+
 // import { useState } from 'react';
 // const [isOverviewOpen, setIsOverviewOpen] = useState(false);
 const PokeNews = () => {

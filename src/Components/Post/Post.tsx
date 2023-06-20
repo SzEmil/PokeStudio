@@ -5,6 +5,7 @@ import { selectAuthUser } from '../../Redux/auth/authSelectors';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../Redux/store';
 import { deletePost } from '../../Redux/pokeNews/pokeNewsOperations';
+
 type postPropType = {
   post: post;
 };
@@ -13,8 +14,10 @@ export const Post = ({ post }: postPropType) => {
   const user = useSelector(selectAuthUser);
   const username = user.username;
 
-  const handleOnClickDeletePost = () => {
-    dispatch(deletePost(post.id));
+  const handleOnClickDeletePost = (postId: string | number) => {
+    if (window.confirm('Are you sure you want to delete this post?')) {
+      dispatch(deletePost(postId));
+    }
   };
   return (
     <div className={css.card}>
@@ -26,7 +29,7 @@ export const Post = ({ post }: postPropType) => {
       {username === 'yellowduck' ? (
         <button
           className={css.button}
-          onClick={() => handleOnClickDeletePost()}
+          onClick={() => handleOnClickDeletePost(post.id)}
         >
           Delete post
         </button>
