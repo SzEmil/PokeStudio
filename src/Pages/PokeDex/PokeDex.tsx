@@ -7,10 +7,7 @@ import { Shop } from '../../Components/Shop/Shop';
 import { lazy } from 'react';
 import { Suspense } from 'react';
 import { PokeballLoader } from '../../Components/PokeballLoader/PokeballLoader';
-
-const PokeNewsComponent = lazy(
-  () => import('../../Components/PokeNews/PokeNews')
-);
+import PokeNews from '../../Components/PokeNews/PokeNews';
 const BattleComponent = lazy(() => import('../../Components/Battle/Battle'));
 
 const PokeDex = () => {
@@ -70,9 +67,7 @@ const PokeDex = () => {
           <Suspense fallback={<PokeballLoader />}>
             {isOpenShelf ? <UserShelf /> : null}
             {isOpenStore ? <Shop /> : null}
-            {!isOpenShelf && !isOpenStore && !isOpenBattle && (
-              <PokeNewsComponent />
-            )}
+            {!isOpenShelf && !isOpenStore && !isOpenBattle && <PokeNews />}
             {isOpenBattle ? <BattleComponent /> : null}
           </Suspense>
         </div>
