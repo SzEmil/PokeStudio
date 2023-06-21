@@ -11,7 +11,29 @@ export const fetchPosts = createAsyncThunk(
 
       if (snapshot.exists()) {
         const posts: post[] = snapshot.val();
-        return Object.values(posts);
+        const postsArr = Object.values(posts);
+        const postsforDisplay = postsArr.reverse().slice(0, 10);
+        return postsforDisplay;
+      } else {
+        return [];
+      }
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const loadMorePosts = createAsyncThunk(
+  'pokeNews/loadMorePosts',
+  async (n: number, thunkAPI) => {
+    try {
+      const snapshot = await get(ref(fireDatabase, 'posts'));
+
+      if (snapshot.exists()) {
+        const posts: post[] = snapshot.val();
+        const postsArr = Object.values(posts);
+        const postsforDisplay = postsArr.reverse().slice(n, n + 10);
+        return postsforDisplay;
       } else {
         return [];
       }
