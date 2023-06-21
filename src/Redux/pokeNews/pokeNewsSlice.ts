@@ -1,13 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { addPost, deletePost } from './pokeNewsOperations';
 import { fetchPosts } from './pokeNewsOperations';
-
+import { loadMorePosts } from './pokeNewsOperations';
 export type post = {
   title: string | null;
   message: string;
   imgLink: string;
   id: string | number;
   author: string | undefined | null;
+  date: string | null | number;
 };
 
 export type initialStateType = {
@@ -65,6 +66,19 @@ const pokeNewsSlice = createSlice({
       state.isLoading = false;
       state.error = null;
       state.posts = state.posts.filter(post => post.id !== action.payload);
+    });
+
+    builder.addCase(loadMorePosts.pending, state => {
+      state.isLoading = true;
+    });
+    builder.addCase(loadMorePosts.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    });
+    builder.addCase(loadMorePosts.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.error = null;
+      state.posts = [...state.posts, ...action.payload];
     });
   },
 });

@@ -15,16 +15,19 @@ import { useEffect } from 'react';
 import { fetchPosts } from '../../Redux/pokeNews/pokeNewsOperations';
 import { isContentClean } from '../../ts/badWordsFIlter';
 import Notiflix from 'notiflix';
-
-// import { useState } from 'react';
+import { GrFormRefresh } from 'react-icons/gr';
+import { useState } from 'react';
+import { loadMorePosts } from '../../Redux/pokeNews/pokeNewsOperations';
 // const [isOverviewOpen, setIsOverviewOpen] = useState(false);
 const PokeNews = () => {
   const dispatch: AppDispatch = useDispatch();
   const user = useSelector(selectAuthUser);
   const userName = user.username;
   const posts = useSelector(selectPokeNewsPosts);
+
   const postsLoading = useSelector(selectPokeNewsLoading);
 
+  const [postsNumber, setPostsNumber] = useState(20);
   useEffect(() => {
     if (posts.length !== 0) return;
     console.log('fetching posts');
@@ -45,6 +48,15 @@ const PokeNews = () => {
       'img'
     ) as HTMLInputElement | null;
 
+    const currentDate = new Date();
+
+    const year = currentDate.getFullYear();
+    const month = currentDate.getMonth() + 1; // Dodajemy 1, ponieważ indeks miesiąca zaczyna się od 0 (styczeń to 0, luty to 1 itd.)
+    const day = currentDate.getDate();
+
+    const hours = currentDate.getHours();
+    const minutes = currentDate.getMinutes();
+
     if (isContentClean(messageTextarea!.value)) {
       const credentials: post = {
         author: userName,
@@ -52,6 +64,7 @@ const PokeNews = () => {
         message: messageTextarea?.value || '',
         imgLink: imgLinkInput?.value || '',
         id: nanoid(),
+        date: `${hours}:${minutes} ${day}.${month}.${year}`,
       };
       dispatch(addPost(credentials));
       form.reset();
@@ -59,8 +72,17 @@ const PokeNews = () => {
       return Notiflix.Notify.failure('You cant use bad words!!');
     }
   };
+
+  const handleOnClickRefreshTable = () => {
+    dispatch(fetchPosts());
+  };
+
+  const handleOnClickLoadMorePosts = () => {
+    dispatch(loadMorePosts(postsNumber));
+    setPostsNumber(prevVal => prevVal + 10);
+  };
   return (
-    <div>
+    <div className={css.table}>
       <h2>Add post</h2>
 
       <form className={css.form} onSubmit={handleOnSubmit}>
@@ -81,7 +103,12 @@ const PokeNews = () => {
           Submit
         </button>
       </form>
-
+      <button
+        onClick={() => handleOnClickRefreshTable()}
+        className={css.refreshBtn}
+      >
+        <GrFormRefresh size={'24px'} />
+      </button>
       <ul className={css.list}>
         {posts.length === 0 ? (
           <p>No posts found</p>
@@ -95,6 +122,12 @@ const PokeNews = () => {
           ))
         )}
       </ul>
+      <button
+        onClick={() => handleOnClickLoadMorePosts()}
+        className={css.button}
+      >
+        Load more
+      </button>
     </div>
   );
 };
