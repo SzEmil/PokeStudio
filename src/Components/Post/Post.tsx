@@ -21,12 +21,18 @@ export const Post = ({ post }: postPropType) => {
   };
   return (
     <div className={css.card}>
-      <p>{post.author}</p>
+      <div className={css.postInfo}>
+        <p className={css.author}>{post.author}</p>
+        <p className={css.author}>{post.date}</p>
+      </div>
       <h2 className={css.title}>{post.title}</h2>
-      <img className={css.image} src={post.imgLink} alt="pic" />
+      <div className={css.imgBox}>
+        <img className={css.image} src={post.imgLink} alt="pic" />
+        <p className={css.source}>src: {post.imgLink}</p>
+      </div>
 
       <p className={css.description}>{post.message}</p>
-      {username === 'yellowduck' ? (
+      {username === 'yellowduck' || username === post.author ? (
         <button
           className={css.button}
           onClick={() => handleOnClickDeletePost(post.id)}
