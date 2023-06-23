@@ -4,6 +4,8 @@
   border: 1px solid rgba(255, 255, 255, 0.2);
   position: relative;
   background-color: rgba(255, 255, 255, 1);
+
+  overflow: hidden;
 }
 .image {
   width: 100%;
