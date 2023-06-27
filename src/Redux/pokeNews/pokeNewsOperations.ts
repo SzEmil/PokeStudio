@@ -47,15 +47,10 @@ export const addPost = createAsyncThunk(
   'pokeNews/addPost',
   async (post: post, thunkAPI) => {
     try {
-      push(ref(fireDatabase, 'posts'), post)
-        .then(() => {
-          console.log('Post added to the database');
-        })
-        .catch(error => {
-          console.error('Error adding post to the database:', error);
-        });
+      await push(ref(fireDatabase, 'posts'), post);
       return post;
     } catch (error: any) {
+      console.error('Error adding post to the database:', error);
       return thunkAPI.rejectWithValue(error.message);
     }
   }
