@@ -8,6 +8,10 @@ cards play a crucial role in battling against an AI opponent, earning coins to
 purchase additional packs. You can also enjoy the PokeStudio community and share
 some posts from pokemon world!
 
+Test credentials:
+email: user@wp.pl
+password: 123456
+
 ## Browse your favorite Pokemon from a database of over 800 Pokemon.
 
 ![PokeStudio main](./public/pokestudio-main.jpg)
