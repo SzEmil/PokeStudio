@@ -84,7 +84,3 @@ create new issue ticket. Otherwise you can contact me via my socials or email:
 - 📧 email: emil-szymczyk2@wp.pl
 
 Enjoy PokeStudio!
-
-
-
-Enjoy!
