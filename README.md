@@ -36,7 +36,7 @@ some posts from pokemon world!
 
 ## <a name="first-look">💻 First Look</a>
 
-✨ Welcome to Service!
+✨ Welcome to PokeStudio!
 
 ## Browse your favorite Pokemon from a database of over 800 Pokemon.
 
