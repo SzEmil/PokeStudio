@@ -1,45 +1,24 @@
 import css from './BtnMoveScroll.module.css';
+import { HiOutlineChevronUp, HiOutlineChevronDown } from 'react-icons/hi2';
 
 type BtnMoveScrollPropsType = {
-  btnType: string;
+  btnType: 'up' | 'down';
 };
 
 export const BtnMoveScroll = ({ btnType }: BtnMoveScrollPropsType) => {
-  const handleOnClickMoveUp = () => {
+  const handleClick = () =>
     window.scrollTo({
-      top: 0,
+      top: btnType === 'up' ? 0 : document.documentElement.scrollHeight,
       behavior: 'smooth',
     });
-  };
-  const handleOnClickMoveDown = () => {
-    window.scrollTo({
-      top: document.documentElement.scrollHeight,
-      behavior: 'smooth',
-    });
-  };
   return (
-    <div>
-      {btnType === 'up' && (
-        <button
-          className={css.btnUp}
-          type="button"
-          onClick={handleOnClickMoveUp}
-        >
-          ^
-        </button>
-      )}
-      {btnType === 'down' && (
-        <button
-          className={css.btnDown}
-          type="button"
-          onClick={handleOnClickMoveDown}
-        >
-          ^
-        </button>
-      )}
-      {btnType !== 'down' && btnType !== 'up' && (
-        <p>Wrong button type! Allowed is down or up</p>
-      )}
-    </div>
+    <button
+      className={css.btn}
+      type="button"
+      onClick={handleClick}
+      aria-label={btnType === 'up' ? 'Scroll to top' : 'Scroll to bottom'}
+    >
+      {btnType === 'up' ? <HiOutlineChevronUp size={18} /> : <HiOutlineChevronDown size={18} />}
+    </button>
   );
 };

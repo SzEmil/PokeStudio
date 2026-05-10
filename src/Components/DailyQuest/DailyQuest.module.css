@@ -1,0 +1,184 @@
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-5);
+}
+
+.banner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-4);
+  padding: var(--s-5);
+  border-radius: var(--r-lg);
+  background:
+    radial-gradient(circle at 0% 0%, rgba(255, 203, 5, 0.18), transparent 60%),
+    radial-gradient(circle at 100% 100%, rgba(99, 144, 240, 0.18), transparent 60%),
+    rgba(20, 27, 44, 0.55);
+  border: 1px solid var(--border);
+}
+
+.bannerLeft {
+  display: flex;
+  align-items: center;
+  gap: var(--s-4);
+}
+
+.eyebrow {
+  font-family: var(--font-display);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--brand);
+  font-weight: 700;
+}
+
+.title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 26px;
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+  margin: 4px 0 6px;
+}
+
+.lead {
+  font-size: 14px;
+  color: var(--text-secondary);
+  max-width: 50ch;
+}
+
+.streak {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  padding: var(--s-3) var(--s-4);
+  background: rgba(255, 94, 94, 0.1);
+  border: 1px solid rgba(255, 94, 94, 0.35);
+  border-radius: var(--r-pill);
+  color: var(--brand-2);
+  font-family: var(--font-display);
+}
+
+.streak strong {
+  font-size: 22px;
+  font-weight: 800;
+}
+
+.streak span {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--s-4);
+}
+
+@media (min-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+  padding: var(--s-5);
+  border-radius: var(--r-lg);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border);
+}
+
+.cardLabel {
+  font-family: var(--font-display);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--text-muted);
+  font-weight: 700;
+}
+
+.coins {
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--s-2);
+}
+
+.coinDot {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #fff5b8, #f5c419 60%, #886c00 100%);
+  box-shadow: 0 0 16px rgba(255, 203, 5, 0.6);
+  flex-shrink: 0;
+  transform: translateY(2px);
+}
+
+.coins strong {
+  font-family: var(--font-display);
+  font-size: 40px;
+  font-weight: 800;
+  color: var(--brand);
+}
+
+.coins span {
+  font-family: var(--font-display);
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+
+.tip {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.streakBar {
+  display: flex;
+  gap: 6px;
+  margin-top: var(--s-2);
+}
+
+.streakDot {
+  width: 100%;
+  height: 6px;
+  border-radius: var(--r-pill);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.streakDotOn {
+  background: var(--grad-brand);
+  box-shadow: 0 0 8px rgba(255, 203, 5, 0.5);
+}
+
+.card small {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+}
+
+.claimedBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  padding: var(--s-2) var(--s-3);
+  background: rgba(52, 211, 153, 0.1);
+  border: 1px solid rgba(52, 211, 153, 0.35);
+  color: var(--success);
+  border-radius: var(--r-md);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.timer {
+  margin-left: auto;
+  font-family: var(--font-mono);
+  color: var(--text-primary);
+}

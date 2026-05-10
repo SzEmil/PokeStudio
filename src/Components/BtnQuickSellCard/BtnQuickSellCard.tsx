@@ -1,27 +1,28 @@
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../Redux/store';
 import { quickSellCard } from '../../Redux/auth/authOperations';
-import css from './BtnQuickSellCard.module.css';
+import { addCardSold } from '../../Redux/stats/statsSlice';
 import { setPackedPokemonState } from '../../Redux/pokeShop/pokeShopSlice';
+import { Button } from '../UI/Button';
+import { LuCoins } from 'react-icons/lu';
 
-type BtnQuickSellCardPropType = {
-  ovrl: number;
-};
-export const calculatePrice = (ovrl: number) => {
-  return Number(ovrl * 3);
-};
+type Props = { ovrl: number };
 
-export const BtnQuickSellCard = ({ ovrl }: BtnQuickSellCardPropType) => {
+export const calculatePrice = (ovrl: number) => Number(ovrl * 3);
+
+export const BtnQuickSellCard = ({ ovrl }: Props) => {
   const dispatch: AppDispatch = useDispatch();
-  const price: number = calculatePrice(ovrl);
+  const price = calculatePrice(ovrl);
 
   const handleOnClick = () => {
     dispatch(quickSellCard(price));
+    dispatch(addCardSold());
     dispatch(setPackedPokemonState());
   };
+
   return (
-    <button className={css.btn} type="button" onClick={handleOnClick}>
-      Quick Sell for {price}
-    </button>
+    <Button variant="ghost" iconLeft={<LuCoins />} onClick={handleOnClick}>
+      Quick sell · {price}¢
+    </Button>
   );
 };

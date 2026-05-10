@@ -1,111 +1,47 @@
 .container {
-  overflow: hidden;
-  position: relative;
+  width: 100%;
 }
-
-.galleryCard {
+.head {
+  margin-bottom: var(--s-3);
+}
+.title {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: var(--s-3);
+}
+.tile {
+  position: relative;
   display: flex;
   flex-direction: column;
-
-  width: 100%;
-}
-.galleryCardBar {
-  display: flex;
   align-items: center;
-  padding: 10px;
-  justify-content: space-between;
-  background-color: rgba(14, 21, 37, 0.8);
-
-  z-index: 100;
-
-  border-radius: 5px 5px 0 0;
-
-  border: 0.3px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: var(--s-3);
+  text-decoration: none;
+  color: inherit;
+  aspect-ratio: 1 / 1.05;
+  transition: transform var(--t-fast), border-color var(--t-fast);
 }
-.galleryCardTitle {
-  color: white;
-  font-style: normal;
-  font-family: 'Roboto';
-  font-weight: 300;
-  font-size: 18px;
-  line-height: 22px;
-}
-
-.button {
-  color: white;
-  position: relative;
-  z-index: 1;
-  font-style: normal;
-  font-family: 'Roboto';
-  font-weight: 300;
-  font-size: 24px;
-  line-height: 26px;
-  border: none;
-  background-color: transparent;
-  padding: 5px;
-  transform: rotateX(180deg);
-  cursor: pointer;
-
-  transition: transform 0.3s ease;
-}
-
-.galleryBox {
-  position: absolute;
-  left: 0;
-  width: 100%;
-  background-color: rgba(0, 0, 0, 0.1);
-  padding: 10px;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-  color: black;
-  transition: opacity 0.3s ease, transform 0.3s ease;
-
-  pointer-events: none;
-  gap: 10px;
-
-  border-radius: 0 0 5px 5px;
-  justify-content: center;
-  opacity: 0;
-  transform: translateY(-100%);
-  pointer-events: none;
-
-  border: 0.2px solid rgba(0, 0, 0, 0.1);
-  border-top: none;
-  width: 100%;
-}
-
-.galleryBox.visible {
-  opacity: 1;
-  transform: translateY(0%);
-  position: static;
-
-  display: flex;
-  pointer-events: all;
-}
-.galleryBox.hidden {
-  opacity: 0;
-  transform: translateY(-100%);
-  transition-delay: 0.1s;
-  display: none;
-  pointer-events: none;
-}
-
-.isVisible {
-  transform: rotateX(0deg);
-}
-.gallery {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  align-items: center;
-  justify-content: center;
-}
-
-.galleryItem {
-  width: 300px;
-  border: 0.2px solid rgba(255, 255, 255, 0.2);
-  border-radius: 5px;
-  padding: 10px;
+.tile:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255, 203, 5, 0.45);
 }
 .image {
+  flex: 1;
   width: 100%;
+  height: 80%;
+  object-fit: contain;
+}
+.tileLabel {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-muted);
+  text-align: center;
+  margin-top: 4px;
 }

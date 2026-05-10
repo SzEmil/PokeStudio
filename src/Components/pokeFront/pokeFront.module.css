@@ -1,81 +1,89 @@
+.linkReset {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  height: 100%;
+}
 
 .card {
-  width: 100%;
+  position: relative;
   display: flex;
   flex-direction: column;
-
-  border-radius: 5px;
-
-  /* background: rgb(227, 212, 108);
-  background: radial-gradient(
-    circle,
-    rgba(227, 212, 108, 1) 45%,
-    rgb(146, 138, 24) 80%
-  ); */
-  position: relative;
-}
-.card:before {
-  content: '';
-  position: absolute;
-  top: -20px; /* ustawianie pozycji */
-  left: -20px; /* ustawianie pozycji */
-  right: -20px; /* ustawianie pozycji */
-  bottom: -20px; /* ustawianie pozycji */
-  z-index: -1; /* ustaw z-index na -1, aby pozostał pod kartą */
-  background: radial-gradient(
-    circle,
-    rgba(255, 255, 255, 0.4) 0%,
-    rgba(255, 255, 255, 0) 60%
-  ); /* dodaj gradient */
-  filter: blur(20px); /* dodaj rozmycie */
-  opacity: 1; /* ukryj połyskiwanie */
-  transition: opacity 0.3s ease-in-out; /* dodaj efekt przejścia */
-
-  transition: background-color 250ms ease-in-out;
+  align-items: center;
+  padding: var(--s-3) var(--s-3) var(--s-4);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  transition: border-color var(--t-med) var(--ease-out), box-shadow var(--t-med) var(--ease-out);
+  cursor: pointer;
+  height: 100%;
 }
 
 .card:hover {
-  cursor: pointer;
+  border-color: rgba(255, 203, 5, 0.45);
+  box-shadow: 0 12px 28px rgba(255, 203, 5, 0.15);
 }
-.card:hover:before {
-  background: radial-gradient(
-    circle,
-    #ffd600 5%,
-    rgba(255, 255, 255, 0) 60%
-  ); /* dodaj gradient */
+
+.glow {
+  position: absolute;
+  top: -40%;
+  left: -20%;
+  right: -20%;
+  height: 90%;
+  background: radial-gradient(closest-side, rgba(255, 203, 5, 0.18), transparent 70%);
+  filter: blur(12px);
+  opacity: 0;
+  transition: opacity var(--t-med);
+  pointer-events: none;
+}
+
+.card:hover .glow {
+  opacity: 1;
+}
+
+.imageBox {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  display: grid;
+  place-items: center;
+  position: relative;
+  z-index: 1;
 }
 
 .image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  width: 88%;
+  height: 88%;
+  object-fit: contain;
+  filter: drop-shadow(0 10px 14px rgba(0, 0, 0, 0.45));
+  transition: transform var(--t-med) var(--ease-out);
 }
-.image {
-  transition: transform 0.5s ease;
-}
+
 .card:hover .image {
-  transform: scale(1.1);
+  transform: translateY(-4px) scale(1.05);
 }
 
 .info {
-  padding: 30px 20px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  z-index: 1;
+}
+
+.id {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
 }
 
 .name {
-  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--text-primary);
   text-align: center;
-
-  color: #ffd600;
-  /* color: white; */
-  font-style: normal;
-  font-family: 'Pokemon Solid';
-  font-weight: 300;
-  font-size: 28px;
-  line-height: 32px;
-}
-
-@media (max-width: 400px) {
-  .card {
-    width: 100%;
-  }
+  letter-spacing: -0.01em;
 }

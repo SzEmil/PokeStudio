@@ -1,0 +1,44 @@
+.ball {
+  position: relative;
+  border-radius: 50%;
+  box-shadow: inset -6px -6px 12px rgba(0, 0, 0, 0.35), 0 8px 18px rgba(0, 0, 0, 0.4);
+  overflow: hidden;
+}
+
+.top {
+  position: absolute;
+  inset: 0 0 50% 0;
+  background: linear-gradient(180deg, #ff5e5e, #d63434);
+}
+.bottom {
+  position: absolute;
+  inset: 50% 0 0 0;
+  background: linear-gradient(180deg, #f5f6fa, #c8cad0);
+}
+.middle {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 8%;
+  background: #111;
+  transform: translateY(-50%);
+}
+.button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 26%;
+  height: 26%;
+  background: radial-gradient(circle at 30% 30%, #fff, #aab1c0 60%, #555 100%);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 0 4px #111, 0 0 0 6px #fff, 0 0 16px rgba(255, 255, 255, 0.45);
+}
+
+.spin {
+  animation: spin 1.4s linear infinite;
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}

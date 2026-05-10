@@ -1,60 +1,59 @@
 .listBox {
+  width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  gap: var(--s-6);
 }
+
 .list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  gap: var(--s-4);
+  width: 100%;
 }
+
 .item {
-  width: 330px;
+  display: flex;
+  height: 100%;
 }
+
 .btnBox {
-  margin: 15px 0;
+  display: flex;
+  justify-content: center;
+  margin-top: var(--s-3);
 }
-.btn {
-  font-style: normal;
-  font-family: 'Roboto';
-  font-weight: 200;
-  font-size: 16px;
-  line-height: 16px;
-  color: white;
-  cursor: pointer;
-  border: none;
-  border-radius: 5px;
 
-  padding: 10px;
-  background-color: rgba(0, 0, 0, 0.589);
-
-  transition: background-color 200ms ease-in-out;
+.notFound {
+  text-align: center;
+  padding: var(--s-9) var(--s-4);
+  color: var(--text-secondary);
 }
-.btn:hover {
-  background-color: rgba(53, 53, 53, 0.589);
+
+.notFound h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 22px;
+  color: var(--text-primary);
+  margin-bottom: var(--s-2);
 }
 
 .btnScrollWrapper {
   position: fixed;
-  bottom: 30px;
-  left: 30px;
-}
-.btnMoveScrollBox {
-  margin-top: 10px;
-}
-.notFound {
-  font-style: normal;
-  font-family: 'Roboto';
-  font-weight: 200;
-  font-size: 16px;
-  line-height: 16px;
-  color: white;
-
+  right: 24px;
+  bottom: 24px;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-direction: column;
+  gap: var(--s-2);
+  z-index: 30;
+}
 
-  margin-top: 80px;
+@media (max-width: 540px) {
+  .list {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: var(--s-3);
+  }
+  .btnScrollWrapper {
+    right: 14px;
+    bottom: 14px;
+  }
 }

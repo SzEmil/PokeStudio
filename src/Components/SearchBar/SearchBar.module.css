@@ -1,18 +1,55 @@
-.input {
-  padding: 5px;
-  background-color: rgba(0, 0, 0, 0.5);
-  color: white;
-  border-radius: 5px;
-  border-color: rgba(255, 255, 255, 0.8);
-
-  font-style: normal;
-  font-family: 'Roboto';
-  font-weight: 200;
-  font-size: 16px;
-  line-height: 16px;
+.wrap {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  padding: 0 var(--s-3);
+  height: 48px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border);
+  border-radius: var(--r-pill);
+  transition: border-color var(--t-fast), background var(--t-fast),
+    box-shadow var(--t-med);
+  width: 100%;
+  max-width: 480px;
 }
 
-.input:focus {
-  border-color: rgb(217, 255, 0);
+.wrap:focus-within {
+  border-color: rgba(255, 203, 5, 0.55);
+  background: rgba(255, 255, 255, 0.07);
+  box-shadow: 0 0 0 4px rgba(255, 203, 5, 0.12);
+}
+
+.icon {
+  color: var(--text-muted);
+  display: inline-flex;
+}
+
+.input {
+  flex: 1;
+  background: transparent;
+  border: none;
   outline: none;
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: 15px;
+}
+.input::placeholder {
+  color: var(--text-muted);
+}
+
+.clear {
+  background: transparent;
+  color: var(--text-muted);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  transition: background var(--t-fast), color var(--t-fast);
+}
+.clear:hover {
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.06);
 }

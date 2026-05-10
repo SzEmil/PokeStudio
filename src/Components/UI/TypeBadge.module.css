@@ -1,0 +1,29 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--r-pill);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #fff;
+  font-family: var(--font-display);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.sm {
+  padding: 3px 10px;
+  font-size: 10px;
+}
+.md {
+  padding: 5px 14px;
+  font-size: 12px;
+}
+.lg {
+  padding: 8px 18px;
+  font-size: 14px;
+}
+
+.soft {
+  text-shadow: none;
+}

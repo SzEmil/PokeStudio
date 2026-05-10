@@ -68,3 +68,15 @@ export const fetchPokemonMoves = createAsyncThunk(
     }
   }
 );
+
+export const fetchEvolutionChain = createAsyncThunk(
+  'pokemons/fetchEvolutionChain',
+  async (url: string, thunkAPI) => {
+    try {
+      const response = await axios.get(url);
+      return response.data;
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);

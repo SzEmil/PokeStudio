@@ -1,28 +1,82 @@
 .user {
   display: flex;
   align-items: center;
+  gap: var(--s-3);
 }
-.userTitle {
-  font-style: normal;
-  font-family: 'Roboto';
-  font-weight: 200;
-  font-size: 16px;
-  line-height: 16px;
-  color: white;
 
-  margin-left: 10px;
-}
-.coins {
-  font-style: normal;
-  font-family: 'Roboto';
-  font-weight: 200;
+.avatar {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #6390f0, #6f35fc);
+  display: grid;
+  place-items: center;
+  color: #fff;
+  font-weight: 700;
+  font-family: var(--font-display);
   font-size: 16px;
-  line-height: 16px;
-  color: white;
-
-  margin-left: 10px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), 0 6px 14px rgba(99, 144, 240, 0.4);
+  flex-shrink: 0;
 }
-.coinsVal {
-  font-weight: 400;
-  color: #ffd600;
+
+.levelDot {
+  position: absolute;
+  bottom: -4px;
+  right: -6px;
+  background: var(--grad-brand);
+  color: #1a0c00;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 9px;
+  letter-spacing: 0.04em;
+  padding: 2px 6px;
+  border-radius: var(--r-pill);
+  border: 1.5px solid var(--bg-0);
+  box-shadow: 0 3px 8px rgba(255, 94, 94, 0.4);
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.name {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--text-primary);
+  text-transform: capitalize;
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  margin-top: 2px;
+}
+
+.coinChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--brand);
+  font-family: var(--font-mono);
+}
+
+.coinDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--brand);
+  box-shadow: 0 0 8px var(--brand);
+}
+
+.cardsChip {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
 }

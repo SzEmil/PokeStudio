@@ -1,71 +1,66 @@
 import css from './PokePack.module.css';
-import { useState } from 'react';
+import { motion } from 'framer-motion';
+import { Button } from '../UI/Button';
 
+type PackType = 'Silver' | 'Gold' | 'Legendary';
 type PokePackPropsType = {
-  type: 'Silver' | 'Gold' | 'Legendary' | string | undefined;
+  type: PackType | string | undefined;
   handleOnClick(event: React.MouseEvent<HTMLButtonElement>): void;
 };
 
+const SPECS: Record<PackType, { price: number; legendary: number; gradient: string; subtitle: string }> = {
+  Silver: {
+    price: 500,
+    legendary: 2,
+    gradient: 'linear-gradient(160deg, #cdd2da 0%, #6f7585 50%, #2d3140 100%)',
+    subtitle: 'Solid odds for early trainers.',
+  },
+  Gold: {
+    price: 1000,
+    legendary: 9,
+    gradient: 'linear-gradient(160deg, #ffd86f 0%, #fcb045 50%, #5a3a00 100%)',
+    subtitle: 'Stronger pulls and a real shot at legends.',
+  },
+  Legendary: {
+    price: 5000,
+    legendary: 100,
+    gradient: 'linear-gradient(160deg, #c084fc 0%, #6f35fc 50%, #1b0a4f 100%)',
+    subtitle: '100% guaranteed legendary Pokémon.',
+  },
+};
+
 export const PokePack = ({ type, handleOnClick }: PokePackPropsType) => {
-  const [isPickedPack, setIsPickedPack] = useState(false);
-  let backgroundImage;
-  let price = 0;
-  let legendary;
-  if (type === 'Gold') {
-    price = 1000;
-    legendary = 9;
-    backgroundImage =
-      'https://cdn.leonardo.ai/users/0b683e71-42fa-4e1b-8356-6df8f6f5706e/generations/6606818d-b1ce-47ce-99b9-c2e7043f0a46/Leonardo_Diffusion_pokemon_pack_background_golden_background_v_2.jpg';
-  }
-  if (type === 'Silver') {
-    price = 500;
-    legendary = 2;
-    backgroundImage = `https://cdn.leonardo.ai/users/0b683e71-42fa-4e1b-8356-6df8f6f5706e/generations/acead86b-1e48-4ef9-ae3a-5d49cb4d2695/Leonardo_Diffusion_Squirtle_pokemon_pack_background_Silver_col_0.jpg`;
-  }
-  if (type === 'Legendary') {
-    price = 5000;
-    legendary = 100;
-    backgroundImage = `https://cdn.leonardo.ai/users/0b683e71-42fa-4e1b-8356-6df8f6f5706e/generations/7ff1a077-f5c6-44f6-bf9a-9b096834f2a5/Leonardo_Diffusion_Legendary_pokemon_pack_background_epic_colo_1.jpg`;
-  }
+  const t = (type as PackType) ?? 'Silver';
+  const spec = SPECS[t] ?? SPECS.Silver;
 
   return (
-    <div
-      className={`${css.card} ${isPickedPack ? css.picked : ''}`}
-      style={{ backgroundImage: `url(${backgroundImage})` }}
-      onClick={() => setIsPickedPack(prevState => !prevState)}
+    <motion.div
+      className={css.pack}
+      style={{ background: spec.gradient }}
+      whileHover={{ y: -6, rotate: -1 }}
+      whileTap={{ scale: 0.97 }}
+      transition={{ duration: 0.25 }}
     >
-      <h2 className={css.title}>{type} Pack</h2>
-      <p className={css.price}>{price}$</p>
-      {isPickedPack && (
-        <div className={css.overlay}>
-          <p className={css.legendaryChance}>
-            Chance for legendary: {legendary}%
-          </p>
-          <div>
-            <button
-              className={css.btn}
-              type="button"
-              onClick={event => {
-                event.stopPropagation();
-                handleOnClick(event);
-                setIsPickedPack(false);
-              }}
-            >
-              Buy
-            </button>
-            <button
-              className={css.btn}
-              type="button"
-              onClick={event => {
-                event.stopPropagation();
-                setIsPickedPack(false);
-              }}
-            >
-              Cancel
-            </button>
-          </div>
+      <div className={css.foil} aria-hidden />
+      <div className={css.shine} aria-hidden />
+      <div className={css.body}>
+        <div className={css.top}>
+          <span className={css.tier}>{t}</span>
+          <span className={css.price}>{spec.price.toLocaleString()} ¢</span>
         </div>
-      )}
-    </div>
+        <div className={css.center}>
+          <h3 className={css.title}>{t} Pack</h3>
+          <p className={css.subtitle}>{spec.subtitle}</p>
+        </div>
+        <div className={css.bottom}>
+          <span className={css.chip}>
+            Legendary chance <strong>{spec.legendary}%</strong>
+          </span>
+          <Button variant="primary" size="sm" onClick={handleOnClick}>
+            Buy & open
+          </Button>
+        </div>
+      </div>
+    </motion.div>
   );
 };

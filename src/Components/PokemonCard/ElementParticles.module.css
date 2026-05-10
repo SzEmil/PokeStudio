@@ -1,0 +1,90 @@
+.layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+  border-radius: inherit;
+}
+
+.particle {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(0.4px);
+  will-change: transform, opacity;
+}
+
+/* Variant-specific tweaks */
+
+.pe_fire .particle {
+  border-radius: 50% 50% 30% 30%;
+  filter: blur(0.6px) drop-shadow(0 0 4px currentColor);
+  animation-name: rise;
+}
+
+.pe_water .particle {
+  border-radius: 50%;
+}
+
+.pe_electric .particle {
+  border-radius: 1px;
+  width: 2px !important;
+  filter: drop-shadow(0 0 6px currentColor);
+}
+
+.pe_grass .particle {
+  border-radius: 60% 40% 60% 40%;
+  filter: blur(0.4px);
+}
+
+.pe_ice .particle {
+  border-radius: 0;
+  transform: rotate(45deg);
+}
+
+.pe_psychic .particle {
+  border-radius: 50%;
+  filter: blur(2px);
+}
+
+.pe_ghost .particle {
+  border-radius: 50%;
+  filter: blur(3px);
+  opacity: 0.6;
+}
+
+.pe_dragon .particle {
+  border-radius: 60% 40% 30% 70%;
+  filter: blur(0.8px);
+}
+
+.pe_dark .particle {
+  border-radius: 50%;
+  filter: blur(2px);
+}
+
+.pe_fairy .particle {
+  border-radius: 50%;
+  filter: blur(0.4px) drop-shadow(0 0 6px currentColor);
+}
+
+.pe_flying .particle {
+  border-radius: 0;
+  width: 4px !important;
+  filter: blur(0.4px);
+}
+
+.pe_poison .particle {
+  border-radius: 50%;
+  filter: blur(1px);
+}
+
+.pe_default .particle {
+  border-radius: 50%;
+}
+
+@keyframes rise {
+  0% { transform: translateY(0) scale(0.8); opacity: 0.3; }
+  50% { transform: translateY(-12px) scale(1.1); opacity: 1; }
+  100% { transform: translateY(-20px) scale(0.7); opacity: 0; }
+}

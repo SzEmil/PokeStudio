@@ -1,149 +1,246 @@
-.pokeShop {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  padding: 10px 0;
-  margin-bottom: 20px;
-}
-.packedPokemon {
-  position: absolute;
-
-  width: 100%;
-
-  z-index: 1000;
-  top: 0%;
-  left: 50%;
-  transform: translateY(-50%);
-  transform: translateX(-50%);
-
-  background-color: rgba(0, 0, 0, 0.8);
-  border-radius: 2px;
-  padding: 20px 0;
-}
-
-.packedPokemonWrapper {
+.shop {
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
-  padding: 10px 0px;
+  gap: var(--s-6);
 }
-.card {
-  min-width: 350px;
-  padding: 0 10px;
-}
-.description {
-  padding-left: 20px;
-  min-width: 330px;
-  max-width: 600px;
-}
-.descriptionTitle {
-  color: white;
-  font-style: normal;
-  font-family: 'Roboto';
-  font-weight: 400;
-  font-size: 18px;
-  line-height: 20px;
 
-  text-align: center;
-  padding-bottom: 20px;
-  padding-top: 20px;
-}
-.descriptionText {
-  color: white;
-  font-style: normal;
-  font-family: 'Roboto';
-  font-weight: 300;
-  font-size: 16px;
-  line-height: 20px;
-}
-.btnCardBox {
-  margin-left: 20px;
-}
-.btnAddCardBox {
+.head {
   display: flex;
-  justify-content: center;
-  margin-top: 20px;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-4);
+}
+
+.eyebrow {
+  font-family: var(--font-display);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--brand);
+  font-weight: 700;
+}
+
+.title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 28px;
+  margin: 4px 0 6px;
+}
+
+.lead {
+  color: var(--text-secondary);
+  font-size: 14px;
+  max-width: 60ch;
+}
+
+.coinChip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  padding: var(--s-3) var(--s-4);
+  background: rgba(255, 203, 5, 0.1);
+  border: 1px solid rgba(255, 203, 5, 0.4);
+  border-radius: var(--r-pill);
+  color: var(--brand);
+}
+.coinChip strong {
+  font-family: var(--font-display);
+  font-size: 18px;
+}
+.coinChip span {
+  font-family: var(--font-display);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+.coinDot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #fff5b8, #f5c419 60%, #886c00 100%);
+  box-shadow: 0 0 12px rgba(255, 203, 5, 0.6);
 }
 
 .packList {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: var(--s-4);
+}
+
+/* === Reveal animation === */
+
+.revealBackdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  padding: var(--s-4);
+  background: rgba(7, 9, 15, 0.78);
+  backdrop-filter: blur(14px);
+}
+
+.revealStage {
+  position: relative;
+  width: min(900px, 100%);
+  max-height: 90vh;
+  overflow-y: auto;
+  background: var(--bg-1);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--r-xl);
+  padding: var(--s-7);
+  box-shadow: var(--shadow-lg);
+}
+
+.closeBtn {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text-primary);
+  font-size: 20px;
+  line-height: 1;
+  transition: background var(--t-fast);
+}
+.closeBtn:hover {
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.opening {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--s-8) 0;
+  isolation: isolate;
+}
+
+.shockwave,
+.shockwave2 {
+  position: absolute;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 203, 5, 0.5);
+  width: 200px;
+  height: 200px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: shock 1.6s ease-out infinite;
+}
+.shockwave2 {
+  animation-delay: 0.8s;
+  border-color: rgba(255, 94, 94, 0.4);
+}
+
+@keyframes shock {
+  0% {
+    transform: translate(-50%, -50%) scale(0.4);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(2.4);
+    opacity: 0;
+  }
+}
+
+.openingText {
+  margin-top: var(--s-5);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 22px;
+  color: var(--text-primary);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+.openingText small {
+  font-size: 12px;
+  font-family: var(--font-mono);
+  color: var(--text-muted);
+}
+
+.revealedCard {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--s-5);
+  align-items: center;
+}
+
+@media (min-width: 800px) {
+  .revealedCard {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.revealHero {
+  display: grid;
+  place-items: center;
+}
+
+.revealActions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+}
+
+.revealActions h3 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 24px;
+  text-transform: capitalize;
+}
+
+.revealActions p {
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+
+.revealButtons {
+  display: flex;
+  gap: var(--s-2);
+  flex-wrap: wrap;
+}
+
+.recent {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+  padding: var(--s-5);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+}
+
+.recentHead h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 18px;
+  margin-top: 4px;
+}
+
+.recentBody {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--s-4);
+  align-items: center;
+}
+@media (min-width: 800px) {
+  .recentBody {
+    grid-template-columns: 0.6fr 1fr;
+  }
+}
+
+.recentActions {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  gap: 40px;
-}
-.loaderBox {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translateX(-50%);
-  transform: translateY(-50%);
-}
-
-@media screen and (min-width: 1200px) {
-  .packedPokemon {
-    position: absolute;
-    max-width: 1000px;
-    z-index: 1000;
-    top: 0%;
-    left: 50%;
-    transform: translateY(-50%);
-    transform: translateX(-50%);
-
-    background-color: rgba(0, 0, 0, 0.8);
-    border-radius: 2px;
-    padding: 20px;
-  }
-  .packedPokemonWrapper {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-    padding: 10px 30px;
-  }
-  .card {
-    max-width: 450px;
-    min-width: 400px;
-  }
-  .description {
-    padding-left: 20px;
-    min-width: 500px;
-    max-width: 600px;
-  }
-  .descriptionTitle {
-    color: white;
-    font-style: normal;
-    font-family: 'Roboto';
-    font-weight: 400;
-    font-size: 28px;
-    line-height: 30px;
-
-    text-align: center;
-    padding-bottom: 40px;
-  }
-  .descriptionText {
-    color: white;
-    font-style: normal;
-    font-family: 'Roboto';
-    font-weight: 300;
-    font-size: 22px;
-    line-height: 24px;
-  }
-  .btnCardBox {
-    margin-left: 20px;
-  }
-  .btnAddCardBox {
-    display: flex;
-    justify-content: center;
-    margin-top: 50px;
-  }
-
-  .packList {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    gap: 40px;
-  }
+  gap: var(--s-2);
 }

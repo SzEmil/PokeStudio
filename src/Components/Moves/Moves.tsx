@@ -1,124 +1,96 @@
 import { nanoid } from '@reduxjs/toolkit';
-import { useSelector } from 'react-redux';
-import { selectPokemonDetails } from '../../Redux/pokemonInfo/pokemonInfoSelectors';
-import { useDispatch } from 'react-redux';
-import { AppDispatch } from '../../Redux/store';
-import { fetchPokemonMoves } from '../../Redux/pokemonInfo/pokemonInfoOperations';
+import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
-import { selectPokemonDetailsMovesInfo } from '../../Redux/pokemonInfo/pokemonInfoSelectors';
+import {
+  selectPokemonDetails,
+  selectPokemonDetailsMovesInfo,
+} from '../../Redux/pokemonInfo/pokemonInfoSelectors';
+import { fetchPokemonMoves } from '../../Redux/pokemonInfo/pokemonInfoOperations';
+import { AppDispatch } from '../../Redux/store';
+import { prettyName } from '../../utils/pokeUtils';
+import { TypeBadge } from '../UI/TypeBadge';
 import css from './Moves.module.css';
+import { HiOutlineInformationCircle, HiOutlineXMark } from 'react-icons/hi2';
 
-type movesType = {
-  move: {
-    name: string;
-    url: string;
-  };
-  version_group_details: [
-    {
-      level_learned_at: number;
-      move_learn_method: {
-        name: string;
-        url: string;
-      };
-      version_group: {
-        name: string;
-        url: string;
-      };
-    }
-  ];
+type MoveType = {
+  move: { name: string; url: string };
 };
-type movePropsType = {
-  moves: movesType[];
-};
+type Props = { moves: MoveType[] };
 
-export const Moves = ({ moves }: movePropsType) => {
+export const Moves = ({ moves }: Props) => {
   const dispatch: AppDispatch = useDispatch();
   const movesDetails: any = useSelector(selectPokemonDetailsMovesInfo);
   const pokeDetails = useSelector(selectPokemonDetails);
-  const [isOpen, setIsOpen] = useState(false);
-  const [movesOpen, setMovesOpen] = useState(false);
+  const [activeUrl, setActiveUrl] = useState<string | null>(null);
 
-  const toggleList = () => {
-    setIsOpen(!isOpen);
+  const handleOpenInfo = (url: string) => {
+    if (activeUrl === url) {
+      setActiveUrl(null);
+    } else {
+      dispatch(fetchPokemonMoves(url));
+      setActiveUrl(url);
+    }
   };
-  const toggleMoves = () => {
-    setMovesOpen(!movesOpen);
-  };
-  const handleOnClickInfo = (url: string | undefined) => {
-    dispatch(fetchPokemonMoves(url));
-    toggleMoves();
-  };
+
   return (
     <div className={css.container}>
-      <div className={css.movesCard}>
-        <div className={css.movesCardBar}>
-          <h3 className={css.movesCardTitle}>Moves</h3>
-          <button
-            type="button"
-            onClick={toggleList}
-            className={`${css.button} ${isOpen ? css.isVisible : ''}`}
-          >
-            ^
-          </button>
-        </div>
-        <ul className={`${css.list} ${isOpen ? css.visible : ''}`}>
-          {moves.map(move => (
-            <li className={css.listItem} key={`${move.move.name}_${nanoid()}`}>
-              <div
-                className={`${css.moveTypeBar} ${
-                  movesOpen ? css.moveTypeVisible : ''
-                }`}
+      <div className={css.head}>
+        <h3 className={css.title}>Moves ({moves.length})</h3>
+      </div>
+      <ul className={css.list}>
+        {moves.map(m => {
+          const isActive = activeUrl === m.move.url;
+          const flavor = movesDetails?.flavor_text_entries?.find(
+            (e: any) => e.language?.name === 'en'
+          )?.flavor_text;
+          return (
+            <li className={css.listItem} key={`${m.move.name}_${nanoid()}`}>
+              <button
+                type="button"
+                className={`${css.row} ${isActive ? css.rowActive : ''}`}
+                onClick={() => handleOpenInfo(m.move.url)}
               >
-                <p className={css.moveTitle}>{move.move.name}</p>
-                <button
-                  className={css.moreInfoBtn}
-                  type="button"
-                  onClick={() => handleOnClickInfo(move.move.url)}
-                >
-                  ?
-                </button>
-              </div>
-              {movesDetails === null ||
-              move.move.name !== movesDetails.name ? null : (
-                <>
+                <span className={css.moveName}>{prettyName(m.move.name)}</span>
+                <span className={css.toggle}>
+                  {isActive ? <HiOutlineXMark size={14} /> : <HiOutlineInformationCircle size={14} />}
+                </span>
+              </button>
+              {isActive && movesDetails?.name === m.move.name && (
+                <div className={css.detail}>
                   {pokeDetails.isMovesLoading ? (
-                    <p>Loading data...</p>
+                    <p className={css.muted}>Loading…</p>
                   ) : (
-                    <div className={css.moveTypeWrapper}>
-                      <p className={css.moveType}>
-                        {
-                          movesDetails.flavor_text_entries.find(
-                            (item: ReturnType<typeof movesDetails>) =>
-                              item.language.name === 'en'
-                          ).flavor_text
-                        }
-                      </p>
-                      <p className={css.moveType}>
-                        Accuracy:{' '}
-                        <span className={css.moveTypeModifier}>
-                          {movesDetails.accuracy}
+                    <>
+                      {flavor && <p className={css.flavor}>{flavor.replace(/[\f\n]/g, ' ')}</p>}
+                      <div className={css.metrics}>
+                        {movesDetails.type?.name && <TypeBadge type={movesDetails.type.name} size="sm" />}
+                        {movesDetails.damage_class?.name && (
+                          <span className={css.metric}>
+                            <span>Class</span>
+                            <strong>{movesDetails.damage_class.name}</strong>
+                          </span>
+                        )}
+                        <span className={css.metric}>
+                          <span>Power</span>
+                          <strong>{movesDetails.power ?? '—'}</strong>
                         </span>
-                      </p>
-                      <p className={css.moveType}>
-                        Power:{' '}
-                        <span className={css.moveTypeModifier}>
-                          {movesDetails.power}
+                        <span className={css.metric}>
+                          <span>Acc</span>
+                          <strong>{movesDetails.accuracy ?? '—'}</strong>
                         </span>
-                      </p>
-                      <p className={css.moveType}>
-                        Damage Class:{' '}
-                        <span className={css.moveTypeModifier}>
-                          {movesDetails.damage_class.name}
+                        <span className={css.metric}>
+                          <span>PP</span>
+                          <strong>{movesDetails.pp ?? '—'}</strong>
                         </span>
-                      </p>
-                    </div>
+                      </div>
+                    </>
                   )}
-                </>
+                </div>
               )}
             </li>
-          ))}
-        </ul>
-      </div>
+          );
+        })}
+      </ul>
     </div>
   );
 };

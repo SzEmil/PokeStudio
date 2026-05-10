@@ -1,46 +1,22 @@
-.btnUp {
-  font-style: normal;
-  font-family: 'Roboto';
-  font-weight: 400;
-  font-size: 28px;
-  line-height: 28px;
-  padding: 5px 12px;
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
-  background-color: #818181;
-  color: white;
-  border: none;
+  background: rgba(20, 27, 44, 0.85);
+  color: var(--text-primary);
+  border: 1px solid var(--border-strong);
+  backdrop-filter: blur(12px);
   cursor: pointer;
-
-  z-index: 99;
-  transition: background-color 0.2s ease-in-out;
+  box-shadow: var(--shadow-md);
+  transition: background var(--t-fast), transform var(--t-fast);
 }
 
-.btnDown {
-  font-style: normal;
-  font-family: 'Roboto';
-  font-weight: 400;
-  font-size: 28px;
-  line-height: 28px;
-  padding: 5px 12px;
-  transform: rotateX(180deg);
-  border-radius: 50%;
-  background-color: #818181;
-  color: white;
-  border: none;
-  cursor: pointer;
-  z-index: 99;
-  transition: background-color 0.2s ease-in-out, transform 0.3s ease-in-out;
-}
-
-.btnUp:hover {
-  background-color: #4b4b4b;
-}
-
-.btnDown:hover {
-  background-color: #4b4b4b;
-}
-
-.btnUp:focus,
-.btnDown:focus {
-  outline: none;
+.btn:hover {
+  background: rgba(255, 203, 5, 0.18);
+  border-color: rgba(255, 203, 5, 0.45);
+  color: var(--brand);
+  transform: translateY(-2px);
 }

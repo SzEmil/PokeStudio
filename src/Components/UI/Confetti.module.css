@@ -1,0 +1,16 @@
+.wrap {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+  overflow: visible;
+  z-index: 5;
+}
+
+.piece {
+  position: absolute;
+  display: inline-block;
+  box-shadow: 0 0 6px currentColor;
+  will-change: transform, opacity;
+}

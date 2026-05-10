@@ -9,6 +9,8 @@ import { authReducer } from './auth/authSlice';
 import { pokeShopReducer } from './pokeShop/pokeShopSlice';
 import { battleReducer } from './battle/battleSlice';
 import { pokeNewsReducer } from './pokeNews/pokeNewsSlice';
+import { statsReducer } from './stats/statsSlice';
+import { teamReducer } from './team/teamSlice';
 
 import {
   FLUSH,
@@ -55,6 +57,16 @@ const pokeNewsConfig = {
   whitelist: ['posts'],
 };
 
+const statsPersistConfig = {
+  key: 'stats',
+  storage,
+};
+
+const teamPersistConfig = {
+  key: 'team',
+  storage,
+};
+
 const ignoredActions = [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER];
 export const store = configureStore({
   reducer: {
@@ -65,6 +77,8 @@ export const store = configureStore({
     pokeShop: persistReducer(pokeShopPersistConfig, pokeShopReducer),
     battle: persistReducer(battlePersistConfig, battleReducer),
     pokeNews: persistReducer(pokeNewsConfig, pokeNewsReducer),
+    stats: persistReducer(statsPersistConfig, statsReducer),
+    team: persistReducer(teamPersistConfig, teamReducer),
   },
 
   middleware: getDefaultMiddleware({
@@ -76,3 +90,4 @@ export const store = configureStore({
 
 export const persistor = persistStore(store);
 export type AppDispatch = typeof store.dispatch;
+export type RootState = ReturnType<typeof store.getState>;

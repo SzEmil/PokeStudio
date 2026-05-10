@@ -1,61 +1,49 @@
 import css from './pokeFront.module.css';
 import { memo } from 'react';
 import { NavLink } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { pokeIdFromUrl, prettyName, paddedId, spriteHome, spriteOfficial } from '../../utils/pokeUtils';
 
 interface PokemonProps {
   pokemon: {
     name: string;
     url: string;
   };
+  index?: number;
 }
-//src={`https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${handlePokeIndex(url)}.png`}/>
-// src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${handlePokeIndex(url )}.png`}
-export const PokeFront = memo(({ pokemon: { name, url } }: PokemonProps) => {
-  const handleGrowFirstLetter = (name: string) => {
-    const bigLetter = name[0].toUpperCase();
-    return name.replace(bigLetter.toLocaleLowerCase(), bigLetter);
-  };
 
-  const handlePokeIndex = (url: string) => {
-    const index = url
-      .split('')
-      .slice(0, length - 1)
-      .slice(34)
-      .join('');
-    //dla obrazków pokemonów w wersji rysunkowej odkomentować i podmienić link
-    // if (Number(index) < 10) {
-    //   console.log(index);
-    //   return '00' + index;
-    // } else if (Number(index) >= 10 && Number(index) < 100) {
-    //   console.log(index);
-    //   return '0' + index;
-    // }
-    return index;
-  };
-  //`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${handlePokeIndex(url)}.png`
+export const PokeFront = memo(({ pokemon: { name, url }, index = 0 }: PokemonProps) => {
+  const id = pokeIdFromUrl(url);
+
   return (
-    <>
-      <NavLink to={`/pokemon/${handlePokeIndex(url)}`}>
-        <div className={css.card}>
+    <NavLink to={`/pokemon/${id}`} className={css.linkReset}>
+      <motion.div
+        className={css.card}
+        initial={{ opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, delay: Math.min(index * 0.025, 0.4), ease: [0.22, 1, 0.36, 1] }}
+        whileHover={{ y: -6 }}
+      >
+        <div className={css.glow} aria-hidden />
+        <div className={css.imageBox}>
           <img
             className={css.image}
             alt={name}
-            src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${handlePokeIndex(
-              url
-            )}.png`}
-            onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
-              const target = e.target as HTMLImageElement;
-              target.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${handlePokeIndex(
-                url
-              )}.png`;
+            loading="lazy"
+            src={spriteHome(id)}
+            onError={e => {
+              const t = e.currentTarget;
+              if (t.dataset.fallback) return;
+              t.dataset.fallback = '1';
+              t.src = spriteOfficial(id);
             }}
           />
-
-          <div className={css.info}>
-            <h2 className={css.name}>{handleGrowFirstLetter(name)}</h2>
-          </div>
         </div>
-      </NavLink>
-    </>
+        <div className={css.info}>
+          <span className={css.id}>{paddedId(id)}</span>
+          <h3 className={css.name}>{prettyName(name)}</h3>
+        </div>
+      </motion.div>
+    </NavLink>
   );
 });

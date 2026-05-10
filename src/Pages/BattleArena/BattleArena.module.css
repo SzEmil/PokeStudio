@@ -1,0 +1,19 @@
+.guard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--s-3);
+  padding: var(--s-9) var(--s-4);
+  text-align: center;
+}
+
+.guard h2 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 26px;
+}
+
+.guard p {
+  color: var(--text-secondary);
+  max-width: 60ch;
+}

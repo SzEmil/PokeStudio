@@ -1,39 +1,22 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { fetchAIPokemons } from './battleOperations';
 
-// type PokeData = Record<string, unknown>;
-
-type statType = {
+type Stat = {
   base_stat: number;
   effort: number;
-  stat: {
-    name: string;
-    url: string;
-  };
+  stat: { name: string; url: string };
 };
 
-type cardsData = {
-  overview?: {
-    stats: statType[];
-    id: number;
-    name?: string;
-  };
-};
-
-type PokemonOnArenaComputer = {
-  stats: statType[];
-  id: number;
-  name?: string;
-};
+type Card = any;
 
 export type BattleStateType = {
   user: {
-    cards: cardsData[];
-    pokemonOnArena: null | cardsData;
+    cards: Card[];
+    pokemonOnArena: null | Card;
   };
   computer: {
-    cards: PokemonOnArenaComputer[] | null;
-    pokemonOnArena: null | PokemonOnArenaComputer;
+    cards: any[] | null;
+    pokemonOnArena: null | any;
   };
   game: {
     isStarted: boolean;
@@ -44,15 +27,9 @@ export type BattleStateType = {
   };
 };
 
-const battleInitialState: BattleStateType = {
-  user: {
-    cards: [],
-    pokemonOnArena: null,
-  },
-  computer: {
-    cards: [],
-    pokemonOnArena: null,
-  },
+const initial: BattleStateType = {
+  user: { cards: [], pokemonOnArena: null },
+  computer: { cards: [], pokemonOnArena: null },
   game: {
     isStarted: false,
     isPaused: false,
@@ -62,18 +39,15 @@ const battleInitialState: BattleStateType = {
   },
 };
 
-const battleSlice = createSlice({
+const slice = createSlice({
   name: 'battle',
-  initialState: battleInitialState,
+  initialState: initial,
   reducers: {
     setUserBattleCards(state, action) {
-      state.user.cards?.push(action.payload);
+      state.user.cards.push(action.payload);
     },
-    deleteUserBattleCards(state, action) {
-      const cardIdToDelete = action.payload;
-      state.user.cards = state.user.cards.filter(card => {
-        return card.overview?.id !== cardIdToDelete;
-      });
+    deleteUserBattleCards(state, action: PayloadAction<number>) {
+      state.user.cards = state.user.cards.filter(c => c.overview?.id !== action.payload);
     },
     addToArena(state, action) {
       state.user.pokemonOnArena = action.payload;
@@ -81,37 +55,39 @@ const battleSlice = createSlice({
     addToArenaComputer(state, action) {
       state.computer.pokemonOnArena = action.payload;
     },
-    damageForComputer(state, action) {
-      state.computer.pokemonOnArena!.stats[0].base_stat = action.payload.healtForDispatch;
-      const cardIndex = state.computer.cards!.findIndex(
-        card => card.id === action.payload.id
-      );
-      state.computer.cards![cardIndex].stats[0].base_stat =
-        action.payload.healtForDispatch;
-
-      state.game.userMove = false;
-      state.game.computerMove = true;
+    setUserHp(state, action: PayloadAction<{ id: number; hp: number }>) {
+      const { id, hp } = action.payload;
+      if (state.user.pokemonOnArena?.overview?.id === id) {
+        const stats: Stat[] = state.user.pokemonOnArena.overview.stats;
+        const i = stats.findIndex(s => s.stat.name === 'hp');
+        if (i >= 0) stats[i].base_stat = hp;
+      }
+      const card = state.user.cards.find(c => c.overview?.id === id);
+      if (card) {
+        const stats: Stat[] = card.overview.stats;
+        const i = stats.findIndex(s => s.stat.name === 'hp');
+        if (i >= 0) stats[i].base_stat = hp;
+      }
     },
-    damageForUser(state, action) {
-      if (state.user.pokemonOnArena === null) return;
-      state.user.pokemonOnArena!.overview!.stats[0].base_stat =
-        action.payload.healtForDispatch;
-      const cardIndex = state.user.cards!.findIndex(
-        card => card.overview!.id === action.payload.id
-      );
-      state.user.cards![cardIndex].overview!.stats[0].base_stat =
-        action.payload.healtForDispatch;
-
-      state.game.userMove = true;
-      state.game.computerMove = false;
+    setComputerHp(state, action: PayloadAction<{ id: number; hp: number }>) {
+      const { id, hp } = action.payload;
+      if (state.computer.pokemonOnArena?.id === id) {
+        const stats: Stat[] = state.computer.pokemonOnArena.stats;
+        const i = stats.findIndex(s => s.stat.name === 'hp');
+        if (i >= 0) stats[i].base_stat = hp;
+      }
+      if (state.computer.cards) {
+        const card = state.computer.cards.find(c => c.id === id);
+        if (card) {
+          const stats: Stat[] = card.stats;
+          const i = stats.findIndex(s => s.stat.name === 'hp');
+          if (i >= 0) stats[i].base_stat = hp;
+        }
+      }
     },
-    defendUser(state) {
-      state.game.userMove = false;
-      state.game.computerMove = true;
-    },
-    defendComputer(state) {
-      state.game.userMove = true;
-      state.game.computerMove = false;
+    setTurn(state, action: PayloadAction<'user' | 'computer'>) {
+      state.game.userMove = action.payload === 'user';
+      state.game.computerMove = action.payload === 'computer';
     },
     startGame(state) {
       state.game.isStarted = true;
@@ -122,7 +98,6 @@ const battleSlice = createSlice({
     },
     pauseGame(state) {
       state.game.isPaused = true;
-      state.game.isEnded = false;
     },
     stopGame(state) {
       state.game.isPaused = false;
@@ -131,7 +106,12 @@ const battleSlice = createSlice({
       state.computer.pokemonOnArena = null;
       state.user.pokemonOnArena = null;
       state.computer.cards = [];
+    },
+    resetBattleSquads(state) {
       state.user.cards = [];
+      state.computer.cards = [];
+      state.user.pokemonOnArena = null;
+      state.computer.pokemonOnArena = null;
     },
   },
   extraReducers(builder) {
@@ -145,12 +125,14 @@ export const {
   setUserBattleCards,
   deleteUserBattleCards,
   addToArena,
-  damageForComputer,
-  startGame,
-  stopGame,
   addToArenaComputer,
-  damageForUser,
-  defendUser,
-  defendComputer,
-} = battleSlice.actions;
-export const battleReducer = battleSlice.reducer;
+  setUserHp,
+  setComputerHp,
+  setTurn,
+  startGame,
+  pauseGame,
+  stopGame,
+  resetBattleSquads,
+} = slice.actions;
+
+export const battleReducer = slice.reducer;

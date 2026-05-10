@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
+
 const easyTab = [
   1, 4, 7, 10, 13, 16, 19, 21, 23, 25, 27, 29, 32, 35, 37, 39, 41, 43, 46, 48,
   50, 52, 54, 56, 58, 60, 63, 66, 69, 72, 74, 77, 79, 81, 84, 86, 88, 90, 92,
@@ -17,41 +18,45 @@ const easyTab = [
 
 const mediumTab = [
   2, 3, 5, 6, 8, 9, 11, 12, 14, 15, 17, 18, 20, 22, 24, 26, 28, 30, 31, 33, 34,
+  36, 38, 40, 42, 44, 45, 47, 49, 51, 53, 55, 57, 59, 62, 65, 68, 71, 76, 78,
+  80, 82, 87, 89, 91, 99, 103, 105, 110, 112, 115, 119, 121, 124, 130, 134, 135,
+  136, 142, 143, 149, 153, 156, 159, 162, 169, 176, 178, 181, 184, 186, 197,
+  199, 219, 224, 232, 233, 248, 257, 260, 269, 272, 275, 282, 284, 286, 295,
+  301, 305, 306, 350, 354, 376, 405,
 ];
 
-axios.defaults.baseURL = ` https://pokeapi.co/api/v2`;
+const hardTab = [
+  68, 130, 134, 135, 136, 143, 149, 169, 199, 248, 282, 286, 295, 350, 376, 405,
+  432, 442, 448, 462, 466, 468, 472, 473, 477, 530, 534, 612, 625, 635, 663,
+  689, 706, 715, 776, 784, 815, 887,
+];
+
+const legendaryTab = [
+  144, 145, 146, 150, 151, 243, 244, 245, 249, 250, 251, 380, 381, 382, 383, 384, 385,
+  483, 484, 487, 491, 492, 493, 643, 644, 646, 716, 718, 786, 791, 792, 800,
+];
+
+axios.defaults.baseURL = `https://pokeapi.co/api/v2`;
 
 const getRandomIds = (array: number[], count: number) => {
-  const shuffledArray = array.sort(() => Math.random() - 0.5);
-  return shuffledArray.slice(0, count);
+  const shuffled = [...array].sort(() => Math.random() - 0.5);
+  return shuffled.slice(0, count);
 };
 
 export const fetchAIPokemons = createAsyncThunk(
   'battleAI/fetchAIPokemons',
   async (type: string, thunkAPI) => {
     try {
-      let idArray;
+      let idArray: number[];
+      if (type === 'easy') idArray = getRandomIds(easyTab, 3);
+      else if (type === 'medium') idArray = getRandomIds(mediumTab, 3);
+      else if (type === 'hard') idArray = getRandomIds(hardTab, 3);
+      else if (type === 'master') idArray = getRandomIds(legendaryTab, 3);
+      else return [];
 
-      if (type === 'easy') {
-        idArray = getRandomIds(easyTab, 3);
-      } else if (type === 'medium') {
-        idArray = getRandomIds(mediumTab, 3);
-      } else {
-        return [];
-      }
-
-      const pokemons = [];
-
-      for (const id of idArray) {
-        try {
-          const response = await axios.get(`/pokemon/${id}`);
-          pokemons.push(response.data);
-        } catch (error) {
-          console.log('Error:', error);
-        }
-      }
-
-      return pokemons;
+      const requests = idArray.map(id => axios.get(`/pokemon/${id}`));
+      const responses = await Promise.all(requests);
+      return responses.map(r => r.data);
     } catch (error: any) {
       return thunkAPI.rejectWithValue(error.message);
     }

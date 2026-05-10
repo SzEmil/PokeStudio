@@ -1,24 +1,24 @@
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { AppDispatch } from '../../Redux/store';
 import { addCard } from '../../Redux/auth/authOperations';
+import { addCardCollected } from '../../Redux/stats/statsSlice';
 import { selectPackedPokemon } from '../../Redux/pokeShop/pokeShopSelectors';
-import css from './BtnAddCard.module.css';
 import { setPackedPokemonState } from '../../Redux/pokeShop/pokeShopSlice';
+import { Button } from '../UI/Button';
+import { LuPlus } from 'react-icons/lu';
 
 export const BtnAddCard = () => {
   const dispatch: AppDispatch = useDispatch();
   const hotpoke: any = useSelector(selectPackedPokemon);
 
-  const handleOnClick = async () => {
-    const card = hotpoke;
-
-    dispatch(addCard({ card }));
+  const handleOnClick = () => {
+    dispatch(addCard({ card: hotpoke }));
+    dispatch(addCardCollected());
     dispatch(setPackedPokemonState());
   };
   return (
-    <button className={css.btn} type="button" onClick={handleOnClick}>
-      Add card
-    </button>
+    <Button variant="primary" iconLeft={<LuPlus />} onClick={handleOnClick}>
+      Add to shelf
+    </Button>
   );
 };

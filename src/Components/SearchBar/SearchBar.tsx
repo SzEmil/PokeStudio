@@ -1,30 +1,47 @@
-import { useDispatch } from 'react-redux';
-import { setFilterData } from '../../Redux/filter/filterSlice';
+import { useDispatch, useSelector } from 'react-redux';
 import { ChangeEvent } from 'react';
-import { useSelector } from 'react-redux';
+import { setFilterData } from '../../Redux/filter/filterSlice';
 import { selectFilterInput } from '../../Redux/filter/filterSelectors';
+import { HiOutlineMagnifyingGlass, HiOutlineXMark } from 'react-icons/hi2';
 import css from './SearchBar.module.css';
 
 type SearchBarPropsType = {
   filterType: 'home' | 'search';
+  placeholder?: string;
 };
-export const SearchBar = ({ filterType }: SearchBarPropsType) => {
+
+export const SearchBar = ({ filterType, placeholder = 'Search Pokémon by name…' }: SearchBarPropsType) => {
   const dispatch = useDispatch();
   const filterInput = useSelector(selectFilterInput);
+
   const handleInputOnChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const inputVal = e?.target.value;
-    dispatch(setFilterData(inputVal));
+    dispatch(setFilterData(e.target.value));
   };
+
   return (
-    <div>
+    <div className={css.wrap}>
+      <span className={css.icon}>
+        <HiOutlineMagnifyingGlass size={18} />
+      </span>
       <input
         className={css.input}
         type="text"
-        placeholder="Pokemon name"
+        placeholder={placeholder}
         name="pokeName"
         value={filterInput}
         onChange={filterType === 'home' ? handleInputOnChange : undefined}
+        autoComplete="off"
       />
+      {filterInput && (
+        <button
+          className={css.clear}
+          type="button"
+          aria-label="Clear search"
+          onClick={() => dispatch(setFilterData(''))}
+        >
+          <HiOutlineXMark size={16} />
+        </button>
+      )}
     </div>
   );
 };

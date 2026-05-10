@@ -1,18 +1,19 @@
 import { logOutUser } from '../../Redux/auth/authOperations';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../Redux/store';
-import css from './BtnLogOut.module.css';
+import { Button } from '../UI/Button';
+import { FiLogOut } from 'react-icons/fi';
 
 export const BtnLogOut = () => {
   const dispatch: AppDispatch = useDispatch();
-  const handleOnClick = () => {
-    dispatch(logOutUser());
-  };
   return (
-    <div>
-      <button className={css.btn} type="button" onClick={handleOnClick}>
-        LogOut
-      </button>
-    </div>
+    <Button
+      variant="ghost"
+      size="sm"
+      iconLeft={<FiLogOut size={14} />}
+      onClick={() => dispatch(logOutUser())}
+    >
+      Sign out
+    </Button>
   );
 };

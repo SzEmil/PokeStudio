@@ -1,0 +1,251 @@
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-5);
+}
+
+.head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-4);
+}
+
+.eyebrow {
+  font-family: var(--font-display);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--brand);
+  font-weight: 700;
+}
+
+.title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 24px;
+  margin-top: 4px;
+}
+
+.head p {
+  color: var(--text-secondary);
+  font-size: 14px;
+  margin-top: 4px;
+  max-width: 60ch;
+}
+
+.scoreboard {
+  display: flex;
+  gap: var(--s-2);
+  flex-wrap: wrap;
+}
+
+.scoreChip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  padding: 8px 16px;
+  background: rgba(99, 144, 240, 0.1);
+  border: 1px solid rgba(99, 144, 240, 0.3);
+  border-radius: var(--r-pill);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--info);
+}
+.scoreChip strong {
+  font-weight: 800;
+  font-size: 16px;
+}
+
+.stage {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-5);
+  align-items: center;
+  padding: var(--s-7);
+  border-radius: var(--r-lg);
+  background:
+    radial-gradient(ellipse at 50% 80%, rgba(122, 199, 76, 0.2), transparent 70%),
+    radial-gradient(ellipse at 0% 0%, rgba(99, 144, 240, 0.2), transparent 60%),
+    rgba(20, 27, 44, 0.7);
+  border: 1px solid var(--border);
+  position: relative;
+  isolation: isolate;
+  min-height: 360px;
+}
+
+.empty {
+  display: grid;
+  place-items: center;
+  min-height: 220px;
+}
+
+.creatureBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  isolation: isolate;
+}
+
+.creature {
+  width: 220px;
+  height: 220px;
+  object-fit: contain;
+  filter: drop-shadow(0 14px 22px rgba(0, 0, 0, 0.5));
+}
+
+.shake {
+  animation: shakeCreature 0.6s ease-in-out;
+}
+
+@keyframes shakeCreature {
+  0%, 100% { transform: rotate(0); }
+  20% { transform: rotate(-8deg); }
+  40% { transform: rotate(6deg); }
+  60% { transform: rotate(-4deg); }
+  80% { transform: rotate(2deg); }
+}
+
+.caught {
+  filter: drop-shadow(0 14px 22px rgba(255, 203, 5, 0.5));
+}
+
+.creatureInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--font-display);
+  margin-top: var(--s-3);
+}
+
+.creatureId {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.creatureInfo h3 {
+  font-weight: 800;
+  font-size: 22px;
+  text-transform: capitalize;
+}
+
+.creatureTypes {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.creatureStats {
+  display: flex;
+  gap: var(--s-3);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-secondary);
+  margin-top: 4px;
+}
+
+.actionRow {
+  display: flex;
+  gap: var(--s-2);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.aimWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--s-3);
+  width: 100%;
+  max-width: 480px;
+}
+
+.hint {
+  font-family: var(--font-display);
+  font-weight: 600;
+  color: var(--text-secondary);
+  font-size: 13px;
+  text-align: center;
+}
+
+.meter {
+  position: relative;
+  width: 100%;
+  height: 22px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border);
+  border-radius: var(--r-pill);
+  overflow: hidden;
+}
+
+.zone {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 38%;
+  width: 24%;
+  background: linear-gradient(180deg, rgba(52, 211, 153, 0.45), rgba(52, 211, 153, 0.18));
+  border-left: 1px solid rgba(52, 211, 153, 0.6);
+  border-right: 1px solid rgba(52, 211, 153, 0.6);
+}
+
+.marker {
+  position: absolute;
+  top: -4px;
+  bottom: -4px;
+  width: 4px;
+  border-radius: var(--r-pill);
+  background: linear-gradient(180deg, #fff, #ff5e5e);
+  box-shadow: 0 0 12px rgba(255, 94, 94, 0.6);
+  transform: translateX(-50%);
+}
+
+.throwing {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-3);
+  font-family: var(--font-display);
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+.result {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--s-3);
+  padding: var(--s-4);
+  border-radius: var(--r-md);
+}
+
+.resultCaught {
+  background: rgba(255, 203, 5, 0.1);
+  border: 1px solid rgba(255, 203, 5, 0.4);
+}
+
+.resultCaught h3 {
+  color: var(--brand);
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 22px;
+  text-transform: capitalize;
+}
+
+.resultFled {
+  background: rgba(248, 113, 113, 0.08);
+  border: 1px solid rgba(248, 113, 113, 0.3);
+}
+
+.resultFled h3 {
+  color: var(--danger);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 18px;
+  text-transform: capitalize;
+}

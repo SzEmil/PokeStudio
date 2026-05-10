@@ -1,120 +1,345 @@
-.container {
+.page {
   display: flex;
   flex-direction: column;
 }
-.wrapper {
-  padding-top: 120px;
-  width: 100%;
-  height: 100%;
-  /* background-image: url(https://img.freepik.com/free-vector/comic-style-background-flat-design_52683-53321.jpg?w=1380&t=st=1683719904~exp=1683720504~hmac=751bf8259ca7b680e60956866c4b23f123e16e083224b2c74a636272eec3257e); */
-  background-size: cover;
 
+.heroBanner {
   position: relative;
+  isolation: isolate;
+  border-bottom: 1px solid var(--border);
 }
 
-.pokemonWrapper {
+.topBar {
   display: flex;
-  flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--s-5);
+  flex-wrap: wrap;
+  gap: var(--s-3);
+}
+
+.back {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  padding: 7px 14px;
+  border-radius: var(--r-pill);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 13px;
+  text-decoration: none;
+  transition: background var(--t-fast), color var(--t-fast);
+}
+
+.back:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-primary);
+}
+
+.neighborNav {
+  display: inline-flex;
+  gap: 6px;
+}
+
+.heroLayout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--s-7);
   align-items: center;
 }
-.img {
-  width: 100%;
-  height: auto;
-}
-.imageBox {
-  width: 700px;
-}
-.cardWrapper {
-  max-width: 600px;
-  min-width: 350px;
+
+@media (min-width: 900px) {
+  .heroLayout {
+    grid-template-columns: 0.9fr 1.1fr;
+  }
 }
 
-.descriptionBox {
-  gap: 2px;
-}
-.descriptionText {
-  display: inline;
-  padding: 0 0;
-  font-style: normal;
-  font-family: 'Roboto';
-  font-weight: 300;
-  font-size: 18px;
-  line-height: 22px;
-}
-.listWrapper {
+.heroVisual {
+  position: relative;
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1 / 1;
+  max-width: 480px;
+  margin: 0 auto;
   width: 100%;
+}
+
+.heroVisual::before {
+  content: '';
+  position: absolute;
+  inset: 10%;
+  background: radial-gradient(closest-side, rgba(255, 255, 255, 0.2), transparent 70%);
+  filter: blur(40px);
+  z-index: 0;
+}
+
+.heroImage {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 30px 30px rgba(0, 0, 0, 0.5));
+  animation: float-y 5s ease-in-out infinite;
+}
+
+.heroId {
+  position: absolute;
+  z-index: 0;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(60px, 16vw, 180px);
+  color: rgba(255, 255, 255, 0.04);
+  letter-spacing: -0.04em;
+  pointer-events: none;
+}
+
+.heroInfo {
   display: flex;
   flex-direction: column;
-  margin-top: 20px;
-  margin-bottom: 20px;
+  gap: var(--s-4);
 }
-.listItem {
-  width: 100%;
+
+.metaRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2);
 }
-.listItem:nth-child(2) {
-  margin-top: 20px;
+
+.genChip,
+.rarityChip,
+.specialChip {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-radius: var(--r-pill);
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text-secondary);
+}
+
+.rarityChip {
+  background: rgba(255, 203, 5, 0.1);
+  color: var(--brand);
+  border-color: rgba(255, 203, 5, 0.35);
+}
+
+.specialChip {
+  background: rgba(167, 100, 239, 0.16);
+  color: #c084fc;
+  border-color: rgba(167, 100, 239, 0.4);
 }
 
 .title {
-  font-style: normal;
-  font-family: 'Pokemon Solid';
-  font-weight: 300;
-  font-size: 36px;
-  line-height: 38px;
-  text-align: center;
-  color: #ffd600;
-
-  padding-bottom: 50px;
-  padding-top: 20px;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(40px, 7vw, 72px);
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
 }
-.addBtn {
-  margin-top: 50px;
-  color: white;
-  font-weight: 300;
-  font-size: 22px;
-  line-height: 22px;
-  text-align: center;
-  background-color: transparent;
-  padding: 10px;
 
+.typeRow {
+  display: flex;
+  gap: var(--s-2);
+  flex-wrap: wrap;
+}
+
+.flavor {
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--text-secondary);
+  max-width: 60ch;
+}
+
+.factGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: var(--s-3);
+  padding-top: var(--s-3);
+  border-top: 1px solid var(--border);
+  margin: 0;
+}
+
+.fact {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.fact dt {
+  font-size: 10px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.fact dd {
+  font-family: var(--font-mono);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* Tabs */
+
+.tabBar {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border);
+  border-radius: var(--r-pill);
+  padding: 5px;
+  margin-bottom: var(--s-6);
+  width: fit-content;
+}
+
+.tab {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  padding: 8px 16px;
+  border-radius: var(--r-pill);
+  background: transparent;
+  color: var(--text-secondary);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 13px;
   cursor: pointer;
+  transition: background var(--t-fast), color var(--t-fast);
 }
-.btnBox {
-  margin-top: 30px;
+.tab:hover {
+  color: var(--text-primary);
 }
-
-@media screen and (min-width: 768px) {
-  .pokemonWrapper {
-    flex-direction: row;
-  }
-  .descriptionBox {
-    padding-left: 20px;
-    width: 700px;
-  }
-  .listItem:nth-child(2) {
-    margin-top: 0px;
-    margin-left: 20px;
-  }
-  .listWrapper {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    margin-top: 20px;
-    margin-bottom: 20px;
-  }
-  .title {
-    padding-bottom: 50px;
-    padding-top: 0;
-  }
+.tabActive {
+  background: var(--grad-brand);
+  color: #1a0c00;
+  box-shadow: 0 4px 12px rgba(255, 94, 94, 0.2);
+}
+.tabIcon {
+  display: inline-flex;
+  font-size: 14px;
 }
 
-@media screen and (min-width: 1200px) {
-  .container {
-    display: flex;
-    flex-direction: column;
+.grid2 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--s-5);
+}
+@media (min-width: 1024px) {
+  .grid2 {
+    grid-template-columns: 1fr 1fr;
   }
-  .title {
-    padding-bottom: 80px;
+  .cardPanel {
+    grid-column: 1 / -1;
+    display: grid;
+    place-items: center;
   }
+}
+
+.panel {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: var(--s-5);
+}
+
+.panelTitle {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: var(--s-4);
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+}
+
+.abilityList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+}
+
+.abilityRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--s-3) var(--s-4);
+  border-radius: var(--r-md);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border);
+}
+
+.abilityName {
+  font-family: var(--font-display);
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.hiddenBadge {
+  font-size: 10px;
+  font-family: var(--font-mono);
+  padding: 3px 8px;
+  border-radius: var(--r-pill);
+  background: rgba(167, 100, 239, 0.18);
+  color: #c084fc;
+}
+
+.matchups {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-4);
+}
+
+.matchups h4 {
+  font-family: var(--font-display);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  margin-bottom: var(--s-2);
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+}
+
+.matchRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.matchChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px 3px 4px;
+  border-radius: var(--r-pill);
+  background: rgba(255, 255, 255, 0.04);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+}
+
+.muted {
+  color: var(--text-muted);
+  font-style: italic;
+  font-size: 13px;
+}
+
+.statList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
 }

@@ -1,20 +1,35 @@
-import { FiUser } from 'react-icons/fi';
 import { useSelector } from 'react-redux';
-import { selectAuthUser } from '../../Redux/auth/authSelectors';
+import { selectAuthUser, selectAuthUserCoins } from '../../Redux/auth/authSelectors';
+import { selectStats } from '../../Redux/stats/statsSelectors';
+import { levelFromXp } from '../../Redux/stats/statsSlice';
 import css from './User.module.css';
-import { selectAuthUserCoins } from '../../Redux/auth/authSelectors';
 
 export const User = () => {
   const user = useSelector(selectAuthUser);
   const coins = useSelector(selectAuthUserCoins);
+  const stats = useSelector(selectStats);
+  const cardsCount = Math.max(0, (user.cards?.length ?? 1) - 1);
+  const initial = (user.username ?? '?').charAt(0).toUpperCase();
+  const lvl = levelFromXp(stats.xp);
+
   return (
     <div className={css.user}>
-      <FiUser size="24px" />
-
-      <h3 className={css.userTitle}>{user.username}</h3>
-      <p className={css.coins}>
-        Coins: <span className={css.coinsVal}>{coins}</span>
-      </p>
+      <div className={css.avatar} aria-hidden>
+        <span>{initial}</span>
+        <span className={css.levelDot}>L{lvl.level}</span>
+      </div>
+      <div className={css.info}>
+        <span className={css.name}>{user.username}</span>
+        <div className={css.meta}>
+          <span className={css.coinChip} title="Coins">
+            <span className={css.coinDot} />
+            {coins?.toLocaleString() ?? 0}
+          </span>
+          <span className={css.cardsChip} title="Pokémon collected">
+            {cardsCount} cards
+          </span>
+        </div>
+      </div>
     </div>
   );
 };

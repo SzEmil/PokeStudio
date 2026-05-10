@@ -1,0 +1,39 @@
+.wrap {
+  position: relative;
+  min-height: calc(100vh - var(--header-h));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: var(--s-3);
+  padding: var(--s-8) var(--s-5);
+  isolation: isolate;
+}
+
+.glow {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: radial-gradient(closest-side, rgba(255, 94, 94, 0.18), transparent 60%),
+    radial-gradient(closest-side, rgba(99, 144, 240, 0.18), transparent 60%);
+}
+
+.wrap h1 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(80px, 18vw, 160px);
+  background: var(--grad-brand);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  letter-spacing: -0.04em;
+  margin-top: var(--s-3);
+}
+
+.wrap p {
+  color: var(--text-secondary);
+  font-size: 16px;
+  max-width: 50ch;
+  margin-bottom: var(--s-3);
+}

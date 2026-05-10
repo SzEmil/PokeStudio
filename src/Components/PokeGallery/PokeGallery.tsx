@@ -1,90 +1,89 @@
-import { useState } from 'react';
+import { useMemo } from 'react';
 import css from './PokeGallery.module.css';
-import { nanoid } from '@reduxjs/toolkit';
-type galleryPropsType = {
-  sprites: {
-    back_default: string | undefined;
-    back_female: string | undefined;
-    back_shiny: string | undefined;
-    back_shiny_female: string | undefined;
-    front_default: string | undefined;
-    front_female: string | undefined;
-    front_shiny: string | undefined;
-    front_shiny_female: string | undefined;
-    other: {
-      dream_world: {
-        front_default: string | undefined;
-      };
-      home: {
-        front_default: string | undefined;
-      };
-      'official-artwork': {
-        front_default: string | undefined;
-      };
-    };
+
+interface Sprites {
+  back_default?: string;
+  back_female?: string;
+  back_shiny?: string;
+  back_shiny_female?: string;
+  front_default?: string;
+  front_female?: string;
+  front_shiny?: string;
+  front_shiny_female?: string;
+  other?: {
+    dream_world?: { front_default?: string };
+    home?: { front_default?: string };
+    'official-artwork'?: { front_default?: string };
   };
+}
+
+interface Props {
+  sprites: Sprites;
+}
+
+const VARIANT_LABEL: Record<string, string> = {
+  front_default: 'Front',
+  back_default: 'Back',
+  front_shiny: 'Shiny Front',
+  back_shiny: 'Shiny Back',
+  front_female: 'Female Front',
+  back_female: 'Female Back',
+  front_shiny_female: 'Shiny ♀ Front',
+  back_shiny_female: 'Shiny ♀ Back',
+  dream_world: 'Dream World',
+  home: 'Home',
+  official_artwork: 'Official Artwork',
 };
 
-export const PokeGallery = ({ sprites }: galleryPropsType) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const toggleList = () => {
-    setIsOpen(!isOpen);
-  };
+export const PokeGallery = ({ sprites }: Props) => {
+  const items = useMemo(() => {
+    const list: { key: string; label: string; src: string }[] = [];
+    Object.entries(sprites).forEach(([k, v]) => {
+      if (typeof v === 'string') list.push({ key: k, label: VARIANT_LABEL[k] ?? k, src: v });
+    });
+    if (sprites.other?.['official-artwork']?.front_default) {
+      list.unshift({
+        key: 'official_artwork',
+        label: VARIANT_LABEL.official_artwork,
+        src: sprites.other['official-artwork'].front_default,
+      });
+    }
+    if (sprites.other?.home?.front_default) {
+      list.unshift({
+        key: 'home',
+        label: VARIANT_LABEL.home,
+        src: sprites.other.home.front_default,
+      });
+    }
+    if (sprites.other?.dream_world?.front_default) {
+      list.push({
+        key: 'dream_world',
+        label: VARIANT_LABEL.dream_world,
+        src: sprites.other.dream_world.front_default,
+      });
+    }
+    return list;
+  }, [sprites]);
+
   return (
     <div className={css.container}>
-      <div className={css.galleryCard}>
-        <div className={css.galleryCardBar}>
-          <h3 className={css.galleryCardTitle}>Gallery</h3>
-          <button
-            type="button"
-            onClick={toggleList}
-            className={`${css.button} ${isOpen ? css.isVisible : ''}`}
+      <div className={css.head}>
+        <h3 className={css.title}>Gallery</h3>
+      </div>
+      <div className={css.grid}>
+        {items.map(item => (
+          <a
+            key={`${item.key}-${item.src}`}
+            className={css.tile}
+            href={item.src}
+            target="_blank"
+            rel="noreferrer"
+            title={item.label}
           >
-            ^
-          </button>
-        </div>
-        <div className={`${css.galleryBox} ${isOpen ? css.visible : ''}`}>
-          <ul className={css.gallery}>
-            {Object.values(sprites).map(
-              (sprite, index) =>
-                sprite !== null &&
-                typeof sprite === 'string' && (
-                  <li key={index} className={css.galleryItem}>
-                    <img
-                      loading="lazy"
-                      className={css.image}
-                      alt="pokePic"
-                      src={sprite}
-                    />
-                  </li>
-                )
-            )}
-            <li className={css.galleryItem} key={nanoid()}>
-              <img
-                loading="lazy"
-                className={css.image}
-                alt="pokePic"
-                src={sprites.other.dream_world.front_default}
-              />
-            </li>
-            <li className={css.galleryItem} key={nanoid()}>
-              <img
-                loading="lazy"
-                className={css.image}
-                alt="pokePic"
-                src={sprites.other.home.front_default}
-              />
-            </li>
-            <li className={css.galleryItem} key={nanoid()}>
-              <img
-                loading="lazy"
-                className={css.image}
-                alt="pokePic"
-                src={sprites.other['official-artwork'].front_default}
-              />
-            </li>
-          </ul>
-        </div>
+            <img loading="lazy" src={item.src} alt={item.label} className={css.image} />
+            <span className={css.tileLabel}>{item.label}</span>
+          </a>
+        ))}
       </div>
     </div>
   );
